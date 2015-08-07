@@ -2,32 +2,11 @@
 <items version="2" >
 
     <item
-        jar="D:\Projects\Footing\Footing\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jar="C:\Users\moi\.gradle\caches\modules-2\files-2.1\com.readystatesoftware.systembartint\systembartint\1.0.3\de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287\systembartint-1.0.3.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="D:\Projects\Footing\Footing\app\build\intermediates\pre-dexed\debug\classes-fd7bc8b9612e1ff0c929e4c6af08e3d2d9a11b73.jar" />
-    </item>
-    <item
-        jar="D:\Tool\SDK\android-sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="D:\Projects\Footing\Footing\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-e84a70787bc2a53d6a01c4b53a418bcb41c181e0.jar" />
-    </item>
-    <item
-        jar="D:\Projects\Footing\Footing\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="D:\Projects\Footing\Footing\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-b38425080b882b1209575a497f745ed7c5982e6d.jar" />
-    </item>
-    <item
-        jar="D:\Projects\Footing\Footing\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="D:\Projects\Footing\Footing\app\build\intermediates\pre-dexed\debug\classes-b1c212e579cf836a1d72edc8a5736b839e421673.jar" />
+        sha1="de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\systembartint-1.0.3-6c1ba3b3dd04461f28c993965a5e3ceefa8f345a.jar" />
     </item>
 
 </items>
