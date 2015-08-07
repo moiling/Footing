@@ -28,4 +28,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.balysv:material-ripple:1.0.2'
+    //bmob-sdk ��Bmob��android sdk��
+    compile 'cn.bmob.android:bmob-sdk:3.4.2'
+    //bmob-im��bmob��im������������������im��������
+    compile 'cn.bmob.android:bmob-im:1.1.8'
+    compile 'cn.bmob.android:bmob-sdk:3.3.5'
+    //bmob-push��Bmob�����Ͱ�
+    compile 'cn.bmob.android:bmob-push:0.6'
 }
