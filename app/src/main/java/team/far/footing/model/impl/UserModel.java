@@ -15,7 +15,23 @@ public class UserModel implements IUserModel {
 
 
     @Override
-    public void Login(String username, String passwrod, OnLoginListener onLoginListener, Context context) {
+    public void Login(String username, String passwrod, final OnLoginListener onLoginListener, Context context) {
+        final Userbean loginBean = new Userbean();
+        loginBean.setUsername(username);
+        loginBean.setPassword(passwrod);
+
+        loginBean.login(context, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                onLoginListener.loginSuccess(loginBean);
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                onLoginListener.loginFailed(s);
+            }
+        });
+
 
     }
 

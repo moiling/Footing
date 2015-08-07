@@ -2,40 +2,18 @@ package team.far.footing.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
-import team.far.footing.presenter.RegisterPresenter;
-import team.far.footing.ui.vu.IRegsterVu;
+import team.far.footing.ui.vu.ILoginVu;
 
-public class LoginActivity extends BaseActivity implements IRegsterVu {
-
-
-    private RegisterPresenter registerPresenter;
-
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
-
+/**
+ * Created by Luoyy on 2015/8/7 0007.
+ */
+public class LoginActivity extends BaseActivity implements ILoginVu {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
-        initToolbar();
-        //初始化 RegsterPresenter
-        registerPresenter = new RegisterPresenter(this);
-        //注册
-        registerPresenter.Regster();
-    }
-
-    private void initToolbar() {
-        mToolbar.setTitle(getResources().getString(R.string.login));
-        setSupportActionBar(mToolbar);
     }
 
 
@@ -55,17 +33,27 @@ public class LoginActivity extends BaseActivity implements IRegsterVu {
     }
 
     @Override
-    public void showRegsterLoading() {
+    public void clearUserName() {
 
     }
 
     @Override
-    public void showRegsterSuccee(Userbean userbean) {
-        Log.i("在LoginActivity中","注册成功");
+    public void clearPassword() {
+
     }
 
     @Override
-    public void showRegsterFail(String reason) {
-        Log.e("在LoginActivity中",reason);
+    public void showLoginLoading() {
+
+    }
+
+    @Override
+    public void showLoginSuccee(Userbean userbean) {
+
+    }
+
+    @Override
+    public void showLoginFail(String reason) {
+
     }
 }

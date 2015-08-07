@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
-    tools:context="team.far.footing.ui.activity.LoginActivity">
+    tools:context="team.far.footing.ui.activity.RegsterActivty">
 
     <include layout="@layout/layout_toolbar"/>
 
