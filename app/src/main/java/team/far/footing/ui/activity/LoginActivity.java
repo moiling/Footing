@@ -1,27 +1,36 @@
 package team.far.footing.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.bean.Userbean;
+import team.far.footing.presenter.RegisterPresenter;
+import team.far.footing.ui.vu.IRegsterVu;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements IRegsterVu {
 
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    private RegisterPresenter registerPresenter;
+
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
-
         initToolbar();
+        //初始化 RegsterPresenter
+        registerPresenter = new RegisterPresenter(this);
+        //注册
+        registerPresenter.Regster();
     }
 
     private void initToolbar() {
@@ -29,25 +38,34 @@ public class LoginActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
     }
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
+    public Context getContext() {
+        return getApplicationContext();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public String getUserName() {
+        return "12345";
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+    @Override
+    public String getPassword() {
+        return "12345";
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public void showRegsterLoading() {
+
+    }
+
+    @Override
+    public void showRegsterSuccee(Userbean userbean) {
+        Log.i("在LoginActivity中","注册成功");
+    }
+
+    @Override
+    public void showRegsterFail(String reason) {
+        Log.e("在LoginActivity中",reason);
     }
 }
