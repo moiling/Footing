@@ -9,4 +9,8 @@ public class API {
 
     }
 
+    public static class KEY {
+
+    }
+
 }
