@@ -1,18 +1,32 @@
 package team.far.footing.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import team.far.footing.R;
+import team.far.footing.app.BaseActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
+
+
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.inject(this);
+
+        initToolbar();
+    }
+
+    private void initToolbar() {
+        mToolbar.setTitle(getResources().getString(R.string.login));
+        setSupportActionBar(mToolbar);
     }
 
     @Override

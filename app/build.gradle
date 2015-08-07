@@ -24,13 +24,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
-
-    //bmob-sdk £ºBmobµÄandroid sdk°ü
+    compile 'com.android.support:design:22.2.0'
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    compile 'com.balysv:material-ripple:1.0.2'
+    //bmob-sdk ï¼šBmobçš„android sdkåŒ…
     compile 'cn.bmob.android:bmob-sdk:3.4.2'
-    //bmob-im£ºbmobµÄim°ü£¬ÒÔÏÂÁ½¸öÅäÖÃÊÇim¹¦ÄÜËùĞè
+    //bmob-imï¼šbmobçš„imåŒ…ï¼Œä»¥ä¸‹ä¸¤ä¸ªé…ç½®æ˜¯imåŠŸèƒ½æ‰€éœ€
     compile 'cn.bmob.android:bmob-im:1.1.8'
     compile 'cn.bmob.android:bmob-sdk:3.3.5'
-    //bmob-push£ºBmobµÄÍÆËÍ°ü
+    //bmob-pushï¼šBmobçš„æ¨é€åŒ…
     compile 'cn.bmob.android:bmob-push:0.6'
-    
 }
