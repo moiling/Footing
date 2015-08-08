@@ -5,7 +5,7 @@ import android.content.Context;
 
 import cn.bmob.v3.Bmob;
 import team.far.footing.R;
-import team.far.footing.config.API;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by moi on 2015/8/7.
@@ -20,7 +20,8 @@ public class APP extends Application {
         context = getApplicationContext();
         // 初始化 Bmob SDK
         Bmob.initialize(this,context.getString(R.string.Bmob_Key));
-
+        // 初始化Log工具……是不是把工具放在一个文件里更好一点呢……
+        LogUtils.isDebug = true;
     }
 
     public static Context getContext() {

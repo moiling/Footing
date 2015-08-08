@@ -1,9 +1,7 @@
 package team.far.footing.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -12,6 +10,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.RegisterPresenter;
 import team.far.footing.ui.vu.IRegsterVu;
+import team.far.footing.util.LogUtils;
 
 public class RegsterActivty extends BaseActivity implements IRegsterVu {
 
@@ -38,12 +37,6 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu {
         setSupportActionBar(mToolbar);
     }
 
-
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
-    }
-
     @Override
     public String getUserName() {
         return "12345";
@@ -64,11 +57,11 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu {
      */
     @Override
     public void showRegsterSuccee(Userbean userbean) {
-        Log.i("在LoginActivity中", "注册成功");
+        LogUtils.i("在LoginActivity中", "注册成功");
     }
 
     @Override
     public void showRegsterFail(String reason) {
-        Log.e("在LoginActivity中", reason);
+        LogUtils.e("在LoginActivity中",reason);
     }
 }

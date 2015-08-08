@@ -1,7 +1,7 @@
 package team.far.footing.model.impl;
 
+import cn.bmob.v3.listener.SaveListener;
 import android.app.Activity;
-import android.content.Context;
 
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -24,15 +24,15 @@ public class UserModel implements IUserModel {
 
 
     @Override
-    public void Login(String username, String passwrod, final OnLoginListener onLoginListener, final Context context) {
+    public void Login(String username, String passwrod, final OnLoginListener onLoginListener) {
         final Userbean loginBean = new Userbean();
         loginBean.setUsername(username);
         loginBean.setPassword(passwrod);
 
-        loginBean.login(context, new SaveListener() {
+        loginBean.login(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
-                onLoginListener.loginSuccess(BmobUser.getCurrentUser(context, Userbean.class));
+                onLoginListener.loginSuccess(BmobUser.getCurrentUser(APP.getContext(), Userbean.class));
             }
 
             @Override
@@ -45,17 +45,17 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void Regster(String username, String passwrod, final OnRegsterListener onRegsterListener, final Context context) {
+    public void Regster(String username, String passwrod, final OnRegsterListener onRegsterListener) {
 
         final Userbean regsterBean = new Userbean();
 
         regsterBean.setUsername(username);
         regsterBean.setPassword(passwrod);
 
-        regsterBean.signUp(context, new SaveListener() {
+        regsterBean.signUp(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
-                onRegsterListener.RegsterSuccess(BmobUser.getCurrentUser(context, Userbean.class));
+                onRegsterListener.RegsterSuccess(BmobUser.getCurrentUser(APP.getContext(), Userbean.class));
             }
 
             @Override

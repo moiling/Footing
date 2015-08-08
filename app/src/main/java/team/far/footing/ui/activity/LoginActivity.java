@@ -29,12 +29,6 @@ public class LoginActivity extends BaseActivity implements ILoginVu {
         loginPresenter = new LoginPresenter(this);
     }
 
-
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
-    }
-
     @Override
     public String getUserName() {
         return "12345";

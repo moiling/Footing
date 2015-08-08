@@ -1,5 +1,6 @@
 package team.far.footing.presenter;
 
+import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.UserModel;
@@ -11,7 +12,8 @@ import team.far.footing.ui.vu.IRegsterVu;
 public class RegisterPresenter {
 
     private IRegsterVu mIRegsterVu;
-    private UserModel mUserModel;
+    // 这里应该是model的接口、否则接口白写了(＞﹏＜)
+    private IUserModel mUserModel;
 
     public RegisterPresenter(IRegsterVu mIRegsterVu) {
         this.mIRegsterVu = mIRegsterVu;
@@ -31,7 +33,7 @@ public class RegisterPresenter {
             public void RegsterFail(String reason) {
                 mIRegsterVu.showRegsterFail(reason);
             }
-        }, mIRegsterVu.getContext());
+        });
     }
 
 }
