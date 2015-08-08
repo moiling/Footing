@@ -33,4 +33,4 @@ proguard/
 *.iws
 .idea/
 *.bin
-.gradle/2.4/taskArtifacts/cache.properties.lock
+app/src/main/res/values/key_string.xml
