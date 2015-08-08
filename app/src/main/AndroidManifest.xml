@@ -28,11 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <application>
+
             <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
-                android:value="7gPn7kClMxHnWE8DYHhlvpb9" />
-        </application>
+                android:value="@string/BaiDu_Key" />
+
 
     </application>
 
