@@ -1,53 +1,59 @@
 package team.far.footing.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.bean.Userbean;
+import team.far.footing.ui.vu.ILoginVu;
 
-public class LoginActivity extends BaseActivity {
-
-
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-
+/**
+ * Created by Luoyy on 2015/8/7 0007.
+ */
+public class LoginActivity extends BaseActivity implements ILoginVu {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
-
-        initToolbar();
     }
 
-    private void initToolbar() {
-        mToolbar.setTitle(getResources().getString(R.string.login));
-        setSupportActionBar(mToolbar);
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
+    public String getUserName() {
+        return "12345";
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public String getPassword() {
+        return "12345";
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+    @Override
+    public void clearUserName() {
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void clearPassword() {
+
+    }
+
+    @Override
+    public void showLoginLoading() {
+
+    }
+
+    @Override
+    public void showLoginSuccee(Userbean userbean) {
+
+    }
+
+    @Override
+    public void showLoginFail(String reason) {
+
     }
 }
