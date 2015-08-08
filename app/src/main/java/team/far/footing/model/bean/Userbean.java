@@ -22,10 +22,50 @@ public class Userbean extends BmobUser implements Serializable {
     private String NickName;
     //签名
     private String Signature;
-    //头像
-    private Bitmap HeadPortrait;
+    //头像url
+    private String HeadPortraitFilePath;
     //点赞数
     private int  PraiseCount;
+    //头像fileame
+    private  String HeadPortraitFileName;
 
+    public String getHeadPortraitFileName(String filename) {
+        return HeadPortraitFileName;
+    }
 
+    public void setHeadPortraitFileName(String headPortraitFileName) {
+        HeadPortraitFileName = headPortraitFileName;
+    }
+
+    public String getHeadPortraitFilePath() {
+        return HeadPortraitFilePath;
+    }
+
+    public void setHeadPortraitFilePath(String headPortraitFilePath) {
+        HeadPortraitFilePath = headPortraitFilePath;
+    }
+
+    public String getNickName() {
+        return NickName;
+    }
+
+    public void setNickName(String nickName) {
+        NickName = nickName;
+    }
+
+    public int getPraiseCount() {
+        return PraiseCount;
+    }
+
+    public void setPraiseCount(int praiseCount) {
+        PraiseCount = praiseCount;
+    }
+
+    public String getSignature() {
+        return Signature;
+    }
+
+    public void setSignature(String signature) {
+        Signature = signature;
+    }
 }
