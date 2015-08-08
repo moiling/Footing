@@ -58,7 +58,7 @@ public class LoginPresenter {
 
             @Override
             public void loginCancel() {
-
+                mILoginVu.showLogincancel();
             }
         });
     }

@@ -22,6 +22,7 @@ public interface ILoginVu {
     void showLoginSuccee(Userbean userbean);
 
     void showLoginFail(String reason);
+    void showLogincancel();
 
     void loginForQQ();
 }

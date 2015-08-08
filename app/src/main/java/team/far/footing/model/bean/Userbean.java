@@ -27,4 +27,5 @@ public class Userbean extends BmobUser implements Serializable {
     //点赞数
     private int  PraiseCount;
 
+
 }

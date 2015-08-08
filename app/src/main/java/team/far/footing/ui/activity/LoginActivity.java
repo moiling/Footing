@@ -21,6 +21,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.LoginPresenter;
 import team.far.footing.ui.vu.ILoginVu;
+import team.far.footing.util.LogUtils;
 import team.far.footing.util.MIUIV6;
 
 /**
@@ -28,13 +29,26 @@ import team.far.footing.util.MIUIV6;
  */
 public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClickListener {
 
-    @InjectView(R.id.ed_login_user_name) AppCompatEditText edUserName;
-    @InjectView(R.id.ed_login_password) AppCompatEditText edPassword;
-    @InjectView(R.id.btn_login_login) CardView btnLogin;
-    @InjectView(R.id.layout_login) LinearLayout layoutLogin;
-    @InjectView(R.id.btn_qq_login) CardView btnQQLogin;
-    @InjectView(R.id.btn_register) CardView btnRegister;
+
+    @InjectView(R.id.ed_login_user_name)
+    AppCompatEditText edUserName;
+    @InjectView(R.id.ed_login_password)
+    AppCompatEditText edPassword;
+    @InjectView(R.id.btn_login_login)
+    CardView btnLogin;
+    @InjectView(R.id.layout_login)
+    LinearLayout layoutLogin;
+    @InjectView(R.id.btn_qq_login)
+    CardView btnQQLogin;
+    @InjectView(R.id.btn_register)
+    CardView btnRegister;
     private LoginPresenter loginPresenter;
+
+    /**
+     * type = 0 -->申请账号登录
+     * type  = 1 --> 第三方登录
+     */
+    private int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,18 +111,20 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
      */
     @Override
     public void showLoginSuccee(Userbean userbean) {
-        dismissProgress();
+        //用type限制了progress的显示
+        if (type == 0) dismissProgress();
         new MaterialDialog.Builder(this).title("登陆成功").content("用户名：" + userbean.getUsername()).positiveText("了解了").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
                 dialog.dismiss();
             }
         }).show();
+        LogUtils.e(userbean.toString());
     }
 
     @Override
     public void showLoginFail(String reason) {
-        dismissProgress();
+        if (type == 0) dismissProgress();
         new MaterialDialog.Builder(this).title("登陆失败").content(reason).positiveText("了解了").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
@@ -118,15 +134,19 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
     }
 
     @Override
+    public void showLogincancel() {
+
+    }
+
+    @Override
     public void loginForQQ() {
         loginPresenter.LoginForQQ();
     }
-
     //应用调用Andriod_SDK接口时，如果要成功接收到回调，
     // 需要在调用接口的Activity的onActivityResult方法中增加如下代码
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Tencent.createInstance(APP.getContext().getString(R.string.QQ_KEY), APP.getContext()).onActivityResult(requestCode, resultCode, data);
+        Tencent.createInstance(APP.getContext().getString(R.string.QQ_ID), APP.getContext()).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -142,9 +162,11 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
                 }
                 break;
             case R.id.btn_qq_login:
+                type = 1;
                 loginForQQ();
                 break;
             case R.id.btn_register:
+                type = 0;
                 loginPresenter.startRegisterActivity(this);
                 break;
         }
