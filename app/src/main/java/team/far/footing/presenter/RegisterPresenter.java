@@ -36,4 +36,8 @@ public class RegisterPresenter {
         });
     }
 
+    // 解除view的绑定
+    public void onRelieveView() {
+        mIRegsterVu = null;
+    }
 }

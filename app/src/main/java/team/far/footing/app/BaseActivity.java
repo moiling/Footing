@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import team.far.footing.R;
@@ -13,6 +15,9 @@ import team.far.footing.R;
  * Created by moi on 2015/8/7.
  */
 public class BaseActivity extends AppCompatActivity {
+
+    private SystemBarTintManager tintManager;
+    private MaterialDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +29,33 @@ public class BaseActivity extends AppCompatActivity {
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        // create our manager instance after the content view is set
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
+        tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
-        // set a custom tint color for all system bars
-        tintManager.setTintColor(getResources().getColor(R.color.primary_color));
+        setBarTintColor(getResources().getColor(R.color.primary_dark_color));
+    }
+
+    protected void setBarTintColor(int color) {
+        tintManager.setTintColor(color);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void showProgress(String title){
+        dialog = new MaterialDialog.Builder(this)
+                .title(title)
+                .content("请稍候")
+                .theme(Theme.LIGHT)
+                .progress(true, 100)
+                .cancelable(false)
+                .show();
+    }
+
+    public void dismissProgress(){
+        dialog.dismiss();
     }
 
 }
