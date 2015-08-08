@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import cn.bmob.v3.Bmob;
-import team.far.footing.config.BmobKey;
+import team.far.footing.config.API;
 
 /**
  * Created by moi on 2015/8/7.
@@ -18,7 +18,8 @@ public class APP extends Application {
         super.onCreate();
         context = getApplicationContext();
         // 初始化 Bmob SDK
-        Bmob.initialize(this, BmobKey.ApplicationID);
+        Bmob.initialize(this, API.KEY.BmobApplicationID);
+
     }
 
     public static Context getContext() {
