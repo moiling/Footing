@@ -13,7 +13,7 @@ public class LogUtils {
     }
 
     public static boolean isDebug = true;
-    private static final String TAG = "Footing";
+    private static final String TAG = "FootingDebug";
 
     public static void i(String msg) {
         if (isDebug) Log.i(TAG, msg);

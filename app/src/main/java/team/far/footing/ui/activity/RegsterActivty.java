@@ -22,13 +22,12 @@ import team.far.footing.ui.vu.IRegsterVu;
 
 public class RegsterActivty extends BaseActivity implements IRegsterVu, View.OnClickListener {
 
-
     @InjectView(R.id.ed_register_user_name) AppCompatEditText edRegisterUserName;
     @InjectView(R.id.ed_register_password) AppCompatEditText edRegisterPassword;
     @InjectView(R.id.ed_register_password_repeat) AppCompatEditText edRegisterPasswordRepeat;
     @InjectView(R.id.btn_register) CardView btnRegister;
     @InjectView(R.id.toolbar) Toolbar mToolbar;
-
+    @InjectView(R.id.ed_register_email) AppCompatEditText edRegisterEmail;
     private RegisterPresenter registerPresenter;
 
     @Override
@@ -75,6 +74,13 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu, View.OnC
     private void initToolbar() {
         mToolbar.setTitle(getResources().getString(R.string.register));
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_back));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -90,6 +96,11 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu, View.OnC
     @Override
     public String getPasswordRepeat() {
         return edRegisterPasswordRepeat.getText().toString();
+    }
+
+    @Override
+    public String getEmail() {
+        return edRegisterEmail.getText().toString();
     }
 
     @Override
@@ -124,12 +135,12 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu, View.OnC
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.btn_register:
                 //注册
-                if ((getUserName().isEmpty() || getPassword().isEmpty() || getPasswordRepeat().isEmpty())) {
+                if ((getUserName().isEmpty() || getPassword().isEmpty() || getPasswordRepeat().isEmpty()) || getEmail().isEmpty()) {
                     Toast.makeText(this, "请填写完整呀！", Toast.LENGTH_SHORT).show();
-                } else if(!getPassword().equals(getPasswordRepeat())) {
+                } else if (!getPassword().equals(getPasswordRepeat())) {
                     Toast.makeText(this, "两次密码都不一样！", Toast.LENGTH_SHORT).show();
                 } else {
                     registerPresenter.Regster();

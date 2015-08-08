@@ -1,15 +1,11 @@
 package team.far.footing.model.bean;
 
-import android.graphics.Bitmap;
-
-import java.io.Serializable;
-
 import cn.bmob.v3.BmobUser;
 
 /**
  * Created by moi on 2015/8/7.
  */
-public class Userbean extends BmobUser implements Serializable {
+public class Userbean extends BmobUser {
 
     /**
      *  继承的BmobUser
@@ -25,9 +21,19 @@ public class Userbean extends BmobUser implements Serializable {
     //头像url
     private String HeadPortraitFilePath;
     //点赞数
-    private int  PraiseCount;
+    private int PraiseCount;
     //头像fileame
-    private  String HeadPortraitFileName;
+    private String HeadPortraitFileName;
+    //角色等级 TODO 我不知道是不是这里加了就行……你看看也
+    private int level;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public String getHeadPortraitFileName(String filename) {
         return HeadPortraitFileName;

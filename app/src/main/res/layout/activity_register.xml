@@ -22,7 +22,7 @@
         android:layout_marginLeft="34dp"
         android:layout_marginRight="34dp"
         android:paddingLeft="6dp"
-        android:hint="请输入用户名"
+        android:hint="请输入帐号"
         android:maxLength="12"
         android:maxLines="1"
         android:textColor="@color/secondary_text"
@@ -59,7 +59,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="34dp"
         android:layout_marginRight="34dp"
         android:paddingLeft="6dp"
@@ -69,8 +68,29 @@
         android:textColor="@color/secondary_text"
         android:textColorHint="@color/secondary_text"
         android:textSize="16sp"
-        android:imeOptions="actionGo"
+        android:imeOptions="actionNext"
         android:inputType="textPassword"
+        android:textColorLink="@color/secondary_text"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:minHeight="48dp"
+        android:id="@+id/ed_register_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="6dp"
+        android:hint="请输入邮箱"
+        android:maxLength="12"
+        android:maxLines="1"
+        android:textColor="@color/secondary_text"
+        android:textColorHint="@color/secondary_text"
+        android:textSize="16sp"
+        android:imeOptions="actionGo"
+        android:inputType="textEmailAddress"
         android:textColorLink="@color/secondary_text"/>
 
     <android.support.v7.widget.CardView

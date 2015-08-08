@@ -30,18 +30,12 @@ import team.far.footing.util.MIUIV6;
 public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClickListener {
 
 
-    @InjectView(R.id.ed_login_user_name)
-    AppCompatEditText edUserName;
-    @InjectView(R.id.ed_login_password)
-    AppCompatEditText edPassword;
-    @InjectView(R.id.btn_login_login)
-    CardView btnLogin;
-    @InjectView(R.id.layout_login)
-    LinearLayout layoutLogin;
-    @InjectView(R.id.btn_qq_login)
-    CardView btnQQLogin;
-    @InjectView(R.id.btn_register)
-    CardView btnRegister;
+    @InjectView(R.id.ed_login_user_name) AppCompatEditText edUserName;
+    @InjectView(R.id.ed_login_password) AppCompatEditText edPassword;
+    @InjectView(R.id.btn_login_login) CardView btnLogin;
+    @InjectView(R.id.layout_login) LinearLayout layoutLogin;
+    @InjectView(R.id.btn_qq_login) CardView btnQQLogin;
+    @InjectView(R.id.btn_register) CardView btnRegister;
     private LoginPresenter loginPresenter;
 
     /**
@@ -103,7 +97,7 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
 
     @Override
     public void showLoginLoading() {
-        showProgress("登陆中");
+        showProgress("登录中");
     }
 
     /**
@@ -113,14 +107,14 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
     public void showLoginSuccee(Userbean userbean) {
         //用type限制了progress的显示
         if (type == 0) dismissProgress();
-        loginPresenter.startHomeActivity(this, userbean);
+        loginPresenter.startHomeActivity(this);
         LogUtils.e(userbean.toString());
     }
 
     @Override
     public void showLoginFail(String reason) {
         if (type == 0) dismissProgress();
-        new MaterialDialog.Builder(this).title("登陆失败").content(reason).positiveText("了解了").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+        new MaterialDialog.Builder(this).title("登录失败").content(reason).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
                 dialog.dismiss();
@@ -130,13 +124,19 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
 
     @Override
     public void showLogincancel() {
-
+        new MaterialDialog.Builder(this).title("登录失败").content("登录被取消了").positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 
     @Override
     public void loginForQQ() {
         loginPresenter.LoginForQQ();
     }
+
     //应用调用Andriod_SDK接口时，如果要成功接收到回调，
     // 需要在调用接口的Activity的onActivityResult方法中增加如下代码
     @Override

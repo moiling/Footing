@@ -23,7 +23,7 @@ public class RegisterPresenter {
     public void Regster() {
         mIRegsterVu.showRegsterLoading();
 
-        mUserModel.Regster(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), new OnRegsterListener() {
+        mUserModel.Regster(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), mIRegsterVu.getEmail(), new OnRegsterListener() {
             @Override
             public void RegsterSuccess(Userbean userbean) {
                 mIRegsterVu.showRegsterSuccee(userbean);
