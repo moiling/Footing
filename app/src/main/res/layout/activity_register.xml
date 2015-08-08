@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    tools:context="team.far.footing.ui.activity.RegsterActivty">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:minHeight="48dp"
+        android:id="@+id/ed_register_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="6dp"
+        android:hint="请输入用户名"
+        android:maxLength="12"
+        android:maxLines="1"
+        android:textColor="@color/secondary_text"
+        android:textColorHint="@color/secondary_text"
+        android:textSize="16sp"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textColorLink="@color/secondary_text"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:minHeight="48dp"
+        android:id="@+id/ed_register_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="6dp"
+        android:hint="请输入密码"
+        android:maxLength="12"
+        android:maxLines="1"
+        android:textColor="@color/secondary_text"
+        android:textColorHint="@color/secondary_text"
+        android:textSize="16sp"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:textColorLink="@color/secondary_text"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:minHeight="48dp"
+        android:id="@+id/ed_register_password_repeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="6dp"
+        android:hint="请重复密码"
+        android:maxLength="12"
+        android:maxLines="1"
+        android:textColor="@color/secondary_text"
+        android:textColorHint="@color/secondary_text"
+        android:textSize="16sp"
+        android:imeOptions="actionGo"
+        android:inputType="textPassword"
+        android:textColorLink="@color/secondary_text"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/btn_register"
+        android:layout_marginBottom="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        card_view:cardBackgroundColor="@color/primary_color">
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/register" />
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

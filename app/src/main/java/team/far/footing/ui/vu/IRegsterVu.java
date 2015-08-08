@@ -11,6 +11,8 @@ public interface IRegsterVu {
 
     String getPassword();
 
+    String getPasswordRepeat();
+
     //正在注册
     void showRegsterLoading();
 

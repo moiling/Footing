@@ -2,12 +2,14 @@ package team.far.footing.model.bean;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobUser;
 
 /**
  * Created by moi on 2015/8/7.
  */
-public class Userbean extends BmobUser {
+public class Userbean extends BmobUser implements Serializable {
 
     /**
      *  继承的BmobUser
