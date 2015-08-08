@@ -1,6 +1,7 @@
 package team.far.footing.presenter;
 
 import team.far.footing.model.IUserModel;
+import team.far.footing.model.Listener.OnLoginForQQListener;
 import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.UserModel;
@@ -36,4 +37,25 @@ public class LoginPresenter {
         });
 
     }
+
+    public void LoginForQQ() {
+        mUserModel.loginForQQ(mILoginVu.getActivity(), new OnLoginForQQListener() {
+            @Override
+            public void loginSuccess(Userbean userbean) {
+
+            }
+
+            @Override
+            public void loginFailed(String reason) {
+
+            }
+
+            @Override
+            public void loginCancel() {
+
+            }
+        });
+    }
+
 }
+

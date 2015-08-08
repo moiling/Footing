@@ -51,6 +51,10 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu {
     public void showRegsterLoading() {
 
     }
+
+    /**
+     * @param userbean 当前注册成功的用户
+     */
     @Override
     public void showRegsterSuccee(Userbean userbean) {
         LogUtils.i("在LoginActivity中", "注册成功");
