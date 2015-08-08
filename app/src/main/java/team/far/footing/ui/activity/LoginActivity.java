@@ -113,12 +113,7 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
     public void showLoginSuccee(Userbean userbean) {
         //用type限制了progress的显示
         if (type == 0) dismissProgress();
-        new MaterialDialog.Builder(this).title("登陆成功").content("用户名：" + userbean.getUsername()).positiveText("了解了").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-                dialog.dismiss();
-            }
-        }).show();
+        loginPresenter.startHomeActivity(this, userbean);
         LogUtils.e(userbean.toString());
     }
 
