@@ -1,15 +1,11 @@
 package team.far.footing.ui.vu;
 
-import android.content.Context;
-
 import team.far.footing.model.bean.Userbean;
 
 /**
  * Created by Luoyy on 2015/8/7 0007.
  */
 public interface IRegsterVu {
-
-    Context getContext();
 
     String getUserName();
 

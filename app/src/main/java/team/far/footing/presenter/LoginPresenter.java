@@ -1,5 +1,6 @@
 package team.far.footing.presenter;
 
+import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.UserModel;
@@ -10,7 +11,8 @@ import team.far.footing.ui.vu.ILoginVu;
  */
 public class LoginPresenter {
     private ILoginVu mILoginVu;
-    private UserModel mUserModel;
+    // 这里应该是model的接口、否则接口白写了(＞﹏＜)
+    private IUserModel mUserModel;
 
     public LoginPresenter(ILoginVu mILoginVu) {
         this.mILoginVu = mILoginVu;
@@ -31,7 +33,7 @@ public class LoginPresenter {
             public void loginFailed(String reason) {
                 mILoginVu.showLoginFail(reason);
             }
-        }, mILoginVu.getContext());
+        });
 
     }
 }

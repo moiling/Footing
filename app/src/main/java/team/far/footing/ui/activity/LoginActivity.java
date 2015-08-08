@@ -1,6 +1,5 @@
 package team.far.footing.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import team.far.footing.app.BaseActivity;
@@ -14,12 +13,6 @@ public class LoginActivity extends BaseActivity implements ILoginVu {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
     }
 
     @Override

@@ -1,8 +1,7 @@
 package team.far.footing.model.impl;
 
-import android.content.Context;
-
 import cn.bmob.v3.listener.SaveListener;
+import team.far.footing.app.APP;
 import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.Listener.OnRegsterListener;
@@ -15,12 +14,12 @@ public class UserModel implements IUserModel {
 
 
     @Override
-    public void Login(String username, String passwrod, final OnLoginListener onLoginListener, Context context) {
+    public void Login(String username, String passwrod, final OnLoginListener onLoginListener) {
         final Userbean loginBean = new Userbean();
         loginBean.setUsername(username);
         loginBean.setPassword(passwrod);
 
-        loginBean.login(context, new SaveListener() {
+        loginBean.login(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
                 onLoginListener.loginSuccess(loginBean);
@@ -36,14 +35,14 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void Regster(String username, String passwrod, final OnRegsterListener onRegsterListener, Context context) {
+    public void Regster(String username, String passwrod, final OnRegsterListener onRegsterListener) {
 
         final Userbean regsterBean = new Userbean();
 
         regsterBean.setUsername(username);
         regsterBean.setPassword(passwrod);
 
-        regsterBean.signUp(context, new SaveListener() {
+        regsterBean.signUp(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
                 onRegsterListener.RegsterSuccess(regsterBean);
