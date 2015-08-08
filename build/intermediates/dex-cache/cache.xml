@@ -2,11 +2,25 @@
 <items version="2" >
 
     <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.afollestad\material-dialogs\0.7.5.5\jars\classes.jar"
+        jar="C:\Users\moi\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="42d4b437a706703e0fbc4be51fc3935ee3c477ca">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-63b8c9133c5da1e1dd15bd2fae48b55a81b7fd5e.jar" />
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\library-2.4.0-6a4a1eaf517bd8f4947ffd2c0fdf5735c40b6fca.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.balysv.materialmenu\material-menu\1.5.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="03fa7fe6f28c412226ff7e2986b391c9574f4955">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-34bd7ff7162113a5287bc534a49f4dc4edf44d98.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.balysv.materialmenu\material-menu-toolbar\1.5.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="cfed15dfda8da4c89585345b0d69dde6262ebb92">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-80fca4a0866cf7971f545dbc8687e07ccf2ad755.jar" />
     </item>
 
 </items>
