@@ -15,7 +15,7 @@ import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
 public interface IUserModel {
     void Login(String username, String passwrod, OnLoginListener onLoginListener);
 
-    void Regster(String username, String passwrod, OnRegsterListener onRegsterListener);
+    void Regster(String username, String passwrod, String email, OnRegsterListener onRegsterListener);
 
     void loginForQQ(Activity activity, OnLoginForQQListener onLoginForQQListener);
 

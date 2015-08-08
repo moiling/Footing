@@ -2,7 +2,6 @@ package team.far.footing.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnLoginForQQListener;
@@ -63,11 +62,8 @@ public class LoginPresenter {
         });
     }
 
-    public void startHomeActivity(Context context, Userbean userbean) {
+    public void startHomeActivity(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("user", userbean);
-        intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         context.startActivity(intent);
     }

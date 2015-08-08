@@ -57,12 +57,13 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void Regster(String username, String passwrod, final OnRegsterListener onRegsterListener) {
+    public void Regster(String username, String passwrod, String email, final OnRegsterListener onRegsterListener) {
 
         final Userbean regsterBean = new Userbean();
 
         regsterBean.setUsername(username);
         regsterBean.setPassword(passwrod);
+        regsterBean.setEmail(email);
 
         regsterBean.signUp(APP.getContext(), new SaveListener() {
             @Override

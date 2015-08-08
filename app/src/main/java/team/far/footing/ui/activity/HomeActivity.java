@@ -10,7 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -21,20 +22,28 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
-import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.bean.Userbean;
+import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adpter.HomePagerAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
 import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.WalkFragment;
+import team.far.footing.ui.vu.IHomeVu;
+import team.far.footing.util.LogUtils;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements IHomeVu {
 
     @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.tabLayout) TabLayout mTabLayout;
     @InjectView(R.id.fabBtn) FloatingActionButton mFabBtn;
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.view_pager) ViewPager mViewPager;
+    @InjectView(R.id.tv_home_user_name) TextView userName;
+    @InjectView(R.id.tv_home_user_lv) TextView userLV;
+    @InjectView(R.id.iv_home_user_image) ImageView userPic;
+    @InjectView(R.id.tv_home_user_signature) TextView userSignature;
+    private HomePresenter presenter;
     private MaterialMenuIconToolbar materialMenu;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
@@ -46,43 +55,24 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
         initToolbar();
+        initNavIcon();
         init();
-        findViewById(R.id.iv_user_image).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(APP.getContext(), "测试", Toast.LENGTH_SHORT).show();
-            }
-        });
+        presenter = new HomePresenter(this);
     }
 
-    private void initToolbar() {
-        mToolbar.setTitle(getResources().getString(R.string.app_name));
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle your drawable state here
-                switch (materialMenu.getDrawable().getIconState()) {
-                    case BURGER:
-                        mDrawerLayout.openDrawer(GravityCompat.START);
-                        break;
-                    case ARROW:
-                        mDrawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case X:
-                        break;
-                    case CHECK:
-                        break;
-                }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onRelieveView();
+    }
 
-            }
-        });
+    private void initNavIcon() {
         materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
             @Override
             public int getToolbarViewId() {
                 return R.id.toolbar;
             }
-        }; // or retrieve from your custom view, etc
+        };
         mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -110,6 +100,21 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    private void initToolbar() {
+        mToolbar.setTitle(getResources().getString(R.string.app_name));
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isDrawerOpened) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+    }
+
     private void init() {
         fragmentList.add(new WalkFragment());
         fragmentList.add(new FriendsFragment());
@@ -125,4 +130,23 @@ public class HomeActivity extends BaseActivity {
         mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
     }
 
+    @Override
+    public void showUserInformation(Userbean userbean) {
+        LogUtils.d(userbean.getUsername());
+        // TODO: 完善bean
+        userName.setText(userbean.getNickName());
+        //userPic.setImageBitmap();
+        userLV.setText("Lv." + userbean.getLevel());
+        userSignature.setText(userbean.getSignature());
+    }
+
+    @Override
+    public void refreshUserInforimation() {
+        presenter.refreshUserInformation();
+    }
+
+    @Override
+    public void showMission() {
+
+    }
 }

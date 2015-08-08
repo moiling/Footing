@@ -13,6 +13,8 @@ public interface IRegsterVu {
 
     String getPasswordRepeat();
 
+    String getEmail();
+
     //正在注册
     void showRegsterLoading();
 

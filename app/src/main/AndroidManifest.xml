@@ -56,6 +56,10 @@
             android:name=".ui.activity.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
+        <activity
+            android:name=".ui.activity.WalkActivity"
+            android:label="@string/title_activity_walk" >
+        </activity>
     </application>
 
 </manifest>
