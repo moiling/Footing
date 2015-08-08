@@ -19,7 +19,7 @@ public class APP extends Application {
         super.onCreate();
         context = getApplicationContext();
         // 初始化 Bmob SDK
-        Bmob.initialize(this,context.getString(R.string.Bmob_Key));
+        Bmob.initialize(this, context.getString(R.string.Bmob_Key));
         // 初始化Log工具……是不是把工具放在一个文件里更好一点呢……
         LogUtils.isDebug = true;
     }
