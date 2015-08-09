@@ -37,7 +37,6 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
     @InjectView(R.id.btn_qq_login) CardView btnQQLogin;
     @InjectView(R.id.btn_register) CardView btnRegister;
     private LoginPresenter loginPresenter;
-
     /**
      * type = 0 -->申请账号登录
      * type  = 1 --> 第三方登录
