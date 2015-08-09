@@ -28,7 +28,9 @@ import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.impl.UserModel;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adpter.HomePagerAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
@@ -41,16 +43,26 @@ import team.far.footing.util.SPUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener {
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.tabLayout) TabLayout mTabLayout;
-    @InjectView(R.id.fabBtn_home) FloatingActionButton mFabBtn;
-    @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @InjectView(R.id.view_pager) ViewPager mViewPager;
-    @InjectView(R.id.tv_home_user_name) TextView userName;
-    @InjectView(R.id.tv_home_user_lv) TextView userLV;
-    @InjectView(R.id.iv_home_user_image) ImageView userPic;
-    @InjectView(R.id.tv_home_user_signature) TextView userSignature;
-    @InjectView(R.id.navigation) NavigationView navigation;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+    @InjectView(R.id.tabLayout)
+    TabLayout mTabLayout;
+    @InjectView(R.id.fabBtn_home)
+    FloatingActionButton mFabBtn;
+    @InjectView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @InjectView(R.id.view_pager)
+    ViewPager mViewPager;
+    @InjectView(R.id.tv_home_user_name)
+    TextView userName;
+    @InjectView(R.id.tv_home_user_lv)
+    TextView userLV;
+    @InjectView(R.id.iv_home_user_image)
+    ImageView userPic;
+    @InjectView(R.id.tv_home_user_signature)
+    TextView userSignature;
+    @InjectView(R.id.navigation)
+    NavigationView navigation;
     private HomePresenter presenter;
     private MaterialMenuIconToolbar materialMenu;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -68,6 +80,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initNavIcon();
         init();
         presenter = new HomePresenter(this);
+
 
         // 测试退出，以后会放在设置里面
         navigation.getMenu().findItem(R.id.navItem4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -148,7 +161,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         mViewPager.setAdapter(fragmentPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -167,7 +181,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
         // 去死吧！接受我的愤怒吧！tabLayout
         // 这货的绑定viewpager之后的title不是自己的，是adapter给的
@@ -223,4 +238,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
                 break;
         }
     }
+
+
+
+
 }

@@ -10,6 +10,7 @@ import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
+import team.far.footing.model.bean.Userbean;
 
 /**
  * Created by moi on 2015/8/7.
@@ -93,4 +94,7 @@ public interface IUserModel {
      * @param onUpdateUserListener ------------更新用户数据的监听器
      */
     void resetPasswordByEmail(String email, OnUpdateUserListener onUpdateUserListener);
+
+
+
 }

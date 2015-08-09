@@ -8,12 +8,13 @@ import cn.bmob.v3.BmobUser;
 public class Userbean extends BmobUser {
 
     /**
-     *  继承的BmobUser
-     *    ------ username
-     *    ------ password
-     *    ------ email
-     *
+     * 继承的BmobUser
+     * ------ username
+     * ------ password
+     * ------ email
      */
+    //用于保存 一个用户对应一个Friends中的objectId
+    private String FriendId;
     //昵称
     private String NickName;
     //签名
@@ -21,17 +22,17 @@ public class Userbean extends BmobUser {
     //头像url
     private String HeadPortraitFilePath;
     //点赞数
-    private int PraiseCount;
+    private Integer PraiseCount;
     //头像fileame
     private String HeadPortraitFileName;
     //角色等级 TODO 我不知道是不是这里加了就行……你看看也  --->>>还要在后台加了 ==
-    private int level;
+    private Integer level;
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -59,11 +60,11 @@ public class Userbean extends BmobUser {
         NickName = nickName;
     }
 
-    public int getPraiseCount() {
+    public Integer getPraiseCount() {
         return PraiseCount;
     }
 
-    public void setPraiseCount(int praiseCount) {
+    public void setPraiseCount(Integer praiseCount) {
         PraiseCount = praiseCount;
     }
 
@@ -78,4 +79,13 @@ public class Userbean extends BmobUser {
     public void setSignature(String signature) {
         Signature = signature;
     }
+
+    public String getFriendId() {
+        return FriendId;
+    }
+
+    public void setFriendId(String friendId) {
+        FriendId = friendId;
+    }
+
 }
