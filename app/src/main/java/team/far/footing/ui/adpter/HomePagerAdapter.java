@@ -20,7 +20,6 @@ public class HomePagerAdapter extends BaseFragmentPagerAdapter {
         homeTabs.add("广场");
     }
 
-
     @Override
     public CharSequence getPageTitle(int position) {
         return homeTabs.get(position);

@@ -11,6 +11,7 @@
     <string name="login_for_qq">QQ登录</string>
     <string name="register">注册</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="walk">步行</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_walk">WalkActivity</string>
