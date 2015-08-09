@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -32,11 +33,11 @@ import team.far.footing.ui.fragment.WalkFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.util.LogUtils;
 
-public class HomeActivity extends BaseActivity implements IHomeVu {
+public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener {
 
     @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.tabLayout) TabLayout mTabLayout;
-    @InjectView(R.id.fabBtn) FloatingActionButton mFabBtn;
+    @InjectView(R.id.fabBtn_home) FloatingActionButton mFabBtn;
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.view_pager) ViewPager mViewPager;
     @InjectView(R.id.tv_home_user_name) TextView userName;
@@ -48,6 +49,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu {
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
     private boolean isDrawerOpened;
+    // 保存page的选择，默认为第一页
+    private int pageSelect = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,11 +119,35 @@ public class HomeActivity extends BaseActivity implements IHomeVu {
     }
 
     private void init() {
+        mFabBtn.setOnClickListener(this);
         fragmentList.add(new WalkFragment());
         fragmentList.add(new FriendsFragment());
         fragmentList.add(new SquareFragment());
         fragmentPagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(fragmentPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                pageSelect = position;
+                switch (position) {
+                    case 0:
+                        mFabBtn.setImageResource(R.mipmap.ic_run);
+                        break;
+                    case 1:
+                        mFabBtn.setImageResource(R.mipmap.ic_back);
+                        break;
+                    case 2:
+                        mFabBtn.setImageResource(R.mipmap.ic_plus);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
         // 去死吧！接受我的愤怒吧！tabLayout
         // 这货的绑定viewpager之后的title不是自己的，是adapter给的
         // 没有找到返回图标的方法，字还那么小一个
@@ -145,8 +172,30 @@ public class HomeActivity extends BaseActivity implements IHomeVu {
         presenter.refreshUserInformation();
     }
 
+    /**
+     *  任务
+     */
     @Override
     public void showMission() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fabBtn_home:
+                switch (pageSelect) {
+                    case 0:
+                        presenter.startWalkActivity(this);
+                        break;
+                    case 1:
+                        Toast.makeText(this, "好友测试", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(this, "广场测试", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
+        }
     }
 }

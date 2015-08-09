@@ -48,7 +48,7 @@
             </LinearLayout>
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fabBtn"
+                android:id="@+id/fabBtn_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
