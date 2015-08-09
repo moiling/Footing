@@ -1,14 +1,17 @@
 package team.far.footing.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
+import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.HomePresenter;
@@ -31,7 +35,9 @@ import team.far.footing.ui.fragment.FriendsFragment;
 import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.WalkFragment;
 import team.far.footing.ui.vu.IHomeVu;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.SPUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener {
 
@@ -44,6 +50,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     @InjectView(R.id.tv_home_user_lv) TextView userLV;
     @InjectView(R.id.iv_home_user_image) ImageView userPic;
     @InjectView(R.id.tv_home_user_signature) TextView userSignature;
+    @InjectView(R.id.navigation) NavigationView navigation;
     private HomePresenter presenter;
     private MaterialMenuIconToolbar materialMenu;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -61,6 +68,20 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initNavIcon();
         init();
         presenter = new HomePresenter(this);
+
+        // 测试退出，以后会放在设置里面
+        navigation.getMenu().findItem(R.id.navItem4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                SPUtils.put(APP.getContext(), "isLogin", Boolean.FALSE);
+                BmobUtils.LogOutUser();
+                Intent intent = new Intent(APP.getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                startActivity(intent);
+                finish();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -161,7 +182,11 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     public void showUserInformation(Userbean userbean) {
         LogUtils.d(userbean.getUsername());
         // TODO: 完善bean
-        userName.setText(userbean.getNickName());
+        if (!(userbean.getNickName() == null)) {
+            userName.setText(userbean.getNickName());
+        } else {
+            userName.setText("未取名");
+        }
         //userPic.setImageBitmap();
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
@@ -173,7 +198,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     }
 
     /**
-     *  任务
+     * 任务
      */
     @Override
     public void showMission() {

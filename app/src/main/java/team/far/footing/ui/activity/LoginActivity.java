@@ -108,6 +108,8 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
         //用type限制了progress的显示
         if (type == 0) dismissProgress();
         loginPresenter.startHomeActivity(this);
+        // 进入了主页之后不应该能够返回到登陆页面
+        finish();
         LogUtils.e(userbean.toString());
     }
 
