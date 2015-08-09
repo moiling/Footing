@@ -28,8 +28,11 @@ import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.IFriendModel;
+import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.impl.FriendModel;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adpter.HomePagerAdapter;
@@ -80,7 +83,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initNavIcon();
         init();
         presenter = new HomePresenter(this);
-
+        Test();
 
         // 测试退出，以后会放在设置里面
         navigation.getMenu().findItem(R.id.navItem4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -241,5 +244,11 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
 
 
 
+
+    //我用来测试的方法
+    public void Test() {
+
+
+    }
 
 }

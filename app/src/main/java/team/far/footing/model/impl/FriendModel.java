@@ -22,29 +22,17 @@ public class FriendModel implements IFriendModel {
 
     @Override
     public void addFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
-        Userbean CurrentUser = BmobUtils.getCurrentUser();
 
+        Userbean CurrentUser = BmobUtils.getCurrentUser();
         Friends friends = new Friends();
         friends.setObjectId(BmobUtils.getCurrentUser().getFriendId());
         friends.setUserbean(CurrentUser);
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.add(userbean);
         friends.setFriends(bmobRelation);
-
-        friends.update(APP.getContext(), new UpdateListener() {
-            @Override
-            public void onSuccess() {
-                onUpdateUserListener.onSuccess();
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
-            }
-        });
+        update_friend(friends, onUpdateUserListener);
 
     }
-
     @Override
     public void getAllFriends(final OnQueryFriendListener onQueryFriendListener) {
         BmobQuery<Userbean> query = new BmobQuery<>();
@@ -64,7 +52,33 @@ public class FriendModel implements IFriendModel {
         });
 
     }
+    @Override
+    public void deleteFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
+        Userbean CurrentUser = BmobUtils.getCurrentUser();
+        Friends friends = new Friends();
+        friends.setObjectId(BmobUtils.getCurrentUser().getFriendId());
+        friends.setUserbean(CurrentUser);
+        BmobRelation bmobRelation = new BmobRelation();
+        bmobRelation.remove(userbean);
+        friends.setFriends(bmobRelation);
+        update_friend(friends, onUpdateUserListener);
+    }
 
+    public void update_friend(Friends friends, final OnUpdateUserListener onUpdateUserListener) {
 
+        friends.update(APP.getContext(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                if (onUpdateUserListener != null)
+                    onUpdateUserListener.onSuccess();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                if (onUpdateUserListener != null)
+                    onUpdateUserListener.onFailure(i, s);
+            }
+        });
+    }
 
 }

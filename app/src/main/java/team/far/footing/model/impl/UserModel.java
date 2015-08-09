@@ -102,9 +102,6 @@ public class UserModel implements IUserModel {
         });
 
 
-
-
-
     }
 
     @Override
@@ -149,27 +146,30 @@ public class UserModel implements IUserModel {
             public void onSuccess(String fileName, String url, BmobFile file) {
                 // TODO Auto-generated method stub
                 LogUtils.i("bmob", "文件上传成功：" + fileName + ",可访问的文件地址：" + file.getUrl());
-                updateUser_HeadPortraitFilePath(url, fileName, file, onUploadHeadPortraitListener);
+                if (onUploadHeadPortraitListener != null)
+                    updateUser_HeadPortraitFilePath(url, fileName, file, onUploadHeadPortraitListener);
             }
 
             @Override
             public void onProgress(int progress) {
                 // TODO Auto-generated method stub
                 LogUtils.i("bmob", "onProgress :" + progress);
-                onUploadHeadPortraitListener.onProgress(progress);
+                if (onUploadHeadPortraitListener != null)
+                    onUploadHeadPortraitListener.onProgress(progress);
             }
 
             @Override
             public void onError(int statuscode, String errormsg) {
                 // TODO Auto-generated method stub
                 LogUtils.e("bmob", "文件上传失败：" + errormsg);
-                onUploadHeadPortraitListener.onError(statuscode, errormsg);
+                if (onUploadHeadPortraitListener != null)
+                    onUploadHeadPortraitListener.onError(statuscode, errormsg);
             }
         });
 
     }
 
-    @Override
+
     public void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
         Userbean newUser = new Userbean();
         newUser.setHeadPortraitFilePath(url);
@@ -288,12 +288,16 @@ public class UserModel implements IUserModel {
         newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
             @Override
             public void onSuccess() {
-                onUpdateUserListener.onSuccess();
+                if (onUpdateUserListener != null)
+                    onUpdateUserListener.onSuccess();
+                return;
             }
 
             @Override
             public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
+                if (onUpdateUserListener != null)
+                    onUpdateUserListener.onFailure(i, s);
+                return;
             }
         });
 

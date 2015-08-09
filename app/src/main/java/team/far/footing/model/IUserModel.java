@@ -28,15 +28,6 @@ public interface IUserModel {
      */
     void uploadHeadPortrait(String filePath, OnUploadHeadPortraitListener onUploadHeadPortraitListener);
 
-    /**
-     * @param url                          ----------头像保存url
-     * @param filename                     -----------头像文件名
-     * @param file                         ----------成功更新后返回的file文件
-     * @param onUploadHeadPortraitListener ---文件上传监听
-     *                                     <p/>
-     *                                     ### 注意：改接口不给外调用
-     */
-    void updateUser_HeadPortraitFilePath(String url, String filename, BmobFile file, OnUploadHeadPortraitListener onUploadHeadPortraitListener);
 
     /**
      * @param signatrue            ----------更新签名

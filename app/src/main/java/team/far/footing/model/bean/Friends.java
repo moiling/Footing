@@ -29,7 +29,6 @@ public class Friends extends BmobObject {
     }
 
 
-
     public BmobRelation getFriends() {
         return friends;
     }

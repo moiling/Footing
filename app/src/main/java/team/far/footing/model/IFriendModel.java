@@ -22,5 +22,5 @@ public interface IFriendModel {
      */
     void getAllFriends(OnQueryFriendListener onQueryFriendListener);
 
-
+    void deleteFriend(Userbean userbean, OnUpdateUserListener onUpdateUserListener);
 }
