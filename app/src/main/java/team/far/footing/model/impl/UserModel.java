@@ -13,9 +13,14 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.OtherLoginListener;
+import cn.bmob.v3.listener.ResetPasswordByEmailListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import team.far.footing.R;
@@ -23,6 +28,7 @@ import team.far.footing.app.APP;
 import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnLoginForQQListener;
 import team.far.footing.model.Listener.OnLoginListener;
+import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
@@ -115,7 +121,6 @@ public class UserModel implements IUserModel {
         }
     }
 
-
     @Override
     public void uploadHeadPortrait(String filePath, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
         BTPFileResponse response = BmobProFile.getInstance(APP.getContext()).upload(filePath, new UploadListener() {
@@ -193,6 +198,43 @@ public class UserModel implements IUserModel {
         updateUser(newUser, onUpdateUserListener);
     }
 
+    @Override
+    public void queryUserByName(String nickname, OnQueryFriendListener onQueryFriendListener) {
+        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        query.addWhereEqualTo("NickName", nickname);
+        query_users(query, onQueryFriendListener);
+    }
+
+    @Override
+    public void queryUserById(String id, OnQueryFriendListener onQueryFriendListener) {
+        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        query.addWhereEqualTo("username", id);
+        query_users(query, onQueryFriendListener);
+    }
+
+    @Override
+    public void queryAlluser(OnQueryFriendListener onQueryFriendListener) {
+        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        query.addWhereNotEqualTo("username", "00");
+        query_users(query, onQueryFriendListener);
+    }
+
+    @Override
+    public void resetPasswordByEmail(String email, final OnUpdateUserListener onUpdateUserListener) {
+        BmobUser.resetPasswordByEmail(APP.getContext(), email, new ResetPasswordByEmailListener() {
+            @Override
+            public void onSuccess() {
+                onUpdateUserListener.onSuccess();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                onUpdateUserListener.onFailure(i, s);
+            }
+        });
+
+    }
+
     //调用第三方登录  -- 暂时先写qq
     public void loginWithAuth(final BmobUser.BmobThirdUserAuth authInfo, final OnLoginForQQListener onLoginForQQListener) {
         BmobUser.loginWithAuthData(APP.getContext(), authInfo, new OtherLoginListener() {
@@ -226,6 +268,28 @@ public class UserModel implements IUserModel {
             @Override
             public void onFailure(int i, String s) {
                 onUpdateUserListener.onFailure(i, s);
+            }
+        });
+
+
+    }
+
+    //设置完查询条件后，进行用户查询
+    private void query_users(BmobQuery<BmobUser> query, final OnQueryFriendListener onQueryFriendListener) {
+        query.findObjects(APP.getContext(), new FindListener<BmobUser>() {
+            @Override
+            public void onSuccess(List<BmobUser> object) {
+                // TODO Auto-generated method stub
+                LogUtils.i("查询用户成功");
+                onQueryFriendListener.onSuccess(object);
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                // TODO Auto-generated method stub
+                LogUtils.e("查询用户失败", msg);
+                onQueryFriendListener.onError(code, msg);
+
             }
         });
 
