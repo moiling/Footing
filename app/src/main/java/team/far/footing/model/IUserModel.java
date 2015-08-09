@@ -6,6 +6,7 @@ import android.app.Activity;
 import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.model.Listener.OnLoginForQQListener;
 import team.far.footing.model.Listener.OnLoginListener;
+import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
@@ -54,6 +55,36 @@ public interface IUserModel {
      */
     void update_NickName(String nickname, OnUpdateUserListener onUpdateUserListener);
 
+    /**
+     * @param PraiseCount          ----------点赞次数
+     * @param onUpdateUserListener -----------更新用户数据的监听器
+     */
+    void update_PraiseCount(int PraiseCount, OnUpdateUserListener onUpdateUserListener);
 
-    void update_PraiseCount(int PraiseCount,OnUpdateUserListener onUpdateUserListener);
+    /**
+     * @param nickname              ----------查询的用户的nickname
+     * @param onQueryFriendListener -----------查询的监听器
+     *                              <p/>
+     *                              ## 按照nickname查找
+     */
+    void queryUserByName(String nickname, OnQueryFriendListener onQueryFriendListener);
+
+    /**
+     * @param id                    -----------查询用户的username
+     * @param onQueryFriendListener -----------查询的监听器
+     */
+    void queryUserById(String id, OnQueryFriendListener onQueryFriendListener);
+
+    /**
+     * ##查询所有注册用户
+     *
+     * @param onQueryFriendListener -----------查询的监听器
+     */
+    void queryAlluser(OnQueryFriendListener onQueryFriendListener);
+
+    /**
+     * @param email                -----------用户注册时输入的邮箱
+     * @param onUpdateUserListener ------------更新用户数据的监听器
+     */
+    void resetPasswordByEmail(String email, OnUpdateUserListener onUpdateUserListener);
 }
