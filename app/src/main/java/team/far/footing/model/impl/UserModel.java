@@ -24,6 +24,7 @@ import team.far.footing.model.IUserModel;
 import team.far.footing.model.Listener.OnLoginForQQListener;
 import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.Listener.OnRegsterListener;
+import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.BmobUtils;
@@ -163,6 +164,35 @@ public class UserModel implements IUserModel {
         });
     }
 
+    @Override
+    public void updateUser_Signature(String signature, final OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setSignature(signature);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
+    public void updateUser_level(int level, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setLevel(level);
+        updateUser(newUser, onUpdateUserListener);
+
+    }
+
+    @Override
+    public void update_NickName(String nickname, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setNickName(nickname);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
+    public void update_PraiseCount(int PraiseCount, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setPraiseCount(PraiseCount);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
     //调用第三方登录  -- 暂时先写qq
     public void loginWithAuth(final BmobUser.BmobThirdUserAuth authInfo, final OnLoginForQQListener onLoginForQQListener) {
         BmobUser.loginWithAuthData(APP.getContext(), authInfo, new OtherLoginListener() {
@@ -181,6 +211,25 @@ public class UserModel implements IUserModel {
             }
 
         });
+    }
+
+    //设置数据完毕后，调用更新服务端数据。
+    private void updateUser(Userbean newUser, final OnUpdateUserListener onUpdateUserListener) {
+
+        BmobUser bmobUser = BmobUser.getCurrentUser(APP.getContext());
+        newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                onUpdateUserListener.onSuccess();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                onUpdateUserListener.onFailure(i, s);
+            }
+        });
+
+
     }
 
 
