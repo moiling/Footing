@@ -24,7 +24,7 @@ public class Userbean extends BmobUser {
     private int PraiseCount;
     //头像fileame
     private String HeadPortraitFileName;
-    //角色等级 TODO 我不知道是不是这里加了就行……你看看也
+    //角色等级 TODO 我不知道是不是这里加了就行……你看看也  --->>>还要在后台加了 ==
     private int level;
 
     public int getLevel() {
@@ -69,6 +69,10 @@ public class Userbean extends BmobUser {
 
     public String getSignature() {
         return Signature;
+    }
+
+    public String getHeadPortraitFileName() {
+        return HeadPortraitFileName;
     }
 
     public void setSignature(String signature) {
