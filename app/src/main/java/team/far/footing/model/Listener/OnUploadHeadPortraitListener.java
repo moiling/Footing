@@ -7,6 +7,11 @@ import cn.bmob.v3.datatype.BmobFile;
  */
 public interface OnUploadHeadPortraitListener {
 
+    /**
+     * @param fileName -------文件在服务器上的名称
+     * @param url      -------文件在服务器上的url
+     * @param file     --------上传的文件
+     */
     void onSuccess(String fileName, String url, BmobFile file);
 
     void onProgress(int progress);
