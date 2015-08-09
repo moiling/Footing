@@ -76,6 +76,12 @@ public interface IUserModel {
     void queryUserById(String id, OnQueryFriendListener onQueryFriendListener);
 
     /**
+     * ##查找附近的人
+     * ===还没写好先把接口放在这里
+     */
+    void queryUserByDistance(OnQueryFriendListener onQueryFriendListener);
+
+    /**
      * ##查询所有注册用户
      *
      * @param onQueryFriendListener -----------查询的监听器
