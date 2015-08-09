@@ -213,6 +213,11 @@ public class UserModel implements IUserModel {
     }
 
     @Override
+    public void queryUserByDistance(OnQueryFriendListener onQueryFriendListener) {
+
+    }
+
+    @Override
     public void queryAlluser(OnQueryFriendListener onQueryFriendListener) {
         BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
         query.addWhereNotEqualTo("username", "00");
