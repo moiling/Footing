@@ -13,14 +13,17 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
-import team.far.footing.util.LogUtils;
 
 public class WalkActivity extends BaseActivity {
 
@@ -32,6 +35,8 @@ public class WalkActivity extends BaseActivity {
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
     private boolean isFirstIn = true;
+    // 存放绘制路线的端点
+    private ArrayList<LatLng> latLngs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +58,11 @@ public class WalkActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         // 停止定位
         mBaiduMap.setMyLocationEnabled(false);
         mLocationClient.stop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
     }
@@ -87,10 +87,14 @@ public class WalkActivity extends BaseActivity {
         mLocationClient.registerLocationListener(mLocationListener);
 
         LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+
         option.setCoorType("bd09ll");
         option.setIsNeedAddress(true);
         option.setOpenGps(true);
         option.setLocationNotify(true);
+        // stop时不杀死service
+        option.setIgnoreKillProcess(true);
         // 1s一次
         option.setScanSpan(1000);
         mLocationClient.setLocOption(option);
@@ -105,7 +109,7 @@ public class WalkActivity extends BaseActivity {
         // 事实证明百度地图的logo是可以隐藏的……百度会不会不允许通过呢？先这样吧……
         mMapView.removeViewAt(1);
         // 缩放比例
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(16.5f);
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18f);
         mBaiduMap.setMapStatus(msu);
     }
 
@@ -124,7 +128,6 @@ public class WalkActivity extends BaseActivity {
     private class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            LogUtils.d("map", "明明调用了，你却不回调");
             MyLocationData data = new MyLocationData.Builder()
                     .accuracy(bdLocation.getRadius())
                     .latitude(bdLocation.getLatitude())
@@ -133,11 +136,20 @@ public class WalkActivity extends BaseActivity {
             mBaiduMap.setMyLocationData(data);
             //MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, )
 
+            LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             if (isFirstIn) {
-                LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
                 MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
                 mBaiduMap.animateMapStatus(msu);
                 isFirstIn = false;
+            }
+
+            latLngs.add(latLng);
+
+            if (latLngs.size() > 1) {
+                //构建用户绘制多边形的Option对象
+                OverlayOptions polylineOptions = new PolylineOptions().points(latLngs).color(getResources().getColor(R.color.accent_color));
+                //在地图上添加多边形Option，用于显示
+                mBaiduMap.addOverlay(polylineOptions);
             }
         }
     }
