@@ -32,6 +32,7 @@ import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
+import team.far.footing.model.bean.Friends;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
@@ -64,25 +65,42 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void Regster(String username, String passwrod, String email, final OnRegsterListener onRegsterListener) {
+    public void Regster(final String username, final String passwrod, final String email, final OnRegsterListener onRegsterListener) {
 
-        final Userbean regsterBean = new Userbean();
 
-        regsterBean.setUsername(username);
-        regsterBean.setPassword(passwrod);
-        regsterBean.setEmail(email);
+        //每注册一个用户表，就建立一个好友表 -->Friend。
+        //好友表的主键为  username
 
-        regsterBean.signUp(APP.getContext(), new SaveListener() {
+        final Friends friends = new Friends();
+        friends.setUsername(username);
+        friends.save(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
-                onRegsterListener.RegsterSuccess(BmobUser.getCurrentUser(APP.getContext(), Userbean.class));
+                final Userbean regsterBean = new Userbean();
+                regsterBean.setUsername(username);
+                regsterBean.setPassword(passwrod);
+                regsterBean.setEmail(email);
+                regsterBean.setFriendId(friends.getObjectId());
+                //注册更新用户表
+                regsterBean.signUp(APP.getContext(), new SaveListener() {
+                    @Override
+                    public void onSuccess() {
+                        onRegsterListener.RegsterSuccess(BmobUser.getCurrentUser(APP.getContext(), Userbean.class));
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                        onRegsterListener.RegsterFail(s);
+                    }
+                });
             }
 
             @Override
             public void onFailure(int i, String s) {
-                onRegsterListener.RegsterFail(s);
+
             }
         });
+
 
     }
 
@@ -128,27 +146,30 @@ public class UserModel implements IUserModel {
             public void onSuccess(String fileName, String url, BmobFile file) {
                 // TODO Auto-generated method stub
                 LogUtils.i("bmob", "文件上传成功：" + fileName + ",可访问的文件地址：" + file.getUrl());
-                updateUser_HeadPortraitFilePath(url, fileName, file, onUploadHeadPortraitListener);
+                if (onUploadHeadPortraitListener != null)
+                    updateUser_HeadPortraitFilePath(url, fileName, file, onUploadHeadPortraitListener);
             }
 
             @Override
             public void onProgress(int progress) {
                 // TODO Auto-generated method stub
                 LogUtils.i("bmob", "onProgress :" + progress);
-                onUploadHeadPortraitListener.onProgress(progress);
+                if (onUploadHeadPortraitListener != null)
+                    onUploadHeadPortraitListener.onProgress(progress);
             }
 
             @Override
             public void onError(int statuscode, String errormsg) {
                 // TODO Auto-generated method stub
                 LogUtils.e("bmob", "文件上传失败：" + errormsg);
-                onUploadHeadPortraitListener.onError(statuscode, errormsg);
+                if (onUploadHeadPortraitListener != null)
+                    onUploadHeadPortraitListener.onError(statuscode, errormsg);
             }
         });
 
     }
 
-    @Override
+
     public void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
         Userbean newUser = new Userbean();
         newUser.setHeadPortraitFilePath(url);
@@ -200,14 +221,14 @@ public class UserModel implements IUserModel {
 
     @Override
     public void queryUserByName(String nickname, OnQueryFriendListener onQueryFriendListener) {
-        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        BmobQuery<Userbean> query = new BmobQuery<Userbean>();
         query.addWhereEqualTo("NickName", nickname);
         query_users(query, onQueryFriendListener);
     }
 
     @Override
     public void queryUserById(String id, OnQueryFriendListener onQueryFriendListener) {
-        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        BmobQuery<Userbean> query = new BmobQuery<Userbean>();
         query.addWhereEqualTo("username", id);
         query_users(query, onQueryFriendListener);
     }
@@ -219,7 +240,7 @@ public class UserModel implements IUserModel {
 
     @Override
     public void queryAlluser(OnQueryFriendListener onQueryFriendListener) {
-        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        BmobQuery<Userbean> query = new BmobQuery<Userbean>();
         query.addWhereNotEqualTo("username", "00");
         query_users(query, onQueryFriendListener);
     }
@@ -267,12 +288,16 @@ public class UserModel implements IUserModel {
         newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
             @Override
             public void onSuccess() {
-                onUpdateUserListener.onSuccess();
+                if (onUpdateUserListener != null)
+                    onUpdateUserListener.onSuccess();
+                return;
             }
 
             @Override
             public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
+                if (onUpdateUserListener != null)
+                    onUpdateUserListener.onFailure(i, s);
+                return;
             }
         });
 
@@ -280,10 +305,10 @@ public class UserModel implements IUserModel {
     }
 
     //设置完查询条件后，进行用户查询
-    private void query_users(BmobQuery<BmobUser> query, final OnQueryFriendListener onQueryFriendListener) {
-        query.findObjects(APP.getContext(), new FindListener<BmobUser>() {
+    private void query_users(BmobQuery<Userbean> query, final OnQueryFriendListener onQueryFriendListener) {
+        query.findObjects(APP.getContext(), new FindListener<Userbean>() {
             @Override
-            public void onSuccess(List<BmobUser> object) {
+            public void onSuccess(List<Userbean> object) {
                 // TODO Auto-generated method stub
                 LogUtils.i("查询用户成功");
                 onQueryFriendListener.onSuccess(object);

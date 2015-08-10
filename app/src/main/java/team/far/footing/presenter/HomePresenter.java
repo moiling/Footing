@@ -46,4 +46,7 @@ public class HomePresenter {
     public void onRelieveView() {
         v = null;
     }
+
+
+
 }
