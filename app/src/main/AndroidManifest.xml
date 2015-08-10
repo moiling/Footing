@@ -62,7 +62,8 @@
         </activity>
         <activity
             android:name=".ui.activity.WalkActivity"
-            android:label="@string/title_activity_walk" >
+            android:label="@string/title_activity_walk"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.activity.LaunchActivity"
