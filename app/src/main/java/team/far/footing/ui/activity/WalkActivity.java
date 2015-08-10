@@ -36,6 +36,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu {
         ButterKnife.inject(this);
         initToolbar();
         initMap();
+        userBarTint();
         presenter = new WalkPresenter(this);
     }
 
