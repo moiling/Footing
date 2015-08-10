@@ -2,6 +2,7 @@ package team.far.footing.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,9 +12,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +31,7 @@ import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
-import team.far.footing.model.IFriendModel;
-import team.far.footing.model.IUserModel;
-import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.bean.Userbean;
-import team.far.footing.model.impl.FriendModel;
-import team.far.footing.model.impl.UserModel;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adpter.HomePagerAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
@@ -43,29 +41,21 @@ import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.SPUtils;
+import team.far.footing.util.ScreenUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener {
 
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
-    @InjectView(R.id.tabLayout)
-    TabLayout mTabLayout;
-    @InjectView(R.id.fabBtn_home)
-    FloatingActionButton mFabBtn;
-    @InjectView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-    @InjectView(R.id.view_pager)
-    ViewPager mViewPager;
-    @InjectView(R.id.tv_home_user_name)
-    TextView userName;
-    @InjectView(R.id.tv_home_user_lv)
-    TextView userLV;
-    @InjectView(R.id.iv_home_user_image)
-    ImageView userPic;
-    @InjectView(R.id.tv_home_user_signature)
-    TextView userSignature;
-    @InjectView(R.id.navigation)
-    NavigationView navigation;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.tabLayout) TabLayout mTabLayout;
+    @InjectView(R.id.fabBtn_home) FloatingActionButton mFabBtn;
+    @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @InjectView(R.id.view_pager) ViewPager mViewPager;
+    @InjectView(R.id.tv_home_user_name) TextView userName;
+    @InjectView(R.id.tv_home_user_lv) TextView userLV;
+    @InjectView(R.id.iv_home_user_image) ImageView userPic;
+    @InjectView(R.id.tv_home_user_signature) TextView userSignature;
+    @InjectView(R.id.navigation) NavigationView navigation;
+    @InjectView(R.id.home_bar) LinearLayout homeBar;
     private HomePresenter presenter;
     private MaterialMenuIconToolbar materialMenu;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -86,18 +76,19 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         Test();
 
         // 测试退出，以后会放在设置里面
-        navigation.getMenu().findItem(R.id.navItem4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                SPUtils.put(APP.getContext(), "isLogin", Boolean.FALSE);
-                BmobUtils.LogOutUser();
-                Intent intent = new Intent(APP.getContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                startActivity(intent);
-                finish();
-                return true;
-            }
-        });
+        navigation.getMenu().findItem(R.id.navItem4)
+                .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        SPUtils.put(APP.getContext(), "isLogin", Boolean.FALSE);
+                        BmobUtils.LogOutUser();
+                        Intent intent = new Intent(APP.getContext(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    }
+                });
     }
 
     @Override
@@ -116,8 +107,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                materialMenu.setTransformationOffset(MaterialMenuDrawable.AnimationState.BURGER_ARROW,
-                        isDrawerOpened ? 2 - slideOffset : slideOffset);
+                materialMenu
+                        .setTransformationOffset(MaterialMenuDrawable.AnimationState.BURGER_ARROW, isDrawerOpened ? 2 - slideOffset : slideOffset);
             }
 
             @Override
@@ -140,7 +131,15 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
     private void initToolbar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            homeBar.setPadding(0, ScreenUtils.getStatusHeight(this), 0, 0);
         mToolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -193,7 +192,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         // 这里总耗时：48min，先让你呆在这里，之后我不把你换掉我不是人！！！
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabsFromPagerAdapter(fragmentPagerAdapter);
-        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
+        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources()
+                .getColor(R.color.white));
     }
 
     @Override
@@ -241,9 +241,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
                 break;
         }
     }
-
-
-
 
     //我用来测试的方法
     public void Test() {

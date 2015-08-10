@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         loginPresenter = new LoginPresenter(this);
-
+        userBarTint();
         setBarTintColor(getResources().getColor(R.color.white));
         MIUIV6.setStatusBarTextColor(this, 1);
 
