@@ -170,26 +170,6 @@ public class UserModel implements IUserModel {
     }
 
 
-    public void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
-        Userbean newUser = new Userbean();
-        newUser.setHeadPortraitFilePath(url);
-        newUser.getHeadPortraitFileName(filename);
-        BmobUser bmobUser = BmobUser.getCurrentUser(APP.getContext());
-        newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
-            @Override
-            public void onSuccess() {
-                // TODO Auto-generated method stub
-                onUploadHeadPortraitListener.onSuccess(filename, url, file);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                // TODO Auto-generated method stub
-                onUploadHeadPortraitListener.onError(code, msg);
-            }
-        });
-    }
-
     @Override
     public void updateUser_Signature(String signature, final OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
@@ -326,5 +306,25 @@ public class UserModel implements IUserModel {
 
     }
 
+    //文件上传的辅助方法 ---->>  不对外调用
+    private void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
+        Userbean newUser = new Userbean();
+        newUser.setHeadPortraitFilePath(url);
+        newUser.getHeadPortraitFileName(filename);
+        BmobUser bmobUser = BmobUser.getCurrentUser(APP.getContext());
+        newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+                onUploadHeadPortraitListener.onSuccess(filename, url, file);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                // TODO Auto-generated method stub
+                onUploadHeadPortraitListener.onError(code, msg);
+            }
+        });
+    }
 
 }

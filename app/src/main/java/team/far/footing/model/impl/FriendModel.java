@@ -64,7 +64,7 @@ public class FriendModel implements IFriendModel {
         update_friend(friends, onUpdateUserListener);
     }
 
-    public void update_friend(Friends friends, final OnUpdateUserListener onUpdateUserListener) {
+    private void update_friend(Friends friends, final OnUpdateUserListener onUpdateUserListener) {
 
         friends.update(APP.getContext(), new UpdateListener() {
             @Override
