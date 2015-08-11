@@ -27,7 +27,7 @@
             android:name=".ui.activity.LoginActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name=".ui.activity.RegsterActivty" />
+        <activity android:name=".ui.activity.RegisterActivty" />
         //baidu
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

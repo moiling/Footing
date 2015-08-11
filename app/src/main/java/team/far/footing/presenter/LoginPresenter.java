@@ -9,7 +9,7 @@ import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.activity.HomeActivity;
-import team.far.footing.ui.activity.RegsterActivty;
+import team.far.footing.ui.activity.RegisterActivty;
 import team.far.footing.ui.vu.ILoginVu;
 
 /**
@@ -69,7 +69,7 @@ public class LoginPresenter {
     }
 
     public void startRegisterActivity(Context context) {
-        Intent intent = new Intent(context, RegsterActivty.class);
+        Intent intent = new Intent(context, RegisterActivty.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         context.startActivity(intent);
     }

@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="all">
+    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navItem1"
+            android:id="@+id/item_drawer_my_map"
             android:icon="@mipmap/ic_user"
-            android:title="地图铆钉"/>
+            android:title="我的地图"/>
         <item
-            android:id="@+id/navItem2"
+            android:id="@+id/item_drawer_my_info"
             android:icon="@mipmap/ic_user"
-            android:title="我的足迹"/>
+            android:title="个人资料"/>
         <item
-            android:id="@+id/navItem3"
+            android:id="@+id/item_drawer_draw_footing"
             android:icon="@mipmap/ic_user"
-            android:title="地图说"/>
+            android:title="绘制路线"/>
         <item
             android:id="@+id/navItem4"
             android:icon="@mipmap/ic_user"
             android:title="切换用户"/>
     </group>
+
+    <item android:id="@+id/drawer_subtitle"
+        android:title="足下">
+        <menu>
+            <item
+                android:id="@+id/sub1"
+                android:icon="@mipmap/ic_mission"
+                android:title="设置" />
+            <item
+                android:id="@+id/sub2"
+                android:icon="@mipmap/ic_mission"
+                android:title="关于我们" />
+        </menu>
+    </item>
 </menu>
