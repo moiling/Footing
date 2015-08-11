@@ -20,7 +20,7 @@ import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.RegisterPresenter;
 import team.far.footing.ui.vu.IRegsterVu;
 
-public class RegsterActivty extends BaseActivity implements IRegsterVu, View.OnClickListener {
+public class RegisterActivty extends BaseActivity implements IRegsterVu, View.OnClickListener {
 
     @InjectView(R.id.ed_register_user_name) AppCompatEditText edRegisterUserName;
     @InjectView(R.id.ed_register_password) AppCompatEditText edRegisterPassword;
@@ -37,7 +37,7 @@ public class RegsterActivty extends BaseActivity implements IRegsterVu, View.OnC
         ButterKnife.inject(this);
         initToolbar();
         userBarTint();
-        //初始化 RegsterPresenter
+        //初始化 RegisterPresenter
         registerPresenter = new RegisterPresenter(this);
         init();
     }

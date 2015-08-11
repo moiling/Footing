@@ -1,7 +1,6 @@
 package team.far.footing.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,9 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +32,9 @@ import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adpter.HomePagerAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
 import team.far.footing.ui.fragment.SquareFragment;
-import team.far.footing.ui.fragment.WalkFragment;
+import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
+import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.SPUtils;
@@ -56,8 +53,10 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     @InjectView(R.id.tv_home_user_signature) TextView userSignature;
     @InjectView(R.id.navigation) NavigationView navigation;
     @InjectView(R.id.home_bar) LinearLayout homeBar;
+    @InjectView(R.id.iv_home_toolbar_user_image) CircleImageView mToolbarUserImage;
+    @InjectView(R.id.tv_home_toolbar_user_name) TextView mToolbarUserName;
+    @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
     private HomePresenter presenter;
-    private MaterialMenuIconToolbar materialMenu;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
     private boolean isDrawerOpened;
@@ -70,7 +69,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
         initToolbar();
-        initNavIcon();
         init();
         presenter = new HomePresenter(this);
         Test();
@@ -97,40 +95,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         presenter.onRelieveView();
     }
 
-    private void initNavIcon() {
-        materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-            @Override
-            public int getToolbarViewId() {
-                return R.id.toolbar;
-            }
-        };
-        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                materialMenu
-                        .setTransformationOffset(MaterialMenuDrawable.AnimationState.BURGER_ARROW, isDrawerOpened ? 2 - slideOffset : slideOffset);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                isDrawerOpened = true;
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                isDrawerOpened = false;
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-                if (newState == DrawerLayout.STATE_IDLE) {
-                    if (isDrawerOpened) materialMenu.setState(MaterialMenuDrawable.IconState.ARROW);
-                    else materialMenu.setState(MaterialMenuDrawable.IconState.BURGER);
-                }
-            }
-        });
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
@@ -140,23 +104,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     private void initToolbar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             homeBar.setPadding(0, ScreenUtils.getStatusHeight(this), 0, 0);
-        mToolbar.setTitle(getResources().getString(R.string.app_name));
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDrawerOpened) {
-                    mDrawerLayout.closeDrawer(GravityCompat.START);
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
     }
 
     private void init() {
         mFabBtn.setOnClickListener(this);
-        fragmentList.add(new WalkFragment());
+        fragmentList.add(new TodayFragment());
         fragmentList.add(new FriendsFragment());
         fragmentList.add(new SquareFragment());
         fragmentPagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), fragmentList);
@@ -194,6 +148,9 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         mTabLayout.setTabsFromPagerAdapter(fragmentPagerAdapter);
         mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources()
                 .getColor(R.color.white));
+        mDrawerLayout.setDrawerShadow(getResources()
+                .getDrawable(R.drawable.drawer_shadow), GravityCompat.START);
+        mDrawerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -202,10 +159,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         // TODO: 完善bean
         if (!(userbean.getNickName() == null)) {
             userName.setText(userbean.getNickName());
+            mToolbarUserName.setText(userbean.getNickName());
         } else {
             userName.setText("未取名");
+            mToolbarUserName.setText("未取名");
         }
         //userPic.setImageBitmap();
+        //mToolbarUserImage.set
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
     }
@@ -237,6 +197,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
                     case 2:
                         Toast.makeText(this, "广场测试", Toast.LENGTH_SHORT).show();
                         break;
+                }
+                break;
+            case R.id.btn_home_drawer:
+                if (isDrawerOpened) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
                 }
                 break;
         }
