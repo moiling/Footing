@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="team.far.footing.ui.fragment.WalkFragment">
+    tools:context="team.far.footing.ui.fragment.TodayFragment">
 
     <TextView
         android:gravity="center"
@@ -10,6 +10,6 @@
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="步行"/>
+        android:text="今日"/>
 
 </FrameLayout>

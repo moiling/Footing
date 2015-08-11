@@ -15,7 +15,7 @@ public class HomePagerAdapter extends BaseFragmentPagerAdapter {
 
     public HomePagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm, fragmentList);
-        homeTabs.add("步行");
+        homeTabs.add("今日");
         homeTabs.add("好友");
         homeTabs.add("广场");
     }

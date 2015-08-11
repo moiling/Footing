@@ -2,6 +2,6 @@
 <resources>
     <dimen name="codelab_fab_margin_right">16dp</dimen>
     <dimen name="codelab_fab_margin_bottom">16dp</dimen>
-    <!--因为5.0以下显示不出阴影，所以做个区分-->
-    <dimen name="toolbar_shadow_height">0dp</dimen>
+
+    <dimen name="toolbar_shadow_height">2dp</dimen>
 </resources>
