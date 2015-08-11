@@ -6,12 +6,12 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
 
 import java.util.ArrayList;
 
 import team.far.footing.app.APP;
 import team.far.footing.ui.vu.IWalkVu;
-import team.far.footing.util.LogUtils;
 
 /**
  * Created by moi on 2015/8/10.
@@ -19,13 +19,15 @@ import team.far.footing.util.LogUtils;
 public class WalkPresenter {
 
     private IWalkVu v;
-
     // 定位
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
     private boolean isFirstIn = true;
     // 存放绘制路线的端点
     private ArrayList<LatLng> latLngs = new ArrayList<>();
+    private double firstDistance = 0;
+    private int span = 5;
+    private double acceleration = 0;
 
     public WalkPresenter(IWalkVu v) {
         this.v = v;
@@ -59,8 +61,8 @@ public class WalkPresenter {
         option.setLocationNotify(true);
         // stop时不杀死service
         option.setIgnoreKillProcess(true);
-        // 1s一次
-        option.setScanSpan(5 * 1000);
+        // 请求的频率
+        option.setScanSpan(span * 1000);
         mLocationClient.setLocOption(option);
     }
 
@@ -80,10 +82,33 @@ public class WalkPresenter {
             if (isFirstIn) {
                 v.moveCamera2Location(latLng);
                 isFirstIn = false;
+                latLngs.add(latLng);
             }
-            latLngs.add(latLng);
-            LogUtils.d("walk_map", latLng.toString());
-            v.drawPolyline(latLngs);
+
+            // 先从距离和加速度两方面控制某一点是否添加到数组中
+            // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
+            // 当前距离
+            double secondDistance = 0;
+            if (latLngs.size() > 0) {
+                secondDistance = DistanceUtil.getDistance(latLng, latLngs.get(latLngs.size() - 1));
+            }
+            // 距离大于10
+            if (secondDistance >= 10) {
+                if (firstDistance == 0) {
+                    latLngs.add(latLng);
+                    v.drawPolyline(latLngs);
+                    firstDistance = secondDistance;
+                } else {
+                    // 加速度
+                    acceleration = (secondDistance - firstDistance) / (span * span);
+                    // 加速度小于10
+                    if (acceleration <= 10) {
+                        latLngs.add(latLng);
+                        v.drawPolyline(latLngs);
+                        firstDistance = secondDistance;
+                    }
+                }
+            }
         }
     }
 
