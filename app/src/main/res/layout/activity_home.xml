@@ -66,10 +66,11 @@
         </LinearLayout>
 
         <!--抽屉布局部分-->
-        <!--因为这个新玩意儿顶部是一定会空一个状态栏高度的，我先随便让它上移26dp，之后测试其他机型-->
+        <!--因为这个新玩意儿顶部是一定会空一个状态栏高度的，我先随便让它margin上移26dp，再padding下移26dp，之后测试其他机型-->
         <android.support.design.widget.NavigationView
             android:id="@+id/navigation"
             android:layout_marginTop="-26dp"
+            android:paddingTop="26dp"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

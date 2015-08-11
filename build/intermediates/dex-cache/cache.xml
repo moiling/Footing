@@ -2,25 +2,53 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\moi\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\library-2.4.0-6a4a1eaf517bd8f4947ffd2c0fdf5735c40b6fca.jar" />
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-66b74095068956bac4067938b17aa6dd4e34bb1e.jar" />
     </item>
     <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.balysv.materialmenu\material-menu\1.5.1\jars\classes.jar"
+        jar="D:\Tool\SDK\android-sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="03fa7fe6f28c412226ff7e2986b391c9574f4955">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-34bd7ff7162113a5287bc534a49f4dc4edf44d98.jar" />
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-108f8f09e6298c63692c635c1ea1a2774a345b17.jar" />
     </item>
     <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.balysv.materialmenu\material-menu-toolbar\1.5.1\jars\classes.jar"
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="cfed15dfda8da4c89585345b0d69dde6262ebb92">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-80fca4a0866cf7971f545dbc8687e07ccf2ad755.jar" />
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-cd79407b2eb41364b7686f016e8fac5ee4e18c6c.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-f31546b4bf912e5abca372c510d83ea3b02c9699.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3abb4b88f5a8a0584a9b01d3170d7165f12f8588">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-8e4c66e09ca39b20419f419f0af67deeb2d906e3.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-79cf6b88f01d6584c0067bf85babde6a19d686d9.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-d69102333c8b39c8d03d80f104f98f632594b608.jar" />
     </item>
 
 </items>
