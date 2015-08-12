@@ -18,7 +18,6 @@ public class LaunchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launch);
-        userBarTint();
         setBarTintColor(getResources().getColor(R.color.primary_color));
         // 每次进入显示LOGO的地方先判断是否登陆过
         isLogin = (Boolean) SPUtils.get(this, "isLogin", Boolean.FALSE);

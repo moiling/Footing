@@ -15,11 +15,6 @@ public interface IHomeVu {
     void showUserInformation(Userbean userbean);
 
     /**
-     * 对内方法，刷新用户数据
-     */
-    void refreshUserInforimation();
-
-    /**
      * 显示任务 TODO 任务先放在这
      */
     void showMission();

@@ -29,13 +29,16 @@ public class BaseActivity extends AppCompatActivity {
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-    }
 
-    protected void userBarTint() {
         tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
         setBarTintColor(getResources().getColor(R.color.primary_color));
+    }
+
+    protected void noUseBarTint() {
+        tintManager.setStatusBarTintEnabled(false);
+        tintManager.setNavigationBarTintEnabled(false);
     }
 
     protected void setBarTintColor(int color) {

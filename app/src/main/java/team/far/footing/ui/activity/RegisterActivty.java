@@ -36,7 +36,6 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu, View.On
         setContentView(R.layout.activity_register);
         ButterKnife.inject(this);
         initToolbar();
-        userBarTint();
         //初始化 RegisterPresenter
         registerPresenter = new RegisterPresenter(this);
         init();

@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    tools:context="team.far.footing.ui.activity.EditUserInfoActivity">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/btn_edit_nick_name"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="昵称"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_edit_nick_name"
+            tools:text="哔啪哩吧啦"
+            android:textColor="@color/primary_text"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_edit_signature"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="签名"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_edit_signature"
+            tools:text="我就是我，傻逼一个"
+            android:textColor="@color/primary_text"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_edit_email"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="邮箱"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_edit_email"
+            tools:text="896001088@qq.com"
+            android:textColor="@color/primary_text"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -63,7 +63,7 @@
         <activity
             android:name=".ui.activity.WalkActivity"
             android:label="@string/title_activity_walk"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ui.activity.LaunchActivity"
@@ -73,6 +73,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.UserInfoActivity"
+            android:label="@string/title_activity_user_info" >
+        </activity>
+        <activity
+            android:name=".ui.activity.EditUserInfoActivity"
+            android:label="@string/title_activity_edit_user_info" >
         </activity>
     </application>
 

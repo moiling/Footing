@@ -36,7 +36,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu {
         ButterKnife.inject(this);
         initToolbar();
         initMap();
-        userBarTint();
         presenter = new WalkPresenter(this);
     }
 
@@ -54,6 +53,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu {
         presenter.stopLocation();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+        presenter.onRelieveView();
     }
 
     @Override

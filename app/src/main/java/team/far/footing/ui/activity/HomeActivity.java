@@ -40,7 +40,7 @@ import team.far.footing.util.LogUtils;
 import team.far.footing.util.SPUtils;
 import team.far.footing.util.ScreenUtils;
 
-public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener {
+public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.tabLayout) TabLayout mTabLayout;
@@ -55,6 +55,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     @InjectView(R.id.home_bar) LinearLayout homeBar;
     @InjectView(R.id.iv_home_toolbar_user_image) CircleImageView mToolbarUserImage;
     @InjectView(R.id.tv_home_toolbar_user_name) TextView mToolbarUserName;
+    @InjectView(R.id.home_drawer_head) LinearLayout mDrawerHead;
     @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
     private HomePresenter presenter;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -68,31 +69,23 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
+        noUseBarTint();
         initToolbar();
         init();
         presenter = new HomePresenter(this);
         Test();
-
-        // 测试退出，以后会放在设置里面
-        navigation.getMenu().findItem(R.id.navItem4)
-                .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        SPUtils.put(APP.getContext(), "isLogin", Boolean.FALSE);
-                        BmobUtils.LogOutUser();
-                        Intent intent = new Intent(APP.getContext(), LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    }
-                });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.onRelieveView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.refreshUserInformation();
     }
 
     @Override
@@ -148,9 +141,14 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         mTabLayout.setTabsFromPagerAdapter(fragmentPagerAdapter);
         mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources()
                 .getColor(R.color.white));
-        mDrawerLayout.setDrawerShadow(getResources()
-                .getDrawable(R.drawable.drawer_shadow), GravityCompat.START);
+        mDrawerLayout
+                .setDrawerShadow(getResources()
+                        .getDrawable(R.drawable.drawer_shadow), GravityCompat.START);
         mDrawerBtn.setOnClickListener(this);
+        mDrawerHead.setOnClickListener(this);
+        if (navigation != null) {
+            navigation.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override
@@ -170,8 +168,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         userSignature.setText(userbean.getSignature());
     }
 
-    @Override
-    public void refreshUserInforimation() {
+    private void refreshUserInforimation() {
         presenter.refreshUserInformation();
     }
 
@@ -206,7 +203,30 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
                     mDrawerLayout.openDrawer(GravityCompat.START);
                 }
                 break;
+            case R.id.home_drawer_head:
+                presenter.startUserInfoActivity(this);
+                break;
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+            case R.id.item_drawer_my_info:
+                presenter.startUserInfoActivity(this);
+                break;
+            // 测试退出，以后会放在设置里面
+            case R.id.navItem4:
+                SPUtils.put(APP.getContext(), "isLogin", Boolean.FALSE);
+                BmobUtils.LogOutUser();
+                Intent intent = new Intent(APP.getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                startActivity(intent);
+                finish();
+                break;
+        }
+        return false;
     }
 
     //我用来测试的方法
@@ -214,5 +234,4 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
 
 
     }
-
 }
