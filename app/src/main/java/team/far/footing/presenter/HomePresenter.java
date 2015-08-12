@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import team.far.footing.app.APP;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.ui.activity.SettingActivity;
 import team.far.footing.ui.activity.UserInfoActivity;
 import team.far.footing.ui.activity.WalkActivity;
 import team.far.footing.ui.vu.IHomeVu;
@@ -45,6 +46,12 @@ public class HomePresenter {
 
     public void startUserInfoActivity(Context context) {
         Intent intent = new Intent(context, UserInfoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        context.startActivity(intent);
+    }
+
+    public void startSettingActivity(Context context) {
+        Intent intent = new Intent(context, SettingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         context.startActivity(intent);
     }

@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="team.far.footing.ui.activity.SettingActivity">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/btn_setting_logout"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        card_view:cardBackgroundColor="@color/primary_color">
+
+        <TextView
+            android:id="@+id/tv_setting_logout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/logout" />
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

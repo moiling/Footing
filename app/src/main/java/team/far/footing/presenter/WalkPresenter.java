@@ -28,6 +28,8 @@ public class WalkPresenter {
     private double firstDistance = 0;
     private int span = 5;
     private double acceleration = 0;
+    private boolean isWalking = false;
+    private double distanceTotal = 0;
 
     public WalkPresenter(IWalkVu v) {
         this.v = v;
@@ -45,6 +47,20 @@ public class WalkPresenter {
     public void stopLocation() {
         v.getBaiduMap().setMyLocationEnabled(false);
         mLocationClient.stop();
+    }
+
+    public void startWalk() {
+        isWalking = true;
+    }
+
+    public void pauseWalk() {
+        isWalking = false;
+    }
+
+    public void stopWalk() {
+        isWalking = false;
+        latLngs.clear();
+        distanceTotal = 0;
     }
 
     private void initLocation() {
@@ -82,30 +98,36 @@ public class WalkPresenter {
             if (isFirstIn) {
                 v.moveCamera2Location(latLng);
                 isFirstIn = false;
-                latLngs.add(latLng);
             }
 
-            // 先从距离和加速度两方面控制某一点是否添加到数组中
-            // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
-            // 当前距离
-            double secondDistance = 0;
-            if (latLngs.size() > 0) {
-                secondDistance = DistanceUtil.getDistance(latLng, latLngs.get(latLngs.size() - 1));
-            }
-            // 距离大于10
-            if (secondDistance >= 10) {
-                if (firstDistance == 0) {
-                    latLngs.add(latLng);
-                    v.drawPolyline(latLngs);
-                    firstDistance = secondDistance;
-                } else {
-                    // 加速度
-                    acceleration = (secondDistance - firstDistance) / (span * span);
-                    // 加速度小于10
-                    if (acceleration <= 10) {
+            if (isWalking) {
+                // 先不管怎么样，加入第一个点再说
+                if (latLngs.isEmpty()) latLngs.add(latLng);
+                // 先从距离和加速度两方面控制某一点是否添加到数组中
+                // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
+                // 当前距离
+                double secondDistance = 0;
+                if (latLngs.size() > 0) {
+                    secondDistance = DistanceUtil
+                            .getDistance(latLng, latLngs.get(latLngs.size() - 1));
+                }
+                // 距离大于15
+                if (secondDistance >= 15) {
+                    if (firstDistance == 0) {
                         latLngs.add(latLng);
                         v.drawPolyline(latLngs);
                         firstDistance = secondDistance;
+                    } else {
+                        // 加速度
+                        acceleration = (secondDistance - firstDistance) / (span * span);
+                        // 加速度小于10
+                        if (acceleration <= 10) {
+                            latLngs.add(latLng);
+                            v.drawPolyline(latLngs);
+                            firstDistance = secondDistance;
+                            distanceTotal += secondDistance;
+                            v.showDistanceTotal(distanceTotal);
+                        }
                     }
                 }
             }

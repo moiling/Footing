@@ -1,6 +1,5 @@
 package team.far.footing.ui.activity;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +25,6 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
-import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.HomePresenter;
@@ -35,9 +34,7 @@ import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.ui.widget.CircleImageView;
-import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
-import team.far.footing.util.SPUtils;
 import team.far.footing.util.ScreenUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -55,7 +52,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     @InjectView(R.id.home_bar) LinearLayout homeBar;
     @InjectView(R.id.iv_home_toolbar_user_image) CircleImageView mToolbarUserImage;
     @InjectView(R.id.tv_home_toolbar_user_name) TextView mToolbarUserName;
-    @InjectView(R.id.home_drawer_head) LinearLayout mDrawerHead;
+    @InjectView(R.id.home_drawer_head) RelativeLayout mDrawerHead;
     @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
     private HomePresenter presenter;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -216,14 +213,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             case R.id.item_drawer_my_info:
                 presenter.startUserInfoActivity(this);
                 break;
-            // 测试退出，以后会放在设置里面
-            case R.id.navItem4:
-                SPUtils.put(APP.getContext(), "isLogin", Boolean.FALSE);
-                BmobUtils.LogOutUser();
-                Intent intent = new Intent(APP.getContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                startActivity(intent);
-                finish();
+            case R.id.item_drawer_setting:
+                presenter.startSettingActivity(this);
                 break;
         }
         return false;

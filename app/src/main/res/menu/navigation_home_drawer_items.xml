@@ -13,19 +13,15 @@
             android:id="@+id/item_drawer_draw_footing"
             android:icon="@mipmap/ic_mission"
             android:title="绘制路线"/>
-        <item
-            android:id="@+id/navItem4"
-            android:icon="@mipmap/ic_user"
-            android:title="切换用户"/>
     </group>
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/sub1"
+            android:id="@+id/item_drawer_setting"
             android:icon="@mipmap/ic_mission"
             android:title="设置" />
         <item
-            android:id="@+id/sub2"
+            android:id="@+id/item_drawer_about"
             android:icon="@mipmap/ic_mission"
             android:title="关于我们" />
     </group>

@@ -1,8 +1,11 @@
 package team.far.footing.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -21,22 +24,34 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
 import team.far.footing.ui.vu.IWalkVu;
 
-public class WalkActivity extends BaseActivity implements IWalkVu {
+public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
     @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.map_walk) MapView mMapView;
+    @InjectView(R.id.card_walk_status) CardView cardWalkStatus;
+    @InjectView(R.id.iv_walk_start) ImageView ivWalkStart;
+    @InjectView(R.id.iv_walk_pause) ImageView ivWalkPause;
+    @InjectView(R.id.iv_walk_stop) ImageView ivWalkStop;
+    @InjectView(R.id.tv_walk_distance) TextView tvWalkDistance;
     private BaiduMap mBaiduMap;
 
     private WalkPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-     super.onCreate(savedInstanceState);
-     setContentView(R.layout.activity_walk);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_walk);
         ButterKnife.inject(this);
         initToolbar();
         initMap();
+        init();
         presenter = new WalkPresenter(this);
+    }
+
+    private void init() {
+        ivWalkStart.setOnClickListener(this);
+        ivWalkPause.setOnClickListener(this);
+        ivWalkStop.setOnClickListener(this);
     }
 
     @Override
@@ -96,6 +111,11 @@ public class WalkActivity extends BaseActivity implements IWalkVu {
     }
 
     @Override
+    public void showDistanceTotal(double distance) {
+        tvWalkDistance.setText(distance + " m");
+    }
+
+    @Override
     public void drawPolyline(ArrayList<LatLng> latLngs) {
 
         // 现在才反应过来……原来画线的方法每一次都重绘了整个图……走得时间长了会变得好卡好卡
@@ -105,7 +125,8 @@ public class WalkActivity extends BaseActivity implements IWalkVu {
             tempLatLngs.add(latLngs.get(latLngs.size() - 2));
             tempLatLngs.add(latLngs.get(latLngs.size() - 1));
             //构建用户绘制多边形的Option对象
-            OverlayOptions polylineOptions = new PolylineOptions().points(tempLatLngs).color(getResources().getColor(R.color.accent_color));
+            OverlayOptions polylineOptions = new PolylineOptions().points(tempLatLngs)
+                    .color(getResources().getColor(R.color.accent_color));
             //在地图上添加多边形Option，用于显示
             mBaiduMap.addOverlay(polylineOptions);
         }
@@ -121,5 +142,30 @@ public class WalkActivity extends BaseActivity implements IWalkVu {
     @Override
     public BaiduMap getBaiduMap() {
         return mBaiduMap;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_walk_start:
+                presenter.startWalk();
+                ivWalkStart.setVisibility(View.GONE);
+                cardWalkStatus.setVisibility(View.VISIBLE);
+                ivWalkStop.setVisibility(View.VISIBLE);
+                ivWalkPause.setVisibility(View.VISIBLE);
+                break;
+            case R.id.iv_walk_pause:
+                presenter.pauseWalk();
+                ivWalkPause.setVisibility(View.GONE);
+                ivWalkStart.setVisibility(View.VISIBLE);
+                break;
+            case R.id.iv_walk_stop:
+                presenter.stopWalk();
+                cardWalkStatus.setVisibility(View.INVISIBLE);
+                ivWalkStop.setVisibility(View.GONE);
+                ivWalkPause.setVisibility(View.GONE);
+                ivWalkStart.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }
