@@ -18,7 +18,7 @@ public class EditUserInfoPresenter {
 
     public EditUserInfoPresenter(IEditUserInfoVu v) {
         this.v = v;
-        mUserModel = new UserModel();
+        mUserModel = UserModel.getInstance();
         userbean = BmobUtils.getCurrentUser();
         showUserInformation();
     }

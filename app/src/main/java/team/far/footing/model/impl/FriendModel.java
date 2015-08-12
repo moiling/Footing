@@ -20,6 +20,16 @@ import team.far.footing.util.BmobUtils;
  */
 public class FriendModel implements IFriendModel {
 
+    public static final FriendModel instance = new FriendModel();
+
+    final public static FriendModel getInstance() {
+        return instance;
+    }
+
+    private FriendModel() {
+    }
+
+
     @Override
     public void addFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
 

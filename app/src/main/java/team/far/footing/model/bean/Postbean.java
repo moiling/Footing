@@ -15,6 +15,25 @@ public class Postbean extends BmobObject {
     private BmobRelation likes;
     private String picUrl;
 
+    public String getPicName() {
+        return picName;
+    }
+
+    public void setPicName(String picName) {
+        this.picName = picName;
+    }
+
+    private  String picName;
+    private int praise;
+
+    public int getPraise() {
+        return praise;
+    }
+
+    public void setPraise(int praise) {
+        this.praise = praise;
+    }
+
     public String getTitle() {
         return title;
     }
