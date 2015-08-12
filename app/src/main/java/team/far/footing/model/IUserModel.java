@@ -3,14 +3,12 @@ package team.far.footing.model;
 
 import android.app.Activity;
 
-import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.model.Listener.OnLoginForQQListener;
 import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
-import team.far.footing.model.bean.Userbean;
 
 /**
  * Created by moi on 2015/8/7.
@@ -21,6 +19,9 @@ public interface IUserModel {
     void Regster(String username, String passwrod, String email, OnRegsterListener onRegsterListener);
 
     void loginForQQ(Activity activity, OnLoginForQQListener onLoginForQQListener);
+
+    // 在编辑页面要一口气更新多个数据
+    void updataUserInfo(String nickname, String signature, String email, OnUpdateUserListener onUpdateUserListener);
 
     /**
      * @param filePath                     ------- 文件路径

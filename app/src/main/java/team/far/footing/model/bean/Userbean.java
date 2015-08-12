@@ -25,7 +25,7 @@ public class Userbean extends BmobUser {
     private Integer PraiseCount;
     //头像fileame
     private String HeadPortraitFileName;
-    //角色等级 TODO 我不知道是不是这里加了就行……你看看也  --->>>还要在后台加了 ==
+    //角色等级
     private Integer level;
 
     public Integer getLevel() {

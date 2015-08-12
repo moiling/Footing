@@ -140,6 +140,15 @@ public class UserModel implements IUserModel {
     }
 
     @Override
+    public void updataUserInfo(String nickname, String signature, String email, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setNickName(nickname);
+        newUser.setEmail(email);
+        newUser.setSignature(signature);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
     public void uploadHeadPortrait(String filePath, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
         BTPFileResponse response = BmobProFile.getInstance(APP.getContext()).upload(filePath, new UploadListener() {
             @Override
