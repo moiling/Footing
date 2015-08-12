@@ -8,7 +8,7 @@ import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
-import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
+import team.far.footing.model.Listener.OnUploadListener;
 
 /**
  * Created by moi on 2015/8/7.
@@ -27,7 +27,7 @@ public interface IUserModel {
      * @param filePath                     ------- 文件路径
      * @param onUploadHeadPortraitListener ----------文件上传监听
      */
-    void uploadHeadPortrait(String filePath, OnUploadHeadPortraitListener onUploadHeadPortraitListener);
+    void uploadHeadPortrait(String filePath, OnUploadListener onUploadHeadPortraitListener);
 
 
     /**

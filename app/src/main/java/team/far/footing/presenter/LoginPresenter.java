@@ -22,7 +22,7 @@ public class LoginPresenter {
 
     public LoginPresenter(ILoginVu mILoginVu) {
         this.mILoginVu = mILoginVu;
-        mUserModel = new UserModel();
+        mUserModel = UserModel.getInstance();
     }
 
 

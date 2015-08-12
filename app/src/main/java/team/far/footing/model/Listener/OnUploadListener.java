@@ -5,7 +5,7 @@ import cn.bmob.v3.datatype.BmobFile;
 /**
  * Created by Luoyy on 2015/8/8 0008.
  */
-public interface OnUploadHeadPortraitListener {
+public interface OnUploadListener {
 
     /**
      * @param fileName -------文件在服务器上的名称

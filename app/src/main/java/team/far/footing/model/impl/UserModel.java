@@ -31,7 +31,7 @@ import team.far.footing.model.Listener.OnLoginListener;
 import team.far.footing.model.Listener.OnQueryFriendListener;
 import team.far.footing.model.Listener.OnRegsterListener;
 import team.far.footing.model.Listener.OnUpdateUserListener;
-import team.far.footing.model.Listener.OnUploadHeadPortraitListener;
+import team.far.footing.model.Listener.OnUploadListener;
 import team.far.footing.model.bean.Friends;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.BmobUtils;
@@ -41,6 +41,16 @@ import team.far.footing.util.LogUtils;
  * Created by moi on 2015/8/7.
  */
 public class UserModel implements IUserModel {
+
+
+    public static final UserModel instance = new UserModel();
+
+    final public static UserModel getInstance() {
+        return instance;
+    }
+
+    private UserModel() {
+    }
 
 
     @Override
@@ -149,7 +159,7 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void uploadHeadPortrait(String filePath, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
+    public void uploadHeadPortrait(String filePath, final OnUploadListener onUploadHeadPortraitListener) {
         BTPFileResponse response = BmobProFile.getInstance(APP.getContext()).upload(filePath, new UploadListener() {
             @Override
             public void onSuccess(String fileName, String url, BmobFile file) {
@@ -316,7 +326,7 @@ public class UserModel implements IUserModel {
     }
 
     //文件上传的辅助方法 ---->>  不对外调用
-    private void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadHeadPortraitListener onUploadHeadPortraitListener) {
+    private void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadListener onUploadHeadPortraitListener) {
         Userbean newUser = new Userbean();
         newUser.setHeadPortraitFilePath(url);
         newUser.getHeadPortraitFileName(filename);
