@@ -10,6 +10,8 @@ import java.util.ArrayList;
  */
 public interface IWalkVu {
 
+    // 显示总距离
+    void showDistanceTotal(double distance);
     // 在地图上画线
     void drawPolyline(ArrayList<LatLng> latLngs);
     // 移动镜头到某处

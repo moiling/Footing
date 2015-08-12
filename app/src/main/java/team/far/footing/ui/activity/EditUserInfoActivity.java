@@ -152,7 +152,7 @@ public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoV
             case R.id.btn_edit_nick_name:
                 new MaterialDialog.Builder(this).title("修改昵称").theme(Theme.LIGHT)
                         .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input("请输入要修改的昵称", "", new MaterialDialog.InputCallback() {
+                        .input("请输入要修改的昵称", editNickName.getText().toString(), new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 editNickName.setText(input);
@@ -163,7 +163,7 @@ public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoV
             case R.id.btn_edit_email:
                 new MaterialDialog.Builder(this).title("修改邮箱").theme(Theme.LIGHT)
                         .inputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                        .input("请输入要修改的邮箱", "", new MaterialDialog.InputCallback() {
+                        .input("请输入要修改的邮箱", editEmail.getText().toString(), new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 editEmail.setText(input);
@@ -174,7 +174,7 @@ public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoV
             case R.id.btn_edit_signature:
                 new MaterialDialog.Builder(this).title("修改签名").theme(Theme.LIGHT)
                         .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input("请输入要修改的签名", "", new MaterialDialog.InputCallback() {
+                        .input("请输入要修改的签名", editSignature.getText().toString(), new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 editSignature.setText(input);
