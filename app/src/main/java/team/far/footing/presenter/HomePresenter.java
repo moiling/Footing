@@ -2,10 +2,7 @@ package team.far.footing.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.webkit.DownloadListener;
 
 import team.far.footing.app.APP;
 import team.far.footing.model.IFileModel;
@@ -35,13 +32,18 @@ public class HomePresenter {
         userbean = BmobUtils.getCurrentUser();
         LogUtils.d(userbean.getUsername());
         showUserInformation();
-        setUserPic(BmobUtils.getCurrentUser().getHeadPortraitFileName());
+        if (userbean.getHeadPortraitFileName() != null) {
+            setUserPic(userbean.getHeadPortraitFileName());
+        }
 
     }
 
     public void refreshUserInformation() {
         userbean = BmobUtils.getCurrentUser();
         showUserInformation();
+        if (userbean.getHeadPortraitFileName() != null) {
+            setUserPic(userbean.getHeadPortraitFileName());
+        }
     }
 
     public void showUserInformation() {
@@ -68,11 +70,9 @@ public class HomePresenter {
 
 
     public void setUserPic(String filename) {
-        Log.e("=sds=============>>>>", filename);
         fileModel.downloadPic(filename, new com.bmob.btp.callback.DownloadListener() {
             @Override
             public void onSuccess(String s) {
-                Log.e("=sds=============>>>>", s);
                 v.showUserImg(BitmapFactory.decodeFile(s));
             }
 
