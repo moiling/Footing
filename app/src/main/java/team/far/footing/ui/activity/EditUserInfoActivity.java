@@ -127,6 +127,7 @@ public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoV
 
     @Override
     public void showEditFail(String reason) {
+        dismissProgress();
         new MaterialDialog.Builder(this).title("提交失败").content(reason).positiveText("好的")
                 .theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override

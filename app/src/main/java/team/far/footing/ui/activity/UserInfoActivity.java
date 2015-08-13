@@ -1,13 +1,21 @@
 package team.far.footing.ui.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
+
+import org.hybridsquad.android.library.CropHelper;
+import org.hybridsquad.android.library.CropParams;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,7 +27,7 @@ import team.far.footing.ui.vu.IUserInfoVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.ScreenUtils;
 
-public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener {
+public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener {
 
     @InjectView(R.id.toolbar_t) Toolbar mToolbar;
     @InjectView(R.id.user_info_bar) FrameLayout barLayout;
@@ -27,6 +35,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @InjectView(R.id.tv_user_info_user_lv) TextView mUserLv;
     @InjectView(R.id.tv_user_info_user_name) TextView mUserName;
     @InjectView(R.id.tv_user_info_user_signature) TextView mUserSignature;
+    @InjectView(R.id.btn_user_info_camera) Button btnCamera;
+    @InjectView(R.id.btn_user_info_photo) Button btnPhoto;
 
     private UserInfoPresenter presenter;
 
@@ -38,7 +48,13 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
         noUseBarTint();
         initToolbar();
 
+        init();
         presenter = new UserInfoPresenter(this);
+    }
+
+    private void init() {
+        btnCamera.setOnClickListener(this);
+        btnPhoto.setOnClickListener(this);
     }
 
     @Override
@@ -50,6 +66,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        presenter.cropDestroy();
         presenter.onRelieveView();
     }
 
@@ -88,6 +105,37 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     }
 
     @Override
+    public void showUpdateLoading() {
+        showProgress("正在上传");
+    }
+
+    @Override
+    public void showUpdateSuccess() {
+        new MaterialDialog.Builder(this).title("上传成功").content("").positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
+    @Override
+    public void showUpdateFailed(String errormsg) {
+        new MaterialDialog.Builder(this).title("上传失败").content(errormsg).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).show();
+
+    }
+
+    @Override
+    public void dismissLoading() {
+        dismissProgress();
+    }
+
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_editor:
@@ -95,5 +143,26 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 break;
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        CropHelper.handleResult(presenter.getCropHandler(), requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_user_info_camera:
+                Intent intent = CropHelper.buildCaptureIntent(new CropParams().uri);
+                startActivityForResult(intent, CropHelper.REQUEST_CAMERA);
+                break;
+            case R.id.btn_user_info_photo:
+                Intent intent2 = CropHelper.buildCropFromGalleryIntent(new CropParams());
+                startActivityForResult(intent2, CropHelper.REQUEST_CROP);
+                break;
+
+        }
     }
 }
