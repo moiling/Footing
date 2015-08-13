@@ -15,6 +15,7 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -112,7 +113,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     @Override
     public void showDistanceTotal(double distance) {
-        tvWalkDistance.setText(distance + " m");
+        tvWalkDistance.setText(new DecimalFormat(".##").format(distance) + " m");
     }
 
     @Override

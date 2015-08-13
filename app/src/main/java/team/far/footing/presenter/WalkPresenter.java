@@ -53,14 +53,24 @@ public class WalkPresenter {
         isWalking = true;
     }
 
+    // 停止步行这里还有些麻烦，第二段开始走得时候没法保存第一段的数据
+    // 之后好友内分享估计会遇到麻烦……
     public void pauseWalk() {
         isWalking = false;
+        // 坐标点清零
+        latLngs.clear();
     }
 
     public void stopWalk() {
         isWalking = false;
+        // 坐标点清零
         latLngs.clear();
+        // 清除地图上的轨迹
+        v.getBaiduMap().clear();
+        // 总距离清零
         distanceTotal = 0;
+        // 总距离的显示清零
+        v.showDistanceTotal(distanceTotal);
     }
 
     private void initLocation() {
@@ -111,8 +121,8 @@ public class WalkPresenter {
                     secondDistance = DistanceUtil
                             .getDistance(latLng, latLngs.get(latLngs.size() - 1));
                 }
-                // 距离大于15
-                if (secondDistance >= 15) {
+                // 距离大于10
+                if (secondDistance >= 10) {
                     if (firstDistance == 0) {
                         latLngs.add(latLng);
                         v.drawPolyline(latLngs);
