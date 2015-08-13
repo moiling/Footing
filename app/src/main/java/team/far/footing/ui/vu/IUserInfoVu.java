@@ -1,5 +1,7 @@
 package team.far.footing.ui.vu;
 
+import android.graphics.Bitmap;
+
 import team.far.footing.model.bean.Userbean;
 
 /**
@@ -7,7 +9,7 @@ import team.far.footing.model.bean.Userbean;
  */
 public interface IUserInfoVu {
 
-    void showUserInformation(Userbean userbean);
+    void showUserInformation(Userbean userbean,Bitmap bitmap);
 
     void showUpdateLoading();
 

@@ -1,5 +1,6 @@
 package team.far.footing.ui.activity;
 
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,11 +11,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,26 +40,42 @@ import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.ui.widget.CircleImageView;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.tabLayout) TabLayout mTabLayout;
-    @InjectView(R.id.fabBtn_home) FloatingActionButton mFabBtn;
-    @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @InjectView(R.id.view_pager) ViewPager mViewPager;
-    @InjectView(R.id.tv_home_user_name) TextView userName;
-    @InjectView(R.id.tv_home_user_lv) TextView userLV;
-    @InjectView(R.id.iv_home_user_image) ImageView userPic;
-    @InjectView(R.id.tv_home_user_signature) TextView userSignature;
-    @InjectView(R.id.navigation) NavigationView navigation;
-    @InjectView(R.id.home_bar) LinearLayout homeBar;
-    @InjectView(R.id.iv_home_toolbar_user_image) CircleImageView mToolbarUserImage;
-    @InjectView(R.id.tv_home_toolbar_user_name) TextView mToolbarUserName;
-    @InjectView(R.id.home_drawer_head) RelativeLayout mDrawerHead;
-    @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+    @InjectView(R.id.tabLayout)
+    TabLayout mTabLayout;
+    @InjectView(R.id.fabBtn_home)
+    FloatingActionButton mFabBtn;
+    @InjectView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @InjectView(R.id.view_pager)
+    ViewPager mViewPager;
+    @InjectView(R.id.tv_home_user_name)
+    TextView userName;
+    @InjectView(R.id.tv_home_user_lv)
+    TextView userLV;
+    @InjectView(R.id.iv_home_user_image)
+    ImageView userPic;
+    @InjectView(R.id.tv_home_user_signature)
+    TextView userSignature;
+    @InjectView(R.id.navigation)
+    NavigationView navigation;
+    @InjectView(R.id.home_bar)
+    LinearLayout homeBar;
+    @InjectView(R.id.iv_home_toolbar_user_image)
+    CircleImageView mToolbarUserImage;
+    @InjectView(R.id.tv_home_toolbar_user_name)
+    TextView mToolbarUserName;
+    @InjectView(R.id.home_drawer_head)
+    RelativeLayout mDrawerHead;
+    @InjectView(R.id.btn_home_drawer)
+    LinearLayout mDrawerBtn;
     private HomePresenter presenter;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
@@ -73,7 +92,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initToolbar();
         init();
         presenter = new HomePresenter(this);
-        Test();
     }
 
     @Override
@@ -99,6 +117,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             homeBar.setPadding(0, ScreenUtils.getStatusHeight(this), 0, 0);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+
     }
 
     private void init() {
@@ -152,7 +171,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
 
         if (ScreenUtils.checkDeviceHasNavigationBar(this)) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.RIGHT);
-            layoutParams.setMargins(0,0,(int)(getResources().getDimension(R.dimen.codelab_fab_margin_right)),(int)(getResources().getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils.getNavigationBarHeight(this)));
+            layoutParams.setMargins(0, 0, (int) (getResources().getDimension(R.dimen.codelab_fab_margin_right)), (int) (getResources().getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils.getNavigationBarHeight(this)));
             mFabBtn.setLayoutParams(layoutParams);
         }
     }
@@ -170,6 +189,9 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         }
         //userPic.setImageBitmap();
         //mToolbarUserImage.set
+
+
+
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
     }
@@ -184,6 +206,12 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     @Override
     public void showMission() {
 
+    }
+
+    @Override
+    public void showUserImg(Bitmap bitmap) {
+        userPic.setImageBitmap(bitmap);
+        mToolbarUserImage.setImageBitmap(bitmap);
     }
 
     @Override
@@ -229,9 +257,5 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         return false;
     }
 
-    //我用来测试的方法
-    public void Test() {
 
-
-    }
 }

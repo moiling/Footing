@@ -1,5 +1,7 @@
 package team.far.footing.model.impl;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.webkit.DownloadListener;
 
 import com.bmob.BTPFileResponse;
@@ -57,8 +59,8 @@ public class FileModel implements IFileModel {
     }
 
     @Override
-    public void downloadPic(String filename, DownloadListener downloadListener) {
-        BmobProFile.getInstance(APP.getContext()).download(filename, (com.bmob.btp.callback.DownloadListener) downloadListener);
+    public void downloadPic(String filename, com.bmob.btp.callback.DownloadListener downloadListener) {
+        BmobProFile.getInstance(APP.getContext()).download(filename, downloadListener);
     }
 
     @Override
@@ -106,6 +108,12 @@ public class FileModel implements IFileModel {
     @Override
     public void getLocalThumbnail(String filepath, int modeId, int width, int height, int quality, LocalThumbnailListener localThumbnailListener) {
         BmobProFile.getInstance(APP.getContext()).getLocalThumbnail(filepath, modeId, width, height, quality, localThumbnailListener);
+    }
+
+    @Override
+    public Bitmap getLocalPic(String filename) {
+
+        return BitmapFactory.decodeFile(getDowPicPath()+"/"+filename);
     }
 
 

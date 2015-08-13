@@ -1,6 +1,8 @@
 package team.far.footing.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -93,13 +95,13 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     }
 
     @Override
-    public void showUserInformation(Userbean userbean) {
+    public void showUserInformation(Userbean userbean,Bitmap bitmap) {
         if (!(userbean.getNickName() == null)) {
             mUserName.setText(userbean.getNickName());
         } else {
             mUserName.setText("未取名");
         }
-        //mUserPic.setImageBitmap();
+       mUserPic.setImageBitmap(bitmap);
         mUserLv.setText("Lv." + userbean.getLevel());
         mUserSignature.setText(userbean.getSignature());
     }
