@@ -1,5 +1,6 @@
 package team.far.footing.model;
 
+import android.graphics.Bitmap;
 import android.webkit.DownloadListener;
 
 import com.bmob.btp.callback.DeleteFileListener;
@@ -28,7 +29,7 @@ public interface IFileModel {
      * @param filename         -------------文件上传后得到的filename
      * @param downloadListener
      */
-    void downloadPic(String filename, DownloadListener downloadListener);
+    void downloadPic(String filename, com.bmob.btp.callback.DownloadListener downloadListener);
 
     /**
      * ------------通过文件名得到可以访问的url
@@ -79,4 +80,7 @@ public interface IFileModel {
     //指定规格ID、宽、高、图片压缩质量
     void getLocalThumbnail(String filepath, int modeId, int width, int height, int quality, LocalThumbnailListener localThumbnailListener);
 
+
+    //
+    Bitmap getLocalPic(String filename);
 }

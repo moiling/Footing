@@ -3,6 +3,8 @@ package team.far.footing.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import org.hybridsquad.android.library.CropHandler;
@@ -18,6 +20,7 @@ import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.activity.EditUserInfoActivity;
 import team.far.footing.ui.vu.IUserInfoVu;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by moi on 2015/8/12.
@@ -78,7 +81,7 @@ public class UserInfoPresenter {
 
             @Override
             public Activity getContext() {
-                return (Activity)v;
+                return (Activity) v;
             }
         };
         showUserInformation();
@@ -99,7 +102,9 @@ public class UserInfoPresenter {
     }
 
     public void showUserInformation() {
-        v.showUserInformation(userbean);
+
+        Bitmap bitmap = fileModel.getLocalPic(userbean.getHeadPortraitFileName());
+        v.showUserInformation(userbean, bitmap);
     }
 
     public void startEditUserInfoActivity(Context context) {

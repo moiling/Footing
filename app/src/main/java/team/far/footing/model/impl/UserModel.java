@@ -329,7 +329,7 @@ public class UserModel implements IUserModel {
     private void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadListener onUploadHeadPortraitListener) {
         Userbean newUser = new Userbean();
         newUser.setHeadPortraitFilePath(url);
-        newUser.getHeadPortraitFileName(filename);
+        newUser.setHeadPortraitFileName(filename);
         BmobUser bmobUser = BmobUser.getCurrentUser(APP.getContext());
         newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
             @Override
