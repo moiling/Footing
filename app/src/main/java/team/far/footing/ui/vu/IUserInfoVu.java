@@ -8,4 +8,12 @@ import team.far.footing.model.bean.Userbean;
 public interface IUserInfoVu {
 
     void showUserInformation(Userbean userbean);
+
+    void showUpdateLoading();
+
+    void showUpdateSuccess();
+
+    void showUpdateFailed(String errormsg);
+
+    void dismissLoading();
 }

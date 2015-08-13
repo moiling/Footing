@@ -10,9 +10,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -145,6 +148,12 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         mDrawerHead.setOnClickListener(this);
         if (navigation != null) {
             navigation.setNavigationItemSelectedListener(this);
+        }
+
+        if (ScreenUtils.checkDeviceHasNavigationBar(this)) {
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.RIGHT);
+            layoutParams.setMargins(0,0,(int)(getResources().getDimension(R.dimen.codelab_fab_margin_right)),(int)(getResources().getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils.getNavigationBarHeight(this)));
+            mFabBtn.setLayoutParams(layoutParams);
         }
     }
 
