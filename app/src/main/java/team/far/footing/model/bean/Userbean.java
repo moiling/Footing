@@ -27,6 +27,36 @@ public class Userbean extends BmobUser {
     private String HeadPortraitFileName;
     //角色等级
     private Integer level;
+    //今日路程
+    private Integer today_distance;
+    //总的路程
+    private Integer all_distance;
+    //今日任务完成没  0表示未完成  1表示完成。
+    private Integer is_finish_today;
+
+    public Integer getToday_distance() {
+        return today_distance;
+    }
+
+    public void setToday_distance(Integer today_distance) {
+        this.today_distance = today_distance;
+    }
+
+    public Integer getAll_distance() {
+        return all_distance;
+    }
+
+    public void setAll_distance(Integer all_distance) {
+        this.all_distance = all_distance;
+    }
+
+    public Integer getIs_finish_today() {
+        return is_finish_today;
+    }
+
+    public void setIs_finish_today(Integer is_finish_today) {
+        this.is_finish_today = is_finish_today;
+    }
 
     public Integer getLevel() {
         return level;

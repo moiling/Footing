@@ -90,6 +90,8 @@ public class UserModel implements IUserModel {
                 regsterBean.setUsername(username);
                 regsterBean.setPassword(passwrod);
                 regsterBean.setEmail(email);
+                regsterBean.setToday_distance(0);
+                regsterBean.setIs_finish_today(0);
                 regsterBean.setLevel(1);
                 regsterBean.setFriendId(friends.getObjectId());
                 //注册更新用户表
@@ -216,6 +218,27 @@ public class UserModel implements IUserModel {
     public void update_PraiseCount(int PraiseCount, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
         newUser.setPraiseCount(PraiseCount);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
+    public void update_today_distance(int today_distance, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setToday_distance(today_distance);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
+    public void update_all_distance(int all_distance, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setToday_distance(all_distance);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
+    public void update_is_finish_today(int update_is_finish_today, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setToday_distance(update_is_finish_today);
         updateUser(newUser, onUpdateUserListener);
     }
 

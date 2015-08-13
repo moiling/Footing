@@ -29,6 +29,7 @@ public class HomePresenter {
         // 当homePresenter被实例化，用sp保存登录状态
         SPUtils.put(APP.getContext(), "isLogin", Boolean.TRUE);
         fileModel = FileModel.getInstance();
+
         userbean = BmobUtils.getCurrentUser();
         LogUtils.d(userbean.getUsername());
         showUserInformation();
