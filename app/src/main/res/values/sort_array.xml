@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="sort_string">
+        <item>1st</item>
+        <item>2ed</item>
+        <item>3rd</item>
+        <item>4th</item>
+        <item>5th</item>
+    </array>
+
+
+</resources>

@@ -55,9 +55,28 @@ public interface IUserModel {
     void update_PraiseCount(int PraiseCount, OnUpdateUserListener onUpdateUserListener);
 
     /**
+     * @param today_distance       ----------今日路程
+     * @param onUpdateUserListener ---------用户更新的监听器
+     */
+    void update_today_distance(int today_distance, OnUpdateUserListener onUpdateUserListener);
+
+    /**
+     * @param all_distance         --------总的距离
+     * @param onUpdateUserListener --------用户更新的监听器
+     */
+    void update_all_distance(int all_distance, OnUpdateUserListener onUpdateUserListener);
+
+    /**
+     * @param update_is_finish_today ----------是否完成每日任务  0表示未完成  1表示完成
+     * @param onUpdateUserListener   ------------------用户更新的监听器
+     */
+    void update_is_finish_today(int update_is_finish_today, OnUpdateUserListener onUpdateUserListener);
+
+
+    /**
      * @param nickname              ----------查询的用户的nickname
      * @param onQueryFriendListener -----------查询的监听器
-     *                              <p/>
+     *                              <p>
      *                              ## 按照nickname查找
      */
     void queryUserByName(String nickname, OnQueryFriendListener onQueryFriendListener);
@@ -86,7 +105,6 @@ public interface IUserModel {
      * @param onUpdateUserListener ------------更新用户数据的监听器
      */
     void resetPasswordByEmail(String email, OnUpdateUserListener onUpdateUserListener);
-
 
 
 }
