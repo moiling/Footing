@@ -3,9 +3,8 @@
 
     <array name="spinner_array_string">
 
-        <item>好友排名</item>
-        <item>今日距离</item>
         <item>总距离</item>
+        <item>今日距离</item>
         <item>等级</item>
 
 

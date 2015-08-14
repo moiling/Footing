@@ -75,9 +75,8 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void Regster(final String username, final String passwrod, final String email, final OnRegsterListener onRegsterListener) {
-
-
+    public void Regster(final String username, final String passwrod, final String email, final OnRegsterListener onRegsterListener)
+    {
         //每注册一个用户表，就建立一个好友表 -->Friend。
         //好友表的主键为  username
 
@@ -91,6 +90,8 @@ public class UserModel implements IUserModel {
                 regsterBean.setPassword(passwrod);
                 regsterBean.setEmail(email);
                 regsterBean.setToday_distance(0);
+                regsterBean.setAll_distance(0);
+                regsterBean.setPraiseCount(0);
                 regsterBean.setIs_finish_today(0);
                 regsterBean.setLevel(1);
                 regsterBean.setFriendId(friends.getObjectId());

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVU;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.ui.widget.DividerItemDecoration;
+import team.far.footing.util.LogUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVU {
 
@@ -48,6 +50,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
     private List<Userbean> userbeanList = new ArrayList<>();
     private TodayPresenter todayPresenter;
     private MyAdapter myAdapter;
+    private int type = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +58,18 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         ButterKnife.inject(this, view);
         todayPresenter = new TodayPresenter(this);
+        spinnerFgToday.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                type = position;
+                todayPresenter.choose_spinner(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return view;
     }
 
@@ -66,13 +81,14 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
 
     @Override
     public void init(Userbean CurrentUser, List<Userbean> userbeanList) {
-        tvTodayDistance.setText(CurrentUser.getToday_distance() + "");
-        if (CurrentUser.getIs_finish_today() == 1) tvIsFinishToday.setText("你已经完成了今天的任务哟！");
+        tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+        if (CurrentUser.getIs_finish_today() == 1) tvIsFinishToday.setText("已完成今日任务！");
         recyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(),DividerItemDecoration.VERTICAL_LIST));
+        recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), DividerItemDecoration.VERTICAL_LIST));
         this.userbeanList = userbeanList;
         myAdapter = new MyAdapter();
         recyclerview.setAdapter(myAdapter);
+
     }
 
     @Override
@@ -87,17 +103,20 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
 
     @Override
     public void choose_distance(List<Userbean> userbeanList) {
-
+        this.userbeanList = userbeanList;
+        recyclerview.setAdapter(myAdapter);
     }
 
     @Override
     public void choose_alldistance(List<Userbean> userbeanList) {
-
+        this.userbeanList = userbeanList;
+        recyclerview.setAdapter(myAdapter);
     }
 
     @Override
     public void choose_level(List<Userbean> userbeanList) {
-
+        this.userbeanList = userbeanList;
+        recyclerview.setAdapter(myAdapter);
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
@@ -109,25 +128,36 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.tv_name.setText(userbeanList.get(position).getNickName());
-            holder.tv_distance.setText(userbeanList.get(position).getAll_distance() + "");
+            holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
+
+            switch (type) {
+                case 0:
+                    holder.tv_distance.setText(userbeanList.get(position).getAll_distance() + "  m");
+                    break;
+                case 1:
+                    holder.tv_distance.setText(userbeanList.get(position).getToday_distance() + "  m");
+                    break;
+                case 2:
+                    holder.tv_distance.setText(userbeanList.get(position).getLevel() + " 级");
+                    break;
+            }
             if (userbeanList.get(position).getHeadPortraitFileName() != null)
-                    FileModel.getInstance().downloadPic(userbeanList.get(position).getHeadPortraitFileName(), new DownloadListener() {
-                        @Override
-                        public void onSuccess(String s) {
-                            holder.circleImageView.setImageBitmap(BitmapFactory.decodeFile(s));
-                        }
+                FileModel.getInstance().downloadPic(userbeanList.get(position).getHeadPortraitFileName(), new DownloadListener() {
+                    @Override
+                    public void onSuccess(String s) {
+                        holder.circleImageView.setImageBitmap(BitmapFactory.decodeFile(s));
+                    }
 
-                        @Override
-                        public void onProgress(String s, int i) {
+                    @Override
+                    public void onProgress(String s, int i) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(int i, String s) {
+                    @Override
+                    public void onError(int i, String s) {
 
-                        }
-                    });
+                    }
+                });
 
         }
 

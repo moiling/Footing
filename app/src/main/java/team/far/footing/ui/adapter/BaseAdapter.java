@@ -1,4 +1,4 @@
-package team.far.footing.ui.adpter;
+package team.far.footing.ui.adapter;
 
 /**
  * Created by moi on 2015/8/7.
