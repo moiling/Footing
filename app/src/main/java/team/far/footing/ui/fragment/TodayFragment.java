@@ -28,7 +28,6 @@ import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVU;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.ui.widget.DividerItemDecoration;
-import team.far.footing.util.LogUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVU {
 
@@ -81,8 +80,12 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
 
     @Override
     public void init(Userbean CurrentUser, List<Userbean> userbeanList) {
-        tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
-        if (CurrentUser.getIs_finish_today() == 1) tvIsFinishToday.setText("已完成今日任务！");
+        if (CurrentUser.getToday_distance() != null) {
+            tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+        } else {
+            tvTodayDistance.setText("0 m");
+        }
+        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) tvIsFinishToday.setText("已完成今日任务！");
         recyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), DividerItemDecoration.VERTICAL_LIST));
         this.userbeanList = userbeanList;
