@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import team.far.footing.app.APP;
 import team.far.footing.ui.vu.IWalkVu;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by moi on 2015/8/10.
@@ -35,6 +36,10 @@ public class WalkPresenter {
         this.v = v;
         // 定位
         initLocation();
+    }
+
+    public LocationClient getmLocationClient() {
+        return mLocationClient;
     }
 
     // 开始定位
@@ -74,7 +79,7 @@ public class WalkPresenter {
     }
 
     private void initLocation() {
-        mLocationClient = new LocationClient(APP.getContext());
+        mLocationClient = APP.getLocationClient();
         mLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(mLocationListener);
 
@@ -89,12 +94,15 @@ public class WalkPresenter {
         option.setIgnoreKillProcess(true);
         // 请求的频率
         option.setScanSpan(span * 1000);
+        mLocationClient.start();
         mLocationClient.setLocOption(option);
     }
 
     private class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
+
+            LogUtils.e(bdLocation.getAltitude() + "  activity " + bdLocation.getLatitude() + "");
             MyLocationData data = new MyLocationData.Builder()
                     .accuracy(bdLocation.getRadius())
                     .latitude(bdLocation.getLatitude())
@@ -149,15 +157,5 @@ public class WalkPresenter {
         v = null;
     }
 
-
-    //开启service
-    public void start_service() {
-
-    }
-
-    //关闭service
-    public void finish_service() {
-
-    }
 
 }

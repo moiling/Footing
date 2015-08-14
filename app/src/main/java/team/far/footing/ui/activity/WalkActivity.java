@@ -1,6 +1,7 @@
 package team.far.footing.ui.activity;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
@@ -30,10 +31,12 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
+import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
 import team.far.footing.service.MapService;
 import team.far.footing.ui.vu.IWalkVu;
+import team.far.footing.util.LogUtils;
 
 public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
@@ -57,6 +60,8 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     private MapService mapService;
 
+    private ServiceConnection serviceConnection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +84,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         super.onStart();
         // 开始定位
         presenter.startLocation();
+        start_service();
     }
 
     @Override
@@ -174,7 +180,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
         ivWalkPause.setVisibility(View.VISIBLE);
-
     }
 
     private void stopWalk() {
@@ -244,4 +249,30 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 break;
         }
     }
+
+    //开启service
+    public void start_service() {
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                mapService = ((MapService.MyBinder) service).getService();
+                LogUtils.e("service绑定成功");
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mapService = null;
+            }
+        };
+        Intent intent = new Intent(WalkActivity.this, MapService.class);
+        startService(intent);
+    }
+
+    //关闭service
+    public void finish_service() {
+
+
+    }
+
+
 }
