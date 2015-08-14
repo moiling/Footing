@@ -10,6 +10,9 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import team.far.footing.app.APP;
 import team.far.footing.util.LogUtils;
 
@@ -18,8 +21,9 @@ import team.far.footing.util.LogUtils;
  */
 public class MapService extends Service {
     private final IBinder myBinder = new MyBinder();
-
     private LocationClient mLocationClient;
+
+    private List<String> list_map = new ArrayList<>();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -45,6 +49,11 @@ public class MapService extends Service {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     public void initLocation() {
         mLocationClient = APP.getLocationClient();
         LocationClientOption option = new LocationClientOption();
@@ -63,11 +72,11 @@ public class MapService extends Service {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 LogUtils.e(bdLocation.getAltitude() + "   " + bdLocation.getLatitude() + "");
+                list_map.add(bdLocation.getAltitude() + "   " + bdLocation.getLatitude());
             }
         });
         mLocationClient.requestLocation();
     }
-
 
 
 }

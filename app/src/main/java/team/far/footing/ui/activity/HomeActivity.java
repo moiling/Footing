@@ -24,13 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.bmob.v3.BmobUser;
 import team.far.footing.R;
+import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.impl.MapModel;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adapter.HomePagerAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
@@ -38,6 +43,7 @@ import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.ui.widget.CircleImageView;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 
@@ -89,6 +95,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initToolbar();
         init();
         presenter = new HomePresenter(this);
+        Test();
     }
 
     @Override
@@ -189,7 +196,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         //mToolbarUserImage.set
 
 
-
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
     }
@@ -256,4 +262,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     }
 
 
+    public void Test() {
+        MapModel.getInstance().save_map_finish(BmobUtils.getCurrentUser(), "1", "1",
+                Arrays.asList("游泳", "看书"), "1", "1", "1", null);
+    }
 }
