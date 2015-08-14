@@ -1,12 +1,18 @@
 package team.far.footing.ui.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -113,7 +119,11 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     @Override
     public void showDistanceTotal(double distance) {
-        tvWalkDistance.setText(new DecimalFormat(".##").format(distance) + " m");
+        if (distance != 0) {
+            tvWalkDistance.setText(new DecimalFormat(".##").format(distance) + " m");
+        } else {
+            tvWalkDistance.setText("请稍微移动一下下哦~");
+        }
     }
 
     @Override
@@ -145,27 +155,77 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         return mBaiduMap;
     }
 
+    private void startWalk() {
+        presenter.startWalk();
+        ivWalkStart.setVisibility(View.GONE);
+        cardWalkStatus.setVisibility(View.VISIBLE);
+        ivWalkStop.setVisibility(View.VISIBLE);
+        ivWalkPause.setVisibility(View.VISIBLE);
+    }
+
+    private void stopWalk() {
+        presenter.stopWalk();
+        cardWalkStatus.setVisibility(View.INVISIBLE);
+        ivWalkStop.setVisibility(View.GONE);
+        ivWalkPause.setVisibility(View.GONE);
+        ivWalkStart.setVisibility(View.VISIBLE);
+    }
+
+    private void pauseWalk() {
+        presenter.pauseWalk();
+        ivWalkPause.setVisibility(View.GONE);
+        ivWalkStart.setVisibility(View.VISIBLE);
+    }
+
+    // 分享的相关操作
+    private void share() {
+        mBaiduMap.snapshotScope(null, new BaiduMap.SnapshotReadyCallback() {
+
+            @Override
+            public void onSnapshotReady(Bitmap bitmap) {
+                Uri uri = Uri.parse(MediaStore.Images.Media
+                        .insertImage(getContentResolver(), bitmap, null, null));
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.setType("image/png");
+                startActivity(Intent
+                        .createChooser(shareIntent, getResources().getText(R.string.send_to)));
+
+                // 停止步行
+                startWalk();
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_walk_start:
-                presenter.startWalk();
-                ivWalkStart.setVisibility(View.GONE);
-                cardWalkStatus.setVisibility(View.VISIBLE);
-                ivWalkStop.setVisibility(View.VISIBLE);
-                ivWalkPause.setVisibility(View.VISIBLE);
+                startWalk();
                 break;
             case R.id.iv_walk_pause:
-                presenter.pauseWalk();
-                ivWalkPause.setVisibility(View.GONE);
-                ivWalkStart.setVisibility(View.VISIBLE);
+                pauseWalk();
                 break;
             case R.id.iv_walk_stop:
-                presenter.stopWalk();
-                cardWalkStatus.setVisibility(View.INVISIBLE);
-                ivWalkStop.setVisibility(View.GONE);
-                ivWalkPause.setVisibility(View.GONE);
-                ivWalkStart.setVisibility(View.VISIBLE);
+                new MaterialDialog.Builder(this)
+                        .title("停止步行")
+                        .content("是否分享此次步行？")
+                        .positiveText("分享")
+                        .negativeText("不用了")
+                        .theme(Theme.LIGHT)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                share();
+                                dialog.dismiss();
+                            }
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                stopWalk();
+                                dialog.dismiss();
+                            }
+                        }).show();
                 break;
         }
     }
