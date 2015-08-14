@@ -7,8 +7,10 @@
     <color name="divider_color">#B6B6B6</color>
 
     <color name="primary_light_color">#e7754d</color>
-    <color name="primary_color">#f16332</color>
+<!--    <color name="primary_color">#f16332</color>-->
+    <color name="primary_color">#E97249</color>
     <color name="primary_dark_color">#d56037</color>
-    <color name="accent_color">#f16332</color>
+    <!--<color name="accent_color">#f16332</color>-->
+    <color name="accent_color">#46AAE0</color>
 
 </resources>
