@@ -90,6 +90,7 @@ public class UserModel implements IUserModel {
                 regsterBean.setUsername(username);
                 regsterBean.setPassword(passwrod);
                 regsterBean.setEmail(email);
+                regsterBean.setLevel(1);
                 regsterBean.setFriendId(friends.getObjectId());
                 //注册更新用户表
                 regsterBean.signUp(APP.getContext(), new SaveListener() {
