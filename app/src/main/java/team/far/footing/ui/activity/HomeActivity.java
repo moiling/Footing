@@ -123,6 +123,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         fragmentList.add(new FriendsFragment());
         fragmentList.add(new SquareFragment());
         fragmentPagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), fragmentList);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(fragmentPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

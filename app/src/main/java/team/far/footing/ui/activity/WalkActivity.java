@@ -1,9 +1,12 @@
 package team.far.footing.ui.activity;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -29,20 +32,30 @@ import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
+import team.far.footing.service.MapService;
 import team.far.footing.ui.vu.IWalkVu;
 
 public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.map_walk) MapView mMapView;
-    @InjectView(R.id.card_walk_status) CardView cardWalkStatus;
-    @InjectView(R.id.iv_walk_start) ImageView ivWalkStart;
-    @InjectView(R.id.iv_walk_pause) ImageView ivWalkPause;
-    @InjectView(R.id.iv_walk_stop) ImageView ivWalkStop;
-    @InjectView(R.id.tv_walk_distance) TextView tvWalkDistance;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+    @InjectView(R.id.map_walk)
+    MapView mMapView;
+    @InjectView(R.id.card_walk_status)
+    CardView cardWalkStatus;
+    @InjectView(R.id.iv_walk_start)
+    ImageView ivWalkStart;
+    @InjectView(R.id.iv_walk_pause)
+    ImageView ivWalkPause;
+    @InjectView(R.id.iv_walk_stop)
+    ImageView ivWalkStop;
+    @InjectView(R.id.tv_walk_distance)
+    TextView tvWalkDistance;
     private BaiduMap mBaiduMap;
 
     private WalkPresenter presenter;
+
+    private MapService mapService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +174,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
         ivWalkPause.setVisibility(View.VISIBLE);
+
     }
 
     private void stopWalk() {
@@ -220,6 +234,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                                 share();
                                 dialog.dismiss();
                             }
+
                             @Override
                             public void onNegative(MaterialDialog dialog) {
                                 stopWalk();

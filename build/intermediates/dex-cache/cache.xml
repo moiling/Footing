@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\org.hybridsquad.android.photocropper\library\2.1.0\jars\classes.jar"
+        jar="E:\Android\Footing\app\build\intermediates\exploded-aar\org.hybridsquad.android.photocropper\library\2.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="95f2c0dcfe955687f296a0c19540882a07c7a800">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-d39835b8afd02f0f46749a51e39cb851e7915429.jar" />
+        <dex dex="E:\Android\Footing\app\build\intermediates\pre-dexed\debug\classes-246e42cbaabc654c11b57330d2bd6ed921df830b.jar" />
     </item>
 
 </items>

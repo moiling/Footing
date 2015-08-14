@@ -23,12 +23,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        tools:replace="android:icon"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity android:name=".ui.activity.RegisterActivty" />
         //baidu
         <meta-data
@@ -38,13 +37,12 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
-        </service>
+            android:process=":remote"></service>
         //qq
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -60,16 +58,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:label="@string/title_activity_home" >
-        </activity>
+            android:label="@string/title_activity_home"></activity>
         <activity
             android:name=".ui.activity.WalkActivity"
             android:label="@string/title_activity_walk"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activity.LaunchActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,16 +74,15 @@
         </activity>
         <activity
             android:name=".ui.activity.UserInfoActivity"
-            android:label="@string/title_activity_user_info" >
-        </activity>
+            android:label="@string/title_activity_user_info"></activity>
         <activity
             android:name=".ui.activity.EditUserInfoActivity"
-            android:label="@string/title_activity_edit_user_info" >
-        </activity>
+            android:label="@string/title_activity_edit_user_info"></activity>
         <activity
             android:name=".ui.activity.SettingActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
+            android:label="@string/title_activity_setting"></activity>
+
+        <service android:name=".service.MapService" />
     </application>
 
 </manifest>

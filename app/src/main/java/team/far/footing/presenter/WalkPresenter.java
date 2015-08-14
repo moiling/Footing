@@ -148,4 +148,16 @@ public class WalkPresenter {
     public void onRelieveView() {
         v = null;
     }
+
+
+    //开启service
+    public void start_service() {
+
+    }
+
+    //关闭service
+    public void finish_service() {
+
+    }
+
 }
