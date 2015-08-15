@@ -58,16 +58,12 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     private WalkPresenter presenter;
 
-    private MapService mapService;
-
-    private ServiceConnection serviceConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walk);
         ButterKnife.inject(this);
-        start_service();
         initToolbar();
         initMap();
         init();
@@ -83,8 +79,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-
-
         // 开始定位
         presenter.startLocation();
     }
@@ -149,7 +143,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     @Override
     public void drawPolyline(ArrayList<LatLng> latLngs) {
-
         // 现在才反应过来……原来画线的方法每一次都重绘了整个图……走得时间长了会变得好卡好卡
         // 现在两点两点一画，但这样图就更抖了、还会出现断层、但是至少比界面卡住要好
         if (latLngs.size() > 1) {
@@ -175,24 +168,24 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     public BaiduMap getBaiduMap() {
         return mBaiduMap;
     }
-
-    private void startWalk() {
+    @Override
+    public void startWalk() {
         presenter.startWalk();
         ivWalkStart.setVisibility(View.GONE);
         cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
         ivWalkPause.setVisibility(View.VISIBLE);
     }
-
-    private void stopWalk() {
+    @Override
+    public void stopWalk() {
         presenter.stopWalk();
         cardWalkStatus.setVisibility(View.INVISIBLE);
         ivWalkStop.setVisibility(View.GONE);
         ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
     }
-
-    private void pauseWalk() {
+    @Override
+    public void pauseWalk() {
         presenter.pauseWalk();
         ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
@@ -214,7 +207,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                         .createChooser(shareIntent, getResources().getText(R.string.send_to)));
 
                 // 停止步行
-                startWalk();
+                stopWalk();
             }
         });
     }
@@ -229,6 +222,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 pauseWalk();
                 break;
             case R.id.iv_walk_stop:
+                presenter.end_service();
                 new MaterialDialog.Builder(this)
                         .title("停止步行")
                         .content("是否分享此次步行？")
@@ -251,30 +245,5 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 break;
         }
     }
-
-    //开启service
-    public void start_service() {
-        serviceConnection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mapService = ((MapService.MyBinder) service).getService();
-                LogUtils.e("service绑定成功");
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                mapService = null;
-            }
-        };
-        Intent intent = new Intent(WalkActivity.this, MapService.class);
-        startService(intent);
-    }
-
-    //关闭service
-    public void finish_service() {
-
-
-    }
-
 
 }

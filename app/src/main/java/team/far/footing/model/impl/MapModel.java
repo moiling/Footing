@@ -33,7 +33,7 @@ public class MapModel implements IMapModel {
         mapBean.setUserbean(userbean);
         mapBean.setAll_distance(all_distance);
         mapBean.setAll_time(all_time);
-        mapBean.add("map_array", "sdjasl");
+        mapBean.addAll("map_array",map_list );
         mapBean.setStart_time(start_time);
         mapBean.setMap_url(map_url);
         mapBean.setMap_file_name(map_file_name);

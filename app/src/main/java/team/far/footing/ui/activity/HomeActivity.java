@@ -261,8 +261,4 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     }
 
 
-    public void Test() {
-        MapModel.getInstance().save_map_finish(BmobUtils.getCurrentUser(), "1", "1",
-                Arrays.asList("游泳", "看书"), "1", "1", "1", null);
-    }
 }
