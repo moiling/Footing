@@ -56,6 +56,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         ButterKnife.inject(this, view);
+        initRecycler();
         todayPresenter = new TodayPresenter(this);
         spinnerFgToday.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -70,6 +71,13 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
             }
         });
         return view;
+    }
+
+    private void initRecycler() {
+        recyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
+        recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), DividerItemDecoration.VERTICAL_LIST));
+        myAdapter = new MyAdapter();
+        recyclerview.setAdapter(myAdapter);
     }
 
     @Override
@@ -89,12 +97,8 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
             tvIsFinishToday.setText("已完成");
             tvIsFinishToday.setTextColor(getResources().getColor(R.color.accent_color));
         }
-        recyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), DividerItemDecoration.VERTICAL_LIST));
         this.userbeanList = userbeanList;
-        myAdapter = new MyAdapter();
-        recyclerview.setAdapter(myAdapter);
-
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -110,19 +114,19 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
     @Override
     public void choose_distance(List<Userbean> userbeanList) {
         this.userbeanList = userbeanList;
-        recyclerview.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void choose_alldistance(List<Userbean> userbeanList) {
         this.userbeanList = userbeanList;
-        recyclerview.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void choose_level(List<Userbean> userbeanList) {
         this.userbeanList = userbeanList;
-        recyclerview.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
