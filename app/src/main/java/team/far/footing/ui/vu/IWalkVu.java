@@ -18,5 +18,8 @@ public interface IWalkVu {
     void moveCamera2Location(LatLng latLng);
     // 得到map
     BaiduMap getBaiduMap();
+    void startWalk();
+    void stopWalk();
+    void pauseWalk();
 
 }
