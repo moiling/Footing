@@ -9,7 +9,6 @@ import cn.bmob.v3.listener.UpdateListener;
 import team.far.footing.app.APP;
 import team.far.footing.model.IMapModel;
 import team.far.footing.model.Listener.OnUpdateMapListener;
-import team.far.footing.model.Listener.OnUpdateUserListener;
 import team.far.footing.model.bean.MapBean;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.LogUtils;

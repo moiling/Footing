@@ -81,6 +81,8 @@ public interface IFileModel {
     void getLocalThumbnail(String filepath, int modeId, int width, int height, int quality, LocalThumbnailListener localThumbnailListener);
 
 
-    //
+    //从本地获取图片
     Bitmap getLocalPic(String filename);
+
+
 }
