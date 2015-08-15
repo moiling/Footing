@@ -85,7 +85,10 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
         } else {
             tvTodayDistance.setText("0 m");
         }
-        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) tvIsFinishToday.setText("已完成今日任务！");
+        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) {
+            tvIsFinishToday.setText("已完成");
+            tvIsFinishToday.setTextColor(getResources().getColor(R.color.accent_color));
+        }
         recyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), DividerItemDecoration.VERTICAL_LIST));
         this.userbeanList = userbeanList;

@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
+import team.far.footing.app.ActivityCollector;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.SPUtils;
@@ -54,7 +55,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 Intent intent = new Intent(APP.getContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 startActivity(intent);
-                finish();
+                ActivityCollector.finishActivitis();
                 break;
         }
     }

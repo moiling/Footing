@@ -34,6 +34,7 @@ public class BaseActivity extends AppCompatActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
         setBarTintColor(getResources().getColor(R.color.primary_color));
+        ActivityCollector.addActivity(this);
     }
 
     protected void noUseBarTint() {
@@ -48,6 +49,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 
     public void showProgress(String title){

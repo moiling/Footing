@@ -2,15 +2,15 @@
 <resources>
 
     <array name="sort_string">
-        <item>1st</item>
-        <item>2ed</item>
-        <item>3rd</item>
-        <item>4th</item>
-        <item>5th</item>
-        <item>6th</item>
-        <item>7th</item>
-        <item>8th</item>
-        <item>9th</item>
+        <item>1ST</item>
+        <item>2ED</item>
+        <item>3RD</item>
+        <item>4TH</item>
+        <item>5TH</item>
+        <item>6TH</item>
+        <item>7TH</item>
+        <item>8TH</item>
+        <item>9TH</item>
     </array>
 
 
