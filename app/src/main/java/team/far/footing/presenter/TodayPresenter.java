@@ -95,6 +95,7 @@ public class TodayPresenter {
                 }
             }
         }
+
         return list;
     }
 

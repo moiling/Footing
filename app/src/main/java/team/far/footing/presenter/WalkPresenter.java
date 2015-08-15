@@ -45,13 +45,13 @@ public class WalkPresenter {
     // 开始定位
     public void startLocation() {
         v.getBaiduMap().setMyLocationEnabled(true);
-        mLocationClient.start();
+      //  mLocationClient.start();
     }
 
     // 停止定位
     public void stopLocation() {
         v.getBaiduMap().setMyLocationEnabled(false);
-        mLocationClient.stop();
+       // mLocationClient.stop();
     }
 
     public void startWalk() {
@@ -91,7 +91,7 @@ public class WalkPresenter {
         option.setOpenGps(true);
         option.setLocationNotify(true);
         // stop时不杀死service
-        option.setIgnoreKillProcess(true);
+        option.setIgnoreKillProcess(false);
         // 请求的频率
         option.setScanSpan(span * 1000);
         mLocationClient.start();
@@ -108,7 +108,10 @@ public class WalkPresenter {
                     .latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude())
                     .build();
+
+            if (v != null)
             v.getBaiduMap().setMyLocationData(data);
+
             //MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, )
 
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());

@@ -22,7 +22,6 @@ import team.far.footing.util.LogUtils;
 public class MapService extends Service {
     private final IBinder myBinder = new MyBinder();
     private LocationClient mLocationClient;
-
     private List<String> list_map = new ArrayList<>();
 
     @Override
@@ -39,19 +38,28 @@ public class MapService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        initLocation();
+
     }
 
 
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
+        initLocation();
+        mLocationClient.start();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtils.e("service已经");
+        return super.onStartCommand(intent, flags, startId);
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LogUtils.e("service已经退出了");
     }
 
     public void initLocation() {

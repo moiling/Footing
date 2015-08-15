@@ -95,7 +95,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initToolbar();
         init();
         presenter = new HomePresenter(this);
-        Test();
     }
 
     @Override

@@ -12,6 +12,12 @@ import com.bmob.btp.callback.GetAccessUrlListener;
 import com.bmob.btp.callback.LocalThumbnailListener;
 import com.bmob.btp.callback.UploadListener;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+
 import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.app.APP;
 import team.far.footing.model.IFileModel;
@@ -24,12 +30,16 @@ import team.far.footing.util.LogUtils;
 public class FileModel implements IFileModel {
     public static final FileModel instance = new FileModel();
 
+
     private FileModel() {
     }
 
     public static final FileModel getInstance() {
         return instance;
     }
+
+
+    private BlockingQueue<String> queue = new LinkedBlockingDeque<>();
 
     @Override
     public void uploadPic(String filePath, final OnUploadListener onUploadListener) {
@@ -59,8 +69,10 @@ public class FileModel implements IFileModel {
     }
 
     @Override
-    public void downloadPic(String filename, com.bmob.btp.callback.DownloadListener downloadListener) {
-        BmobProFile.getInstance(APP.getContext()).download(filename, downloadListener);
+    public void downloadPic(final String filename, final com.bmob.btp.callback.DownloadListener downloadListener) {
+        BmobProFile bmobProFile =  new BmobProFile();
+        bmobProFile.start(APP.getContext());
+        bmobProFile.download(filename,downloadListener);
     }
 
     @Override
@@ -112,8 +124,7 @@ public class FileModel implements IFileModel {
 
     @Override
     public Bitmap getLocalPic(String filename) {
-
-        return BitmapFactory.decodeFile(getDowPicPath()+"/"+filename);
+        return BitmapFactory.decodeFile(getDowPicPath() + "/" + filename);
     }
 
 

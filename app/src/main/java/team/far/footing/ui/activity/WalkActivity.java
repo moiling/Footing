@@ -67,6 +67,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walk);
         ButterKnife.inject(this);
+        start_service();
         initToolbar();
         initMap();
         init();
@@ -82,9 +83,10 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
+
+
         // 开始定位
         presenter.startLocation();
-        start_service();
     }
 
     @Override

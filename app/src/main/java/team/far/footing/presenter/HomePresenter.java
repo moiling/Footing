@@ -24,7 +24,7 @@ public class HomePresenter {
     private Userbean userbean;
     private IFileModel fileModel;
 
-    public HomePresenter(IHomeVu v) {
+    public HomePresenter(IHomeVu v)  {
         this.v = v;
         // 当homePresenter被实例化，用sp保存登录状态
         SPUtils.put(APP.getContext(), "isLogin", Boolean.TRUE);
@@ -70,7 +70,7 @@ public class HomePresenter {
     }
 
 
-    public void setUserPic(String filename) {
+    public void setUserPic(String filename)  {
         fileModel.downloadPic(filename, new com.bmob.btp.callback.DownloadListener() {
             @Override
             public void onSuccess(String s) {
