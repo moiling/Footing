@@ -19,6 +19,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.RegisterPresenter;
 import team.far.footing.ui.vu.IRegsterVu;
+import team.far.footing.util.BmobUtils;
 
 public class RegisterActivty extends BaseActivity implements IRegsterVu, View.OnClickListener {
 
@@ -123,9 +124,9 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu, View.On
     }
 
     @Override
-    public void showRegsterFail(String reason) {
+    public void showRegsterFail(int i) {
         dismissProgress();
-        new MaterialDialog.Builder(this).title("注册失败").content(reason).positiveText("好吧").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+        new MaterialDialog.Builder(this).title("注册失败").content(BmobUtils.searchCode(i)).positiveText("好吧").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
                 dialog.dismiss();
