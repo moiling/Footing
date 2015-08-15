@@ -8,5 +8,5 @@ import team.far.footing.model.bean.Userbean;
 public interface OnRegsterListener {
     void RegsterSuccess(Userbean userbean);
 
-    void RegsterFail(String reason);
+    void RegsterFail(int i);
 }

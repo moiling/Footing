@@ -21,6 +21,76 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@mipmap/ic_friends_status"/>
+
+            <TextView
+                android:text="好友状态"
+                android:textSize="16sp"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/secondary_text"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_fg_friends"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="2dp"
+            card_view:cardBackgroundColor="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp">
+
+                <Spinner
+                    android:layout_marginRight="22dp"
+                    android:id="@+id/spinner_fg_today"
+                    android:theme="@style/SpinnerTheme"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:entries="@array/spinner_array_string" />
+
+                <TextView
+                    android:id="@+id/tv_friends"
+                    android:layout_marginLeft="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="好友排名"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinner_fg_today" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@mipmap/ic_my_status"/>
 
             <TextView
@@ -40,7 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            card_view:cardCornerRadius="2dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="3dp"
             card_view:cardElevation="2dp"
             card_view:cardBackgroundColor="@color/white">
 
@@ -51,14 +122,14 @@
                 android:layout_height="match_parent">
 
                 <View
-                    android:background="@color/divider_color"
+                    android:background="@color/background_material_light"
                     android:layout_marginLeft="22dp"
                     android:layout_marginRight="22dp"
                     android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
 
-                <TextView
+           <!--     <TextView
                     android:id="@+id/tv_tt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,21 +137,18 @@
                     android:gravity="center"
                     android:text="行走路程"
                     android:textColor="@color/primary_text"
-                    android:textSize="16sp" />
+                    android:textSize="16sp" />-->
 
                 <TextView
                     android:id="@+id/tv_today_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_tt"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="22dp"
+                    android:layout_marginLeft="22dp"
                     tools:text="0 m"
                     android:textColor="@color/accent_color"
                     android:textSize="18sp" />
 
-                <TextView
+       <!--         <TextView
                     android:id="@+id/tv_mission_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,90 +157,19 @@
                     android:text="任务情况"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/primary_text"
-                    android:textSize="16sp" />
+                    android:textSize="16sp" />-->
 
                 <TextView
                     android:id="@+id/tv_Is_finish_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_mission_status"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="22dp"
-                    android:text="未完成"
+                    android:layout_below="@+id/tv_today_distance"
+                    android:text="未完成任务"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="22dp"
                     android:textColor="@color/primary_color"
                     android:textSize="16sp" />
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="14dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_friends_status"/>
-
-            <TextView
-                android:text="好友状态"
-                android:textSize="16sp"
-                android:layout_marginLeft="12dp"
-                android:textColor="@color/secondary_text"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_fg_friends"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="2dp"
-            card_view:cardBackgroundColor="@color/white">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp">
-
-                <Spinner
-                    android:id="@+id/spinner_fg_today"
-                    android:theme="@style/SpinnerTheme"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:entries="@array/spinner_array_string" />
-
-                <TextView
-                    android:id="@+id/tv_friends"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="好友排名"
-                    android:textColor="@color/primary_text"
-                    android:textSize="16sp"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/spinner_fg_today" />
-            </RelativeLayout>
-
         </android.support.v7.widget.CardView>
 
     </LinearLayout>

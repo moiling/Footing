@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.bmob.btp.callback.DownloadListener;
 
 import java.util.ArrayList;
@@ -28,11 +29,10 @@ import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVU;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.ui.widget.DividerItemDecoration;
+import team.far.footing.util.LogUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVU {
 
-    @InjectView(R.id.tv_tt)
-    TextView tvTt;
     @InjectView(R.id.tv_today_distance)
     TextView tvTodayDistance;
     @InjectView(R.id.CV_fg_today)
@@ -135,7 +135,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
-
+            holder.ripple.setRippleColor(getResources().getColor(R.color.divider_color));
             switch (type) {
                 case 0:
                     holder.tv_distance.setText(userbeanList.get(position).getAll_distance() + "  m");
@@ -147,10 +147,12 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
                     holder.tv_distance.setText(userbeanList.get(position).getLevel() + " 级");
                     break;
             }
-            if (userbeanList.get(position).getHeadPortraitFileName() != null)
-                FileModel.getInstance().downloadPic(userbeanList.get(position).getHeadPortraitFileName(), new DownloadListener() {
+            if (userbeanList.get(position).getHeadPortraitFileName() != null) {
+                FileModel.getInstance().downloadPic(userbeanList.get(position)
+                        .getHeadPortraitFileName(), new DownloadListener() {
                     @Override
                     public void onSuccess(String s) {
+                        LogUtils.d("下载头像", "显示头像:" + s);
                         holder.circleImageView.setImageBitmap(BitmapFactory.decodeFile(s));
                     }
 
@@ -164,6 +166,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
 
                     }
                 });
+            }
 
         }
 
@@ -176,14 +179,15 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
             private CircleImageView circleImageView;
             private TextView tv_name;
             private TextView tv_distance;
+            private MaterialRippleLayout ripple;
 
             public ViewHolder(View itemView) {
                 super(itemView);
+                ripple = (MaterialRippleLayout) itemView.findViewById(R.id.ripple);
                 circleImageView = (CircleImageView) itemView.findViewById(R.id.item_image_friend);
                 tv_name = (TextView) itemView.findViewById(R.id.item_tv_name);
                 tv_distance = (TextView) itemView.findViewById(R.id.item_tv_distance);
             }
         }
     }
-
 }

@@ -104,7 +104,7 @@ public class UserModel implements IUserModel {
 
                     @Override
                     public void onFailure(int i, String s) {
-                        onRegsterListener.RegsterFail(s);
+                        onRegsterListener.RegsterFail(i);
                     }
                 });
             }

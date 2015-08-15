@@ -30,8 +30,8 @@ public class RegisterPresenter {
             }
 
             @Override
-            public void RegsterFail(String reason) {
-                mIRegsterVu.showRegsterFail(reason);
+            public void RegsterFail(int i) {
+                mIRegsterVu.showRegsterFail(i);
             }
         });
     }
