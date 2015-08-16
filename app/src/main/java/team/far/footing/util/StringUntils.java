@@ -13,8 +13,13 @@ public class StringUntils {
 
         ArrayList<LatLng> latLngs = new ArrayList<>();
         for (String string : list_map) {
-            String[] array = string.split("=");
-            latLngs.add(new LatLng(Double.valueOf(array[0]), Double.valueOf(array[0])));
+            try {
+                String[] array = string.split("=");
+                latLngs.add(new LatLng(Double.valueOf(array[0]), Double.valueOf(array[0])));
+            } catch (Exception e) {
+                LogUtils.e("在StringUntils中：解析出错");
+            }
+
         }
         return latLngs;
     }
