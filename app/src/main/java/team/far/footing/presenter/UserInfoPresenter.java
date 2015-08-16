@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import org.hybridsquad.android.library.CropHandler;
@@ -46,7 +47,23 @@ public class UserInfoPresenter {
                     public void onSuccess(String fileName, String url, BmobFile file) {
                         v.dismissLoading();
                         v.showUpdateSuccess();
-                        showUserInformation();
+                        fileModel.downloadPic(fileName, new com.bmob.btp.callback.DownloadListener() {
+
+                            @Override
+                            public void onError(int i, String s) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(String s) {
+                                v.showUserPic(BitmapFactory.decodeFile(s));
+                            }
+
+                            @Override
+                            public void onProgress(String s, int i) {
+
+                            }
+                        });
                     }
 
                     @Override
