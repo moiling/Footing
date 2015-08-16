@@ -127,46 +127,32 @@ public class BmobUtils {
                 return "该手机号已经注册过了，是不是以前注册过呢？试着找回密码吧！";
             case 301:
                 return "邮箱格式不正确";
+            case 302:
+                return "被限定了!";
             case 310:
-                return "被限定了！";
+                return "云端代码运行错误";
             case 311:
-                return "";
+                return "云端代码名称规范不对";
             case 401:
-                return "";
+                return "唯一键不能存在重复的值";
             case 402:
-                return "";
+                return "查询的where语句长度太大了";
             case 601:
-                return "";
+                return "不正确的BQL查询语句";
             case 1002:
-                return "";
+                return "什么！你居然碰到这样的错误？！应用的表到达上限了！快通知管理员！";
             case 1003:
-                return "";
+                return "什么！你居然碰到这样的错误？！表的行数到达上限了！快通知管理员！";
             case 1004:
-                return "";
+                return "什么！你居然碰到这样的错误？！表的列数到达上限了！快通知管理员！";
             case 1005:
-                return "";
+                return "555~居然请求次数到达上限了，快通知管理员，顺便寄点钱吧T。T";
             case 1006:
-                return "";
+                return "555~居然创建的定时任务到达上限了，快通知管理员，顺便寄点钱吧T。T";
             case 1007:
-                return "";
+                return "什么！你居然碰到这样的错误？！云端代码数到达上限了！快通知管理员！";
             case 1500:
-                return "";
-            case 10001:
-                return "";
-            case 10002:
-                return "";
-            case 10003:
-                return "";
-            case 10004:
-                return "";
-            case 10010:
-                return "";
-            case 10011:
-                return "";
-            case 10012:
-                return "";
-            case 10013:
-                return "";
+                return "你的文件，太大了！";
         }
         return "我也不知道怎么就错了~诶嘿~";
     }

@@ -33,7 +33,9 @@ public class MapModel implements IMapModel {
         mapBean.setUserbean(userbean);
         mapBean.setAll_distance(all_distance);
         mapBean.setAll_time(all_time);
-        mapBean.addAll("map_array",map_list );
+        if (map_list != null) {
+            mapBean.addAll("map_array", map_list);
+        }
         mapBean.setStart_time(start_time);
         mapBean.setMap_url(map_url);
         mapBean.setMap_file_name(map_file_name);
@@ -46,7 +48,9 @@ public class MapModel implements IMapModel {
         final MapBean mapBean = new MapBean();
 
         mapBean.setObjectId(objectId);
-        mapBean.addAll("map_array", map_list);
+        if (map_list != null) {
+            mapBean.addAll("map_array", map_list);
+        }
         mapBean.setAll_time(all_time);
         mapBean.setAll_distance(all_distance);
 

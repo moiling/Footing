@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -98,7 +97,9 @@ public class MapService extends Service {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 LogUtils.e(bdLocation.getAltitude() + "=" + bdLocation.getLatitude() + "");
-                list_map.add(bdLocation.getAltitude() + "=" + bdLocation.getLatitude());
+                if (list_map != null) {
+                    list_map.add(bdLocation.getAltitude() + "=" + bdLocation.getLatitude());
+                }
             }
         });
         mLocationClient.requestLocation();

@@ -132,7 +132,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, null);
+            View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_today_friends_list, null);
             return new ViewHolder(V);
         }
 
