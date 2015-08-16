@@ -19,6 +19,7 @@ public interface IWalkVu {
     // 得到map
     BaiduMap getBaiduMap();
     void startWalk();
+    void show_start_work();
     void stopWalk();
     void pauseWalk();
 

@@ -168,6 +168,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     public BaiduMap getBaiduMap() {
         return mBaiduMap;
     }
+
     @Override
     public void startWalk() {
         presenter.startWalk();
@@ -176,6 +177,15 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         ivWalkStop.setVisibility(View.VISIBLE);
         ivWalkPause.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void show_start_work() {
+        ivWalkStart.setVisibility(View.GONE);
+        cardWalkStatus.setVisibility(View.VISIBLE);
+        ivWalkStop.setVisibility(View.VISIBLE);
+        ivWalkPause.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void stopWalk() {
         presenter.stopWalk();
@@ -184,11 +194,14 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
     }
+
     @Override
     public void pauseWalk() {
-        presenter.pauseWalk();
         ivWalkPause.setVisibility(View.GONE);
+        cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStart.setVisibility(View.VISIBLE);
+        ivWalkStop.setVisibility(View.VISIBLE);
+        presenter.pauseWalk();
     }
 
     // 分享的相关操作
@@ -217,11 +230,14 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         switch (v.getId()) {
             case R.id.iv_walk_start:
                 startWalk();
+                MapService.STATUS = 1;
                 break;
             case R.id.iv_walk_pause:
+                MapService.STATUS = 2;
                 pauseWalk();
                 break;
             case R.id.iv_walk_stop:
+                MapService.STATUS = 3;
                 presenter.end_service();
                 new MaterialDialog.Builder(this)
                         .title("停止步行")

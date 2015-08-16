@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import team.far.footing.app.APP;
+import team.far.footing.model.IFileModel;
 import team.far.footing.model.bean.MapBean;
 import team.far.footing.service.MapService;
 import team.far.footing.ui.vu.IWalkVu;
@@ -50,7 +51,8 @@ public class WalkPresenter {
         this.v = v;
         // 定位
         initLocation();
-        start_service();
+        if (MapService.STATUS != 0)
+            start_service();
     }
 
     // 开始定位
@@ -121,32 +123,52 @@ public class WalkPresenter {
                 mapService.start_Location();
                 mapBean = mapService.getLast_mapBean();
                 list_map = mapService.getList_map();
-                //加个标志来判断是否是刚进入  还是退出后的再次进入
-                //latLngs = StringUntils.getLaLngs(mapService.getList_map());
-                //展示数据
-                //v.startWalk();
-                //  v.drawPolyline(latLngs);
-                // v.showDistanceTotal(1000.2);
-
+                latLngs = mapService.getLatLngs();
+                distanceTotal = mapService.getDistance();
+                LogUtils.e("MapService.STATUS:"+MapService.STATUS);
+                switch (MapService.STATUS) {
+                    case 0:
+                        LogUtils.e("还没有开始步行");
+                        break;
+                    case 1:
+                        if (v != null) {
+                            v.show_start_work();
+                            v.showDistanceTotal(distanceTotal);
+                            v.drawPolyline(latLngs);
+                        }
+                        LogUtils.e("正在步行");
+                        break;
+                    case 2:
+                        if (v != null) {
+                            v.pauseWalk();
+                            v.showDistanceTotal(distanceTotal);
+                            v.drawPolyline(latLngs);
+                        }
+                        LogUtils.e("暂停步行");
+                        break;
+                    case 3:
+                        LogUtils.e("停止步行");
+                        break;
+                }
 
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 mapService = null;
-
             }
         };
+
         if (intent == null)
             intent = new Intent(APP.getContext(), MapService.class);
         APP.getContext().startService(intent);
         APP.getContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-
-
     }
 
     public void end_service() {
         mapService.stop_Location(distanceTotal);
+        APP.getContext().stopService(intent);
+        APP.getContext().unbindService(serviceConnection);
     }
 
     public void pause_service() {
