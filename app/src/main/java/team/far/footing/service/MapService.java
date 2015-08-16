@@ -168,10 +168,18 @@ public class MapService extends Service {
         STATUS = 2;
         mLocationClient.stop();
         end_date = TimeUtils.getcurrentTime();
-        //把数据传到服务器
-        MapModel.getInstance().save_map_finish(
-                BmobUtils.getCurrentUser(), "url", "filename", list_map, end_date.getTime() - start_date.getTime() + "",
-                distanceTotal + "", TimeUtils.dateToString(start_date), onUpdateMapListener);
+        if (last_mapBean == null) {
+            //把数据传到服务器
+            MapModel.getInstance().save_map_finish(
+                    BmobUtils.getCurrentUser(), "url", "filename", list_map, end_date.getTime() - start_date.getTime() + "",
+                    distanceTotal + "", TimeUtils.dateToString(start_date), onUpdateMapListener);
+        }
+        //如果last_mapBean不为null,表明service暂停过 --->  更新
+        else {
+            MapModel.getInstance().save_map_again(last_mapBean.getObjectId(), list_map, end_date.getTime() - start_date.getTime() + "",
+                    distanceTotal + "", onUpdateMapListener);
+            LogUtils.e("更新上传");
+        }
 
     }
 
