@@ -94,7 +94,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     }
 
     @Override
-    public void showUserInformation(Userbean userbean,Bitmap bitmap) {
+    public void showUserInformation(Userbean userbean, Bitmap bitmap) {
         if (!(userbean.getNickName() == null)) {
             mUserName.setText(userbean.getNickName());
         } else {
@@ -105,6 +105,13 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
         }
         mUserLv.setText("Lv." + userbean.getLevel());
         mUserSignature.setText(userbean.getSignature());
+    }
+
+    @Override
+    public void showUserPic(Bitmap bitmap) {
+        if (bitmap != null) {
+            mUserPic.setImageBitmap(bitmap);
+        }
     }
 
     @Override

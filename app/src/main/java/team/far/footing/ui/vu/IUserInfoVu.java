@@ -11,6 +11,8 @@ public interface IUserInfoVu {
 
     void showUserInformation(Userbean userbean,Bitmap bitmap);
 
+    void showUserPic(Bitmap bitmap);
+
     void showUpdateLoading();
 
     void showUpdateSuccess();
