@@ -1,13 +1,9 @@
 package team.far.footing.ui.activity;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -31,33 +27,21 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
-import team.far.footing.app.APP;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
-import team.far.footing.service.MapService;
 import team.far.footing.ui.vu.IWalkVu;
-import team.far.footing.util.LogUtils;
 
 public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
-    @InjectView(R.id.map_walk)
-    MapView mMapView;
-    @InjectView(R.id.card_walk_status)
-    CardView cardWalkStatus;
-    @InjectView(R.id.iv_walk_start)
-    ImageView ivWalkStart;
-    @InjectView(R.id.iv_walk_pause)
-    ImageView ivWalkPause;
-    @InjectView(R.id.iv_walk_stop)
-    ImageView ivWalkStop;
-    @InjectView(R.id.tv_walk_distance)
-    TextView tvWalkDistance;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.map_walk) MapView mMapView;
+    @InjectView(R.id.card_walk_status) CardView cardWalkStatus;
+    @InjectView(R.id.iv_walk_start) ImageView ivWalkStart;
+    @InjectView(R.id.iv_walk_pause) ImageView ivWalkPause;
+    @InjectView(R.id.iv_walk_stop) ImageView ivWalkStop;
+    @InjectView(R.id.tv_walk_distance) TextView tvWalkDistance;
     private BaiduMap mBaiduMap;
-
     private WalkPresenter presenter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +98,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         // 隐藏缩放控件
         mMapView.showZoomControls(false);
         // 事实证明百度地图的logo是可以隐藏的……百度会不会不允许通过呢？先这样吧……
-        mMapView.removeViewAt(1);
+        // mMapView.removeViewAt(1);
         // 缩放比例
         MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18f);
         mBaiduMap.setMapStatus(msu);
@@ -179,14 +163,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     }
 
     @Override
-    public void show_start_work() {
-        ivWalkStart.setVisibility(View.GONE);
-        cardWalkStatus.setVisibility(View.VISIBLE);
-        ivWalkStop.setVisibility(View.VISIBLE);
-        ivWalkPause.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void stopWalk() {
         presenter.stopWalk();
         cardWalkStatus.setVisibility(View.INVISIBLE);
@@ -230,21 +206,13 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         switch (v.getId()) {
             case R.id.iv_walk_start:
                 startWalk();
-                MapService.STATUS = 1;
                 break;
             case R.id.iv_walk_pause:
-                MapService.STATUS = 2;
                 pauseWalk();
                 break;
             case R.id.iv_walk_stop:
-                MapService.STATUS = 3;
-                presenter.end_service();
-                new MaterialDialog.Builder(this)
-                        .title("停止步行")
-                        .content("是否分享此次步行？")
-                        .positiveText("分享")
-                        .negativeText("不用了")
-                        .theme(Theme.LIGHT)
+                new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
+                        .positiveText("分享").negativeText("不用了").theme(Theme.LIGHT)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
