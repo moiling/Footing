@@ -1,4 +1,4 @@
-package team.far.footing.model.Listener;
+package team.far.footing.model.callback;
 
 /**
  * Created by Luoyy on 2015/8/9 0009.

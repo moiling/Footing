@@ -1,4 +1,4 @@
-package team.far.footing.model.Listener;
+package team.far.footing.model.callback;
 
 import java.util.List;
 

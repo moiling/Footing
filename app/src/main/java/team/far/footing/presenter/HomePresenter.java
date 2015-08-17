@@ -74,7 +74,7 @@ public class HomePresenter {
         fileModel.downloadPic(filename, new com.bmob.btp.callback.DownloadListener() {
             @Override
             public void onSuccess(String s) {
-                v.showUserImg(BitmapFactory.decodeFile(s));
+                if (v != null) v.showUserImg(BitmapFactory.decodeFile(s));
             }
 
             @Override

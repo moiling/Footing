@@ -139,7 +139,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
-            holder.ripple.setRippleColor(getResources().getColor(R.color.divider_color));
+            holder.ripple.setRippleColor(getResources().getColor(R.color.accent_light_color));
             switch (type) {
                 case 0:
                     holder.tv_distance.setText(userbeanList.get(position).getAll_distance() + "  m");
