@@ -3,11 +3,10 @@ package team.far.footing.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import team.far.footing.app.APP;
 import team.far.footing.model.IFileModel;
-import team.far.footing.model.Listener.OngetUserPicListener;
+import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.ui.activity.SettingActivity;

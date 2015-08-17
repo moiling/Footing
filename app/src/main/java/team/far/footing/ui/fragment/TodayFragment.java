@@ -1,13 +1,11 @@
 package team.far.footing.ui.fragment;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
-import com.bmob.btp.callback.DownloadListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +22,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
-import team.far.footing.model.Listener.OngetUserPicListener;
+import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVU;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.ui.widget.DividerItemDecoration;
-import team.far.footing.util.LogUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVU {
 

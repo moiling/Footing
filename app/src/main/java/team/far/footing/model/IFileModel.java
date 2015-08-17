@@ -1,14 +1,13 @@
 package team.far.footing.model;
 
 import android.graphics.Bitmap;
-import android.webkit.DownloadListener;
 
 import com.bmob.btp.callback.DeleteFileListener;
 import com.bmob.btp.callback.GetAccessUrlListener;
 import com.bmob.btp.callback.LocalThumbnailListener;
 
-import team.far.footing.model.Listener.OnUploadListener;
-import team.far.footing.model.Listener.OngetUserPicListener;
+import team.far.footing.model.callback.OnUploadListener;
+import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 
 /**

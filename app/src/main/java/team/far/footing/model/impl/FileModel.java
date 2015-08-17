@@ -2,7 +2,6 @@ package team.far.footing.model.impl;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.webkit.DownloadListener;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,17 +20,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.app.APP;
 import team.far.footing.model.IFileModel;
-import team.far.footing.model.Listener.OnUploadListener;
-import team.far.footing.model.Listener.OngetUserPicListener;
+import team.far.footing.model.callback.OnUploadListener;
+import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.LogUtils;
 
@@ -52,7 +48,6 @@ public class FileModel implements IFileModel {
 
     private BlockingQueue<String> queue = new LinkedBlockingDeque<>();
 
-    @Override
     public void uploadPic(String filePath, final OnUploadListener onUploadListener) {
         BTPFileResponse response = BmobProFile.getInstance(APP.getContext()).upload(filePath, new UploadListener() {
 
