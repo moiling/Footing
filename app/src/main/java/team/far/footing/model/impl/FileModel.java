@@ -2,7 +2,6 @@ package team.far.footing.model.impl;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.webkit.DownloadListener;
 
 import com.bmob.BTPFileResponse;
 import com.bmob.BmobPro;
@@ -12,16 +11,13 @@ import com.bmob.btp.callback.GetAccessUrlListener;
 import com.bmob.btp.callback.LocalThumbnailListener;
 import com.bmob.btp.callback.UploadListener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.app.APP;
 import team.far.footing.model.IFileModel;
-import team.far.footing.model.Listener.OnUploadListener;
+import team.far.footing.model.callback.OnUploadListener;
 import team.far.footing.util.LogUtils;
 
 /**

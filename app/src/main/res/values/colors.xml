@@ -12,5 +12,6 @@
     <color name="primary_dark_color">#d56037</color>
     <!--<color name="accent_color">#f16332</color>-->
     <color name="accent_color">#64c2f5</color>
+    <color name="accent_light_color">#a6dbf8</color>
 
 </resources>

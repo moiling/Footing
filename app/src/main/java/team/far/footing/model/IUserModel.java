@@ -3,12 +3,12 @@ package team.far.footing.model;
 
 import android.app.Activity;
 
-import team.far.footing.model.Listener.OnLoginForQQListener;
-import team.far.footing.model.Listener.OnLoginListener;
-import team.far.footing.model.Listener.OnQueryFriendListener;
-import team.far.footing.model.Listener.OnRegsterListener;
-import team.far.footing.model.Listener.OnUpdateUserListener;
-import team.far.footing.model.Listener.OnUploadListener;
+import team.far.footing.model.callback.OnLoginForQQListener;
+import team.far.footing.model.callback.OnLoginListener;
+import team.far.footing.model.callback.OnQueryFriendListener;
+import team.far.footing.model.callback.OnRegsterListener;
+import team.far.footing.model.callback.OnUpdateUserListener;
+import team.far.footing.model.callback.OnUploadListener;
 
 /**
  * Created by moi on 2015/8/7.

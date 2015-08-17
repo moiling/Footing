@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:mrl_rippleColor="@color/background_material_light"
-    app:mrl_rippleDuration="500">
+    app:mrl_rippleDuration="200">
 
     <RelativeLayout
         android:layout_width="match_parent"

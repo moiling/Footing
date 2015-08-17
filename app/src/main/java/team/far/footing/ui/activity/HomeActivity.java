@@ -43,36 +43,21 @@ import team.far.footing.util.ScreenUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
-    @InjectView(R.id.tabLayout)
-    TabLayout mTabLayout;
-    @InjectView(R.id.fabBtn_home)
-    FloatingActionButton mFabBtn;
-    @InjectView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-    @InjectView(R.id.view_pager)
-    ViewPager mViewPager;
-    @InjectView(R.id.tv_home_user_name)
-    TextView userName;
-    @InjectView(R.id.tv_home_user_lv)
-    TextView userLV;
-    @InjectView(R.id.iv_home_user_image)
-    ImageView userPic;
-    @InjectView(R.id.tv_home_user_signature)
-    TextView userSignature;
-    @InjectView(R.id.navigation)
-    NavigationView navigation;
-    @InjectView(R.id.home_bar)
-    LinearLayout homeBar;
-    @InjectView(R.id.iv_home_toolbar_user_image)
-    CircleImageView mToolbarUserImage;
-    @InjectView(R.id.tv_home_toolbar_user_name)
-    TextView mToolbarUserName;
-    @InjectView(R.id.home_drawer_head)
-    RelativeLayout mDrawerHead;
-    @InjectView(R.id.btn_home_drawer)
-    LinearLayout mDrawerBtn;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.tabLayout) TabLayout mTabLayout;
+    @InjectView(R.id.fabBtn_home) FloatingActionButton mFabBtn;
+    @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @InjectView(R.id.view_pager) ViewPager mViewPager;
+    @InjectView(R.id.tv_home_user_name) TextView userName;
+    @InjectView(R.id.tv_home_user_lv) TextView userLV;
+    @InjectView(R.id.iv_home_user_image) ImageView userPic;
+    @InjectView(R.id.tv_home_user_signature) TextView userSignature;
+    @InjectView(R.id.navigation) NavigationView navigation;
+    @InjectView(R.id.home_bar) LinearLayout homeBar;
+    @InjectView(R.id.iv_home_toolbar_user_image) CircleImageView mToolbarUserImage;
+    @InjectView(R.id.tv_home_toolbar_user_name) TextView mToolbarUserName;
+    @InjectView(R.id.home_drawer_head) RelativeLayout mDrawerHead;
+    @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
     private HomePresenter presenter;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
@@ -158,9 +143,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         mTabLayout.setTabsFromPagerAdapter(fragmentPagerAdapter);
         mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources()
                 .getColor(R.color.white));
-        mDrawerLayout
-                .setDrawerShadow(getResources()
-                        .getDrawable(R.drawable.drawer_shadow), GravityCompat.START);
+        mDrawerLayout.setDrawerShadow(getResources()
+                .getDrawable(R.drawable.drawer_shadow), GravityCompat.START);
         mDrawerBtn.setOnClickListener(this);
         mDrawerHead.setOnClickListener(this);
         if (navigation != null) {
@@ -169,7 +153,10 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
 
         if (ScreenUtils.checkDeviceHasNavigationBar(this)) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.RIGHT);
-            layoutParams.setMargins(0, 0, (int) (getResources().getDimension(R.dimen.codelab_fab_margin_right)), (int) (getResources().getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils.getNavigationBarHeight(this)));
+            layoutParams.setMargins(0, 0, (int) (getResources()
+                    .getDimension(R.dimen.codelab_fab_margin_right)), (int) (getResources()
+                                                                                     .getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils
+                                                                                     .getNavigationBarHeight(this)));
             mFabBtn.setLayoutParams(layoutParams);
         }
     }

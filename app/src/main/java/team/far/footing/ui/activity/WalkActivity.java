@@ -100,7 +100,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         // 事实证明百度地图的logo是可以隐藏的……百度会不会不允许通过呢？先这样吧……
         // mMapView.removeViewAt(1);
         // 缩放比例
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18f);
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(16.5f);
         mBaiduMap.setMapStatus(msu);
     }
 
@@ -121,7 +121,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         if (distance != 0) {
             tvWalkDistance.setText(new DecimalFormat(".##").format(distance) + " m");
         } else {
-            tvWalkDistance.setText("请稍微移动一下下哦~");
+            tvWalkDistance.setText("稍微走动一下哦~");
         }
     }
 
@@ -144,8 +144,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     @Override
     public void moveCamera2Location(LatLng latLng) {
         MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
-        // 这里不能用动画切换镜头，停留在天安门的时间会变长，体验不好，但是现在也还是会闪屏一下……
-        mBaiduMap.setMapStatus(msu);
+        mBaiduMap.animateMapStatus(msu);
     }
 
     @Override

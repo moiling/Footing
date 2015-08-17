@@ -6,7 +6,7 @@ import java.util.List;
 import team.far.footing.model.IFileModel;
 import team.far.footing.model.IFriendModel;
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.Listener.OnQueryFriendListener;
+import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.model.impl.FriendModel;
