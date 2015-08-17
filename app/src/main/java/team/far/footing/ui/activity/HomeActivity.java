@@ -28,9 +28,12 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.bmob.v3.listener.FindListener;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
+import team.far.footing.model.bean.MapBean;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.impl.MapModel;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.ui.adapter.HomePagerAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
@@ -38,6 +41,7 @@ import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.ui.widget.CircleImageView;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 
@@ -99,6 +103,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             homeBar.setPadding(0, ScreenUtils.getStatusHeight(this), 0, 0);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        Test();
 
     }
 
@@ -241,5 +246,24 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         return false;
     }
 
+
+    public void Test(){
+
+        MapModel.getInstance().get_map_byuserbean(BmobUtils.getCurrentUser(), new FindListener<MapBean>() {
+            @Override
+            public void onSuccess(List<MapBean> list) {
+                for (MapBean mapBean:list){
+                    LogUtils.e(mapBean.getMap_array().toString());
+
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+
+    }
 
 }

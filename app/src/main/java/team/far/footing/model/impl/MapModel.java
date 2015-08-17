@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import team.far.footing.app.APP;
@@ -68,6 +70,19 @@ public class MapModel implements IMapModel {
         });
 
     }
+
+    @Override
+    public void get_map_byuserbean(Userbean userbean, FindListener<MapBean> findListener) {
+        BmobQuery<MapBean> query = new BmobQuery<MapBean>();
+        query.addWhereEqualTo("userbean", userbean);
+        query.findObjects(APP.getContext(), findListener);
+    }
+
+    @Override
+    public void delete_mapbean(MapBean mapBean) {
+        mapBean.delete(APP.getContext());
+    }
+
 
     private void update(final MapBean mapBean, Context context, final OnUpdateMapListener onUpdateMapListener) {
         mapBean.save(context, new SaveListener() {
