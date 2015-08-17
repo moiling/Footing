@@ -30,6 +30,7 @@ import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
 import team.far.footing.ui.vu.IWalkVu;
+import team.far.footing.util.LogUtils;
 
 public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
@@ -52,6 +53,8 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         initMap();
         init();
         presenter = new WalkPresenter(this);
+        // 开始定位
+        presenter.startLocation();
     }
 
     private void init() {
@@ -63,8 +66,17 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-        // 开始定位
-        presenter.startLocation();
+        // 从home返回
+        LogUtils.d("从home回来");
+        presenter.onHomeBack();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 去home
+        LogUtils.d("去home");
+        presenter.onHome();
     }
 
     @Override
@@ -127,6 +139,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     @Override
     public void drawPolyline(ArrayList<LatLng> latLngs) {
+        LogUtils.d("开始画线");
         // 现在才反应过来……原来画线的方法每一次都重绘了整个图……走得时间长了会变得好卡好卡
         // 现在两点两点一画，但这样图就更抖了、还会出现断层、但是至少比界面卡住要好
         if (latLngs.size() > 1) {
@@ -135,8 +148,20 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             tempLatLngs.add(latLngs.get(latLngs.size() - 1));
             //构建用户绘制多边形的Option对象
             OverlayOptions polylineOptions = new PolylineOptions().points(tempLatLngs)
-                    .color(getResources().getColor(R.color.accent_color));
+                    .color(getResources().getColor(R.color.accent_color))
+                    .width(10);
             //在地图上添加多边形Option，用于显示
+            mBaiduMap.addOverlay(polylineOptions);
+        }
+    }
+
+    @Override
+    public void drawAllPolyline(ArrayList<LatLng> latLngs) {
+        LogUtils.d("开始画所有的线");
+        mBaiduMap.clear();
+        if (latLngs.size() > 1) {
+            OverlayOptions polylineOptions = new PolylineOptions().points(latLngs)
+                    .color(getResources().getColor(R.color.accent_color)).width(10);
             mBaiduMap.addOverlay(polylineOptions);
         }
     }
