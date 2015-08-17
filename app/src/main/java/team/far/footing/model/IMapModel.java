@@ -2,7 +2,7 @@ package team.far.footing.model;
 
 import java.util.List;
 
-import team.far.footing.model.Listener.OnUpdateMapListener;
+import team.far.footing.model.callback.OnUpdateMapListener;
 import team.far.footing.model.bean.Userbean;
 
 /**

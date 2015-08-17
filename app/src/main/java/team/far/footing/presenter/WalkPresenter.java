@@ -1,18 +1,24 @@
 package team.far.footing.presenter;
 
+import android.app.Activity;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
 import java.util.ArrayList;
 
+import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.ui.vu.IWalkVu;
-
+import team.far.footing.util.listener.MyOrientationListener;
 
 
 /**
@@ -25,6 +31,10 @@ public class WalkPresenter {
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
     private boolean isFirstIn = true;
+
+    private BitmapDescriptor mMapPointer;
+    private MyOrientationListener mOrientationListener;
+    private float mCurrentX;
     // 存放绘制路线的端点
     private ArrayList<LatLng> latLngs = new ArrayList<>();
     private double firstDistance = 0;
@@ -42,13 +52,17 @@ public class WalkPresenter {
     // 开始定位
     public void startLocation() {
         v.getBaiduMap().setMyLocationEnabled(true);
-        mLocationClient.start();
+        if (!mLocationClient.isStarted()) {
+            mLocationClient.start();
+        }
+        mOrientationListener.start();
     }
 
     // 停止定位
     public void stopLocation() {
         v.getBaiduMap().setMyLocationEnabled(false);
         mLocationClient.stop();
+        mOrientationListener.stop();
     }
 
     public void startWalk() {
@@ -90,6 +104,16 @@ public class WalkPresenter {
         // 请求的频率
         option.setScanSpan(span * 1000);
         mLocationClient.setLocOption(option);
+
+        mMapPointer = BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pointer);
+        mOrientationListener = new MyOrientationListener((Activity)v);
+
+        mOrientationListener.setmOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
+            @Override
+            public void onOrientationChanged(float x) {
+                mCurrentX = x;
+            }
+        });
     }
 
     // 解除view的绑定
@@ -102,12 +126,14 @@ public class WalkPresenter {
         public void onReceiveLocation(BDLocation bdLocation) {
 
             MyLocationData data = new MyLocationData.Builder()
+                    .direction(mCurrentX)
                     .accuracy(bdLocation.getRadius())
                     .latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude())
                     .build();
-
+            MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mMapPointer);
             v.getBaiduMap().setMyLocationData(data);
+            v.getBaiduMap().setMyLocationConfigeration(config);
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             // 第一次定位把镜头移向用户当前位置
             if (isFirstIn) {
@@ -123,8 +149,7 @@ public class WalkPresenter {
                 // 当前距离
                 double secondDistance = 0;
                 if (latLngs.size() > 0) {
-                    secondDistance = DistanceUtil
-                            .getDistance(latLng, latLngs.get(latLngs.size() - 1));
+                    secondDistance = DistanceUtil.getDistance(latLng, latLngs.get(latLngs.size() - 1));
                 }
                 // 距离大于10
                 if (secondDistance >= 10) {

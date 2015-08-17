@@ -1,7 +1,7 @@
 package team.far.footing.presenter;
 
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.Listener.OnRegsterListener;
+import team.far.footing.model.callback.OnRegsterListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.vu.IRegsterVu;

@@ -1,4 +1,4 @@
-package team.far.footing.model.Listener;
+package team.far.footing.model.callback;
 
 import team.far.footing.model.bean.MapBean;
 

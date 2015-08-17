@@ -13,7 +13,7 @@ import org.hybridsquad.android.library.CropParams;
 
 import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.Listener.OnUploadListener;
+import team.far.footing.model.callback.OnUploadListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.model.impl.UserModel;

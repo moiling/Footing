@@ -1,9 +1,9 @@
 package team.far.footing.model;
 
-import team.far.footing.model.Listener.OnQueryCommentListener;
-import team.far.footing.model.Listener.OnQueryFriendListener;
-import team.far.footing.model.Listener.OnQueryPostListener;
-import team.far.footing.model.Listener.OnUpdateUserListener;
+import team.far.footing.model.callback.OnQueryCommentListener;
+import team.far.footing.model.callback.OnQueryFriendListener;
+import team.far.footing.model.callback.OnQueryPostListener;
+import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.bean.Postbean;
 
 /**

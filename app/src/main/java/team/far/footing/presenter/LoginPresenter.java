@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.Listener.OnLoginForQQListener;
-import team.far.footing.model.Listener.OnLoginListener;
+import team.far.footing.model.callback.OnLoginForQQListener;
+import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.activity.HomeActivity;
