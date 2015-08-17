@@ -20,4 +20,7 @@ public interface IMapModel {
     void save_map_again(String objectId, List<String> map_list,
                         String all_time, String all_distance,OnUpdateMapListener onUpdateMapListener);
 
+
+
+
 }

@@ -1,6 +1,6 @@
 package team.far.footing.ui.fragment;
 
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
-import com.bmob.btp.callback.DownloadListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +22,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
+import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVU;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.ui.widget.DividerItemDecoration;
-import team.far.footing.util.LogUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVU {
 
@@ -152,22 +151,13 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
                     break;
             }
             if (userbeanList.get(position).getHeadPortraitFileName() != null) {
-                FileModel.getInstance().downloadPic(userbeanList.get(position)
-                        .getHeadPortraitFileName(), new DownloadListener() {
+                FileModel.getInstance().getUserPic(userbeanList.get(position), new OngetUserPicListener() {
                     @Override
-                    public void onSuccess(String s) {
-                        LogUtils.d("下载头像", "显示头像:" + s);
-                        holder.circleImageView.setImageBitmap(BitmapFactory.decodeFile(s));
+                    public void onSucess(Bitmap bitmap) {
+                        holder.circleImageView.setImageBitmap(bitmap);
                     }
-
                     @Override
-                    public void onProgress(String s, int i) {
-
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-
+                    public void onError() {
                     }
                 });
             }

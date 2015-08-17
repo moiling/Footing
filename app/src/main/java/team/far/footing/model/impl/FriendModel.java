@@ -1,5 +1,9 @@
 package team.far.footing.model.impl;
 
+import android.util.Log;
+
+import com.bmob.btp.callback.DownloadListener;
+
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -8,12 +12,14 @@ import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import team.far.footing.app.APP;
+import team.far.footing.model.IFileModel;
 import team.far.footing.model.IFriendModel;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.bean.Friends;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by Luoyy on 2015/8/9 0009.
@@ -43,6 +49,7 @@ public class FriendModel implements IFriendModel {
         update_friend(friends, onUpdateUserListener);
 
     }
+
     @Override
     public void getAllFriends(final OnQueryFriendListener onQueryFriendListener) {
         BmobQuery<Userbean> query = new BmobQuery<>();
@@ -51,17 +58,22 @@ public class FriendModel implements IFriendModel {
         query.addWhereRelatedTo("friends", new BmobPointer(friends));
         query.findObjects(APP.getContext(), new FindListener<Userbean>() {
             @Override
-            public void onSuccess(List<Userbean> list) {
+            public void onSuccess(final List<Userbean> list) {
                 onQueryFriendListener.onSuccess(list);
+
             }
 
-            @Override
-            public void onError(int i, String s) {
-                onQueryFriendListener.onError(i, s);
-            }
-        });
+        @Override
+        public void onError ( int i, String s){
+            onQueryFriendListener.onError(i, s);
+        }
+        }
 
-    }
+    );
+
+}
+
+
     @Override
     public void deleteFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
         Userbean CurrentUser = BmobUtils.getCurrentUser();

@@ -353,7 +353,7 @@ public class UserModel implements IUserModel {
     //文件上传的辅助方法 ---->>  不对外调用
     private void updateUser_HeadPortraitFilePath(final String url, final String filename, final BmobFile file, final OnUploadListener onUploadHeadPortraitListener) {
         Userbean newUser = new Userbean();
-        newUser.setHeadPortraitFilePath(url);
+        newUser.setHeadPortraitFilePath(file.getUrl());
         newUser.setHeadPortraitFileName(filename);
         BmobUser bmobUser = BmobUser.getCurrentUser(APP.getContext());
         newUser.update(APP.getContext(), bmobUser.getObjectId(), new UpdateListener() {
