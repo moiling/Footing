@@ -52,4 +52,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile files('libs/mta-sdk-1.6.2.jar')
     compile files('libs/open_sdk_r5043.jar')
+    compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
 }

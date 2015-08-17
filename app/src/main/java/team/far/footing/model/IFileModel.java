@@ -8,6 +8,8 @@ import com.bmob.btp.callback.GetAccessUrlListener;
 import com.bmob.btp.callback.LocalThumbnailListener;
 
 import team.far.footing.model.Listener.OnUploadListener;
+import team.far.footing.model.Listener.OngetUserPicListener;
+import team.far.footing.model.bean.Userbean;
 
 /**
  * Created by luoyy on 2015/8/12 0012.
@@ -84,5 +86,10 @@ public interface IFileModel {
     //从本地获取图片
     Bitmap getLocalPic(String filename);
 
+    //获取本地图片的Path
+    String getLocalPicPath(String filename);
+
+
+    void getUserPic(Userbean userbean,OngetUserPicListener ongetUserPicListener);
 
 }

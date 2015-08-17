@@ -2,25 +2,11 @@
 <items version="2" >
 
     <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\libs\open_sdk_r5043.jar"
+        jar="C:\Users\luoyy\.gradle\caches\modules-2\files-2.1\eu.the4thfloor.volley\com.android.volley\2015.05.28\b0b08cc0ac897e596abe6b263a9507cba875b705\com.android.volley-2015.05.28.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="fbc2fb9bce736c4b6d9146b932c4bf7a473f5786">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\open_sdk_r5043-f228c426f0d54d01822f9fff36109af325e10edc.jar" />
-    </item>
-    <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\libs\mta-sdk-1.6.2.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c184c69f43b1fe46390f7123717c65bd844bccb6">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\mta-sdk-1.6.2-72a64fa216635c97215ec64cc519daa49d92070c.jar" />
-    </item>
-    <item
-        jar="D:\Projects\Footing\Footing_fork\Footing\app\libs\BaiduLBS_Android.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ab9bcf1c8ab7369fdd8840caf53fa7f8b84e2713">
-        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\BaiduLBS_Android-73c390b489e7e306e0b3f3081f64ce329eb918d6.jar" />
+        sha1="b0b08cc0ac897e596abe6b263a9507cba875b705">
+        <dex dex="E:\Android\Footing\app\build\intermediates\pre-dexed\debug\com.android.volley-2015.05.28-f5741cfd7bf8f64e7bc1ab9bd58c93d7fe8eeb40.jar" />
     </item>
 
 </items>

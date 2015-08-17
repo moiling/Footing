@@ -2,10 +2,12 @@ package team.far.footing.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import team.far.footing.app.APP;
 import team.far.footing.model.IFileModel;
+import team.far.footing.model.Listener.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.ui.activity.SettingActivity;
@@ -24,7 +26,7 @@ public class HomePresenter {
     private Userbean userbean;
     private IFileModel fileModel;
 
-    public HomePresenter(IHomeVu v)  {
+    public HomePresenter(IHomeVu v) {
         this.v = v;
         // 当homePresenter被实例化，用sp保存登录状态
         SPUtils.put(APP.getContext(), "isLogin", Boolean.TRUE);
@@ -70,22 +72,20 @@ public class HomePresenter {
     }
 
 
-    public void setUserPic(String filename)  {
-        fileModel.downloadPic(filename, new com.bmob.btp.callback.DownloadListener() {
+    public void setUserPic(String filename) {
+
+        fileModel.getUserPic(BmobUtils.getCurrentUser(), new OngetUserPicListener() {
             @Override
-            public void onSuccess(String s) {
-                v.showUserImg(BitmapFactory.decodeFile(s));
+            public void onSucess(Bitmap bitmap) {
+                v.showUserImg(bitmap);
             }
 
             @Override
-            public void onProgress(String s, int i) {
-            }
-
-            @Override
-            public void onError(int i, String s) {
+            public void onError() {
 
             }
         });
+
     }
 
     // 解除view的绑定
