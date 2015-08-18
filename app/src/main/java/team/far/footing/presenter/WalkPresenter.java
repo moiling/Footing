@@ -14,11 +14,19 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import team.far.footing.R;
 import team.far.footing.app.APP;
+import team.far.footing.model.IMapModel;
+import team.far.footing.model.bean.MapBean;
+import team.far.footing.model.callback.OnUpdateMapListener;
+import team.far.footing.model.impl.MapModel;
 import team.far.footing.ui.vu.IWalkVu;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.TimeUtils;
 import team.far.footing.util.listener.MyOrientationListener;
 
 
@@ -28,6 +36,7 @@ import team.far.footing.util.listener.MyOrientationListener;
 public class WalkPresenter {
 
     private IWalkVu v;
+    private Date start_date, end_date;
     // 定位
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
@@ -38,6 +47,7 @@ public class WalkPresenter {
     private float mCurrentX;
     // 存放绘制路线的端点
     private ArrayList<LatLng> latLngs = new ArrayList<>();
+    private List<String> map_list = new ArrayList<>();
     private double firstDistance = 0;
     private int span = 3;
     private double acceleration = 0;
@@ -49,9 +59,13 @@ public class WalkPresenter {
     public static final int STATUS_HOME = 1;
     public static final int STATUS_HOME_BACK = 2;
 
+    //model
+    private IMapModel mapModel;
+
     public WalkPresenter(IWalkVu v) {
         this.v = v;
         // 定位
+        mapModel = MapModel.getInstance();
         initLocation();
     }
 
@@ -68,6 +82,7 @@ public class WalkPresenter {
     // 开始定位
     public void startLocation() {
         LogUtils.d("开始定位了");
+        start_date = TimeUtils.getcurrentTime();
         v.getBaiduMap().setMyLocationEnabled(true);
         if (!mLocationClient.isStarted()) {
             mLocationClient.start();
@@ -81,6 +96,7 @@ public class WalkPresenter {
         v.getBaiduMap().setMyLocationEnabled(false);
         mLocationClient.stop();
         mOrientationListener.stop();
+
     }
 
     public void startWalk() {
@@ -122,7 +138,6 @@ public class WalkPresenter {
         // 请求的频率
         option.setScanSpan(span * 1000);
         mLocationClient.setLocOption(option);
-
         mMapPointer = BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pointer);
         mOrientationListener = new MyOrientationListener((Activity) v);
         mOrientationListener.setmOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
@@ -131,6 +146,29 @@ public class WalkPresenter {
                 mCurrentX = x;
             }
         });
+    }
+
+    public void save() {
+        LogUtils.e("map_list", (map_list == null) + "");
+
+        end_date = TimeUtils.getcurrentTime();
+        mapModel.save_map_finish(BmobUtils.getCurrentUser(), "url",
+                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", distanceTotal + "", TimeUtils.dateToString(start_date),
+                new OnUpdateMapListener() {
+                    @Override
+                    public void onSuccess(MapBean mapBean) {
+                        LogUtils.d("上传成功");
+                        //清除数据
+                        distanceTotal = 0.0;
+                        map_list.clear();
+                        latLngs.clear();
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                        LogUtils.e("上传失败");
+                    }
+                });
     }
 
     // 解除view的绑定
@@ -143,6 +181,7 @@ public class WalkPresenter {
         public void onReceiveLocation(BDLocation bdLocation) {
             LogUtils.d("现在的状态：" + appStatus);
             LogUtils.d("LatLng's size: " + latLngs.size());
+            map_list.add(bdLocation.getLongitude() + "=" + bdLocation.getLatitude());
             MyLocationData data = new MyLocationData.Builder().direction(mCurrentX)
                     .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude()).build();
