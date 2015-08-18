@@ -27,7 +27,8 @@
         tools:replace="android:icon" >
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.RegisterActivty" />
         //baidu
         <meta-data
@@ -58,14 +59,16 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.WalkActivity"
             android:label="@string/title_activity_walk"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LaunchActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,23 +77,26 @@
         </activity>
         <activity
             android:name=".ui.activity.UserInfoActivity"
-            android:label="@string/title_activity_user_info" />
+            android:label="@string/title_activity_user_info"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.EditUserInfoActivity"
-            android:label="@string/title_activity_edit_user_info" />
+            android:label="@string/title_activity_edit_user_info"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SettingActivity"
-            android:label="@string/title_activity_setting" />
-
-        <service android:name=".service.MapService" />
+            android:label="@string/title_activity_setting"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.activity.FriendInfoActivity"
-            android:label="@string/title_activity_friend_info" >
+            android:label="@string/title_activity_friend_info"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.activity.AddFriendActivity"
-            android:label="@string/title_activity_add_friend" >
+            android:label="@string/title_activity_add_friend"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

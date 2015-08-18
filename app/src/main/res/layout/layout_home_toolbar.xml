@@ -34,7 +34,7 @@
         <TextView
             android:id="@+id/tv_home_toolbar_user_name"
             tools:text="哔啪哩吧啦"
-            android:layout_marginLeft="18dp"
+            android:layout_marginLeft="16dp"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:layout_gravity="center"
