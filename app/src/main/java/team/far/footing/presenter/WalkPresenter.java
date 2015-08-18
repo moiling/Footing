@@ -47,8 +47,13 @@ public class WalkPresenter {
     private float mCurrentX;
     // 存放绘制路线的端点
     private ArrayList<LatLng> latLngs = new ArrayList<>();
+    // 上一次的距离
+    private double lastDistance = 0;
+    // 当前距离
+    private double currentDistance = 0;
+    // 距离上次记录点的间隔时间！！
+    private int timeSpan = 3;
     private List<String> map_list = new ArrayList<>();
-    private double firstDistance = 0;
     private int span = 3;
     private double acceleration = 0;
     private boolean isWalking = false;
@@ -203,31 +208,28 @@ public class WalkPresenter {
                     if (latLngs.isEmpty()) latLngs.add(latLng);
                     // 先从距离和加速度两方面控制某一点是否添加到数组中
                     // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
-                    // 当前距离
-                    double secondDistance = 0;
                     if (latLngs.size() > 0) {
-                        secondDistance = DistanceUtil
+                        currentDistance = DistanceUtil
                                 .getDistance(latLng, latLngs.get(latLngs.size() - 1));
                     }
-                    // 距离大于5
-                    if (secondDistance >= 5) {
-                        if (firstDistance == 0) {
+                    // 距离大于10
+                    if (currentDistance >= 10) {
+                        if (lastDistance == 0) {
                             latLngs.add(latLng);
                             v.drawPolyline(latLngs);
-                            firstDistance = secondDistance;
+                            lastDistance = currentDistance;
                         } else {
                             // 加速度
-                            acceleration = (secondDistance - firstDistance) / (span * span);
+                            acceleration = (currentDistance - lastDistance) / (timeSpan * timeSpan);
                             // 加速度小于10
                             if (acceleration <= 10) {
                                 latLngs.add(latLng);
-                                firstDistance = secondDistance;
-                                distanceTotal += secondDistance;
-                                // activity开启的时候才画，home的时候不画，只记录点
-                                if (appStatus == STATUS_ACTIVITY_ON) {
-                                    v.drawPolyline(latLngs);
-                                    v.showDistanceTotal(distanceTotal);
-                                }
+                                // 加入点之后重置间隔时间
+                                timeSpan = 0;
+                                lastDistance = currentDistance;
+                                distanceTotal += currentDistance;
+                                v.drawPolyline(latLngs);
+                                v.showDistanceTotal(distanceTotal);
                             }
                         }
                     }
@@ -238,6 +240,8 @@ public class WalkPresenter {
                     // 画完了马上换状态
                     appStatus = STATUS_ACTIVITY_ON;
                 }
+                // 间隔时间记录
+                timeSpan += span;
             }
         }
     }
