@@ -228,7 +228,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 shareIntent.setType("image/png");
                 startActivity(Intent
                         .createChooser(shareIntent, getResources().getText(R.string.send_to)));
-
                 // 停止步行
                 stopWalk();
             }
