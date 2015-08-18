@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -153,6 +154,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             //在地图上添加多边形Option，用于显示
             mBaiduMap.addOverlay(polylineOptions);
         }
+        Toast.makeText(this, "DrawPolyline, size: " + latLngs.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -161,9 +163,10 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         mBaiduMap.clear();
         if (latLngs.size() > 1) {
             OverlayOptions polylineOptions = new PolylineOptions().points(latLngs)
-                    .color(getResources().getColor(R.color.accent_color)).width(10);
+                    .color(0x3364c2f5).width(10);
             mBaiduMap.addOverlay(polylineOptions);
         }
+        Toast.makeText(this, "DrawAllPolyline, size: " + latLngs.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
