@@ -35,13 +35,20 @@ import team.far.footing.util.LogUtils;
 
 public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.map_walk) MapView mMapView;
-    @InjectView(R.id.card_walk_status) CardView cardWalkStatus;
-    @InjectView(R.id.iv_walk_start) ImageView ivWalkStart;
-    @InjectView(R.id.iv_walk_pause) ImageView ivWalkPause;
-    @InjectView(R.id.iv_walk_stop) ImageView ivWalkStop;
-    @InjectView(R.id.tv_walk_distance) TextView tvWalkDistance;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+    @InjectView(R.id.map_walk)
+    MapView mMapView;
+    @InjectView(R.id.card_walk_status)
+    CardView cardWalkStatus;
+    @InjectView(R.id.iv_walk_start)
+    ImageView ivWalkStart;
+    @InjectView(R.id.iv_walk_pause)
+    ImageView ivWalkPause;
+    @InjectView(R.id.iv_walk_stop)
+    ImageView ivWalkStop;
+    @InjectView(R.id.tv_walk_distance)
+    TextView tvWalkDistance;
     private BaiduMap mBaiduMap;
     private WalkPresenter presenter;
 
@@ -221,7 +228,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 shareIntent.setType("image/png");
                 startActivity(Intent
                         .createChooser(shareIntent, getResources().getText(R.string.send_to)));
-
                 // 停止步行
                 stopWalk();
             }
@@ -238,6 +244,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 pauseWalk();
                 break;
             case R.id.iv_walk_stop:
+                presenter.save();
                 new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
                         .positiveText("分享").negativeText("不用了").theme(Theme.LIGHT)
                         .callback(new MaterialDialog.ButtonCallback() {

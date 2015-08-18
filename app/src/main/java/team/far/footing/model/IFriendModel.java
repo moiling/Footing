@@ -31,7 +31,12 @@ public interface IFriendModel {
      */
     void deleteFriend(Userbean userbean, OnUpdateUserListener onUpdateUserListener);
 
-    void isMyFriendByUsername(String username, OnIsMyFriendListener onIsMyFriendListener);
+    /**
+     *   根据用户名判断
+     * @param username
+     * @param onIsMyFriendListener
+     */
+  void isMyFriendByUsername(String username, OnIsMyFriendListener onIsMyFriendListener);
 
     void isMyFriendByNickname(String username, OnIsMyFriendListener onIsMyFriendListener);
 
