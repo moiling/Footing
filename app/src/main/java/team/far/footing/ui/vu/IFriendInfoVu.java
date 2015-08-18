@@ -30,4 +30,6 @@ public interface IFriendInfoVu {
 
     // 删除好友失败
     void onDeleteFail(int i);
+
+
 }
