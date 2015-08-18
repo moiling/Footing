@@ -1,6 +1,7 @@
 package team.far.footing.ui.vu;
 
 import android.app.Activity;
+
 import team.far.footing.model.bean.Userbean;
 
 /**
@@ -9,6 +10,7 @@ import team.far.footing.model.bean.Userbean;
 public interface ILoginVu {
 
     String getUserName();
+
     Activity getActivity();
 
     String getPassword();
@@ -21,7 +23,8 @@ public interface ILoginVu {
 
     void showLoginSuccee(Userbean userbean);
 
-    void showLoginFail(String reason);
+    void showLoginFail(int i, String s);
+
     void showLogincancel();
 
     void loginForQQ();

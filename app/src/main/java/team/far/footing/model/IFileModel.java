@@ -89,6 +89,6 @@ public interface IFileModel {
     String getLocalPicPath(String filename);
 
 
-    void getUserPic(Userbean userbean,OngetUserPicListener ongetUserPicListener);
+    void getUserPic(Userbean userbean, OngetUserPicListener ongetUserPicListener);
 
 }

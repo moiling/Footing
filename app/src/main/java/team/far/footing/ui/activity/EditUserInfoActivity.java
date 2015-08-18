@@ -19,6 +19,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.EditUserInfoPresenter;
 import team.far.footing.ui.vu.IEditUserInfoVu;
+import team.far.footing.util.BmobUtils;
 
 public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener {
 
@@ -126,9 +127,9 @@ public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoV
     }
 
     @Override
-    public void showEditFail(String reason) {
+    public void showEditFail(int i) {
         dismissProgress();
-        new MaterialDialog.Builder(this).title("提交失败").content(reason).positiveText("好的")
+        new MaterialDialog.Builder(this).title("提交失败").content(BmobUtils.searchCode(i)).positiveText("好的")
                 .theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {

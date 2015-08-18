@@ -74,7 +74,7 @@ public class UserInfoPresenter {
                     @Override
                     public void onError(int statuscode, String errormsg) {
                         v.dismissLoading();
-                        v.showUpdateFailed(errormsg);
+                        v.showUpdateFailed(statuscode);
                     }
                 });
             }

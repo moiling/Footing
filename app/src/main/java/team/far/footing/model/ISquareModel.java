@@ -17,7 +17,7 @@ public interface ISquareModel {
      * @param picUrl               ---  图片的 url
      * @param onUpdateUserListener ----更新用户的Listener
      */
-    void sendPost(String title, String content,String picName, String picUrl, OnUpdateUserListener onUpdateUserListener);
+    void sendPost(String title, String content, String picName, String picUrl, OnUpdateUserListener onUpdateUserListener);
 
     /**
      * @param onQueryPostListener ----获取当前用户所有post的监听
@@ -65,7 +65,6 @@ public interface ISquareModel {
      * @param onQueryFriendListener
      */
     void getLikePostUser(Postbean postbean, OnQueryFriendListener onQueryFriendListener);
-
 
 
 }

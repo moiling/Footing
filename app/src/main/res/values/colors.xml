@@ -7,12 +7,12 @@
     <color name="divider_color">#B6B6B6</color>
 
     <color name="primary_light_color">#e7754d</color>
-<!--    <color name="primary_color">#f16332</color>-->
+    <!--    <color name="primary_color">#f16332</color>-->
     <color name="primary_color">#f9835b</color>
     <color name="primary_dark_color">#d56037</color>
     <!--<color name="accent_color">#f16332</color>-->
     <color name="accent_color">#64c2f5</color>
     <color name="accent_light_color">#a6dbf8</color>
-    <color name="login_blue">#74edfb</color>
+    <color name="login_blue">#414141</color>
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="team.far.footing">
+    package="team.far.footing" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -24,10 +24,10 @@
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        tools:replace="android:icon" >
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity android:name=".ui.activity.RegisterActivty" />
         //baidu
         <meta-data
@@ -37,12 +37,12 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
         //qq
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -58,14 +58,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:label="@string/title_activity_home"></activity>
+            android:label="@string/title_activity_home" />
         <activity
             android:name=".ui.activity.WalkActivity"
             android:label="@string/title_activity_walk"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LaunchActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,15 +74,20 @@
         </activity>
         <activity
             android:name=".ui.activity.UserInfoActivity"
-            android:label="@string/title_activity_user_info"></activity>
+            android:label="@string/title_activity_user_info" />
         <activity
             android:name=".ui.activity.EditUserInfoActivity"
-            android:label="@string/title_activity_edit_user_info"></activity>
+            android:label="@string/title_activity_edit_user_info" />
         <activity
             android:name=".ui.activity.SettingActivity"
-            android:label="@string/title_activity_setting"></activity>
+            android:label="@string/title_activity_setting" />
 
         <service android:name=".service.MapService" />
+
+        <activity
+            android:name=".ui.activity.FriendInfoActivity"
+            android:label="@string/title_activity_friend_info" >
+        </activity>
     </application>
 
 </manifest>

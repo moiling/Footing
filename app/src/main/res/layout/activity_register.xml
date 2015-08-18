@@ -9,13 +9,13 @@
     android:fitsSystemWindows="true"
     tools:context="team.far.footing.ui.activity.RegisterActivty">
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <!--toolbar下方阴影-->
     <View
         android:layout_width="match_parent"
         android:background="@drawable/shadow"
-        android:layout_height="@dimen/toolbar_shadow_height"/>
+        android:layout_height="@dimen/toolbar_shadow_height" />
 
     <android.support.v7.widget.AppCompatEditText
         android:minHeight="48dp"
@@ -36,7 +36,7 @@
         android:textSize="16sp"
         android:imeOptions="actionNext"
         android:inputType="text"
-        android:textColorLink="@color/secondary_text"/>
+        android:textColorLink="@color/secondary_text" />
 
     <android.support.v7.widget.AppCompatEditText
         android:minHeight="48dp"
@@ -55,7 +55,7 @@
         android:textSize="16sp"
         android:imeOptions="actionNext"
         android:inputType="textPassword"
-        android:textColorLink="@color/secondary_text"/>
+        android:textColorLink="@color/secondary_text" />
 
     <android.support.v7.widget.AppCompatEditText
         android:minHeight="48dp"
@@ -74,7 +74,7 @@
         android:textSize="16sp"
         android:imeOptions="actionNext"
         android:inputType="textPassword"
-        android:textColorLink="@color/secondary_text"/>
+        android:textColorLink="@color/secondary_text" />
 
     <android.support.v7.widget.AppCompatEditText
         android:minHeight="48dp"
@@ -94,7 +94,7 @@
         android:textSize="16sp"
         android:imeOptions="actionGo"
         android:inputType="textEmailAddress"
-        android:textColorLink="@color/secondary_text"/>
+        android:textColorLink="@color/secondary_text" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/btn_register"

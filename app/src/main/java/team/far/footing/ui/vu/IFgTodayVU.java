@@ -10,7 +10,7 @@ import team.far.footing.model.bean.Userbean;
 public interface IFgTodayVU {
     void init(Userbean CurrentUser, List<Userbean> userbeanList);
 
-    void oninit_error(int code,String msg);
+    void oninit_error(int code, String msg);
 
     void onclickwork();
 

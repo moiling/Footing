@@ -4,37 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/login_blue"
+    android:background="@color/background_floating_material_light"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
     android:theme="@style/LoginLayoutTheme"
     tools:context="team.far.footing.ui.activity.RegisterActivty">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="72dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:src="@mipmap/image_logo"/>
-
-    </ScrollView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/login_card"
         android:layout_width="match_parent"
-        android:layout_height="226dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="-4dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp">
@@ -43,29 +29,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <ImageView
+                android:id="@+id/image_login_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="64dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@mipmap/image_login_logo" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image_login_logo"
+                android:layout_marginTop="40dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@mipmap/image_title" />
+
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/ed_login_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="28dp"
                 android:layout_marginRight="28dp"
-                android:layout_marginTop="27dp"
                 android:hint="@string/user_name"
                 android:maxLength="10"
                 android:maxLines="1"
                 android:singleLine="true"
+                android:layout_above="@+id/ed_login_password"
                 android:textColor="@color/secondary_text"
                 android:textColorHint="@color/secondary_text"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/ed_login_password"
+                android:layout_above="@+id/btn_qq_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ed_login_user_name"
                 android:layout_marginLeft="28dp"
                 android:layout_marginRight="28dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="60dp"
                 android:hint="@string/password"
                 android:imeOptions="actionGo"
                 android:inputType="textPassword"
@@ -74,7 +82,7 @@
                 android:textColor="@color/secondary_text"
                 android:textColorHint="@color/secondary_text"
                 android:textColorLink="@color/secondary_text"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
 
             <TextView
@@ -83,11 +91,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="22dp"
+                android:layout_marginBottom="36dp"
                 android:layout_marginRight="84dp"
                 android:text="@string/register"
                 android:textColor="@color/primary_color"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
 
             <TextView
@@ -96,35 +104,37 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="22dp"
+                android:layout_marginBottom="36dp"
                 android:layout_marginRight="28dp"
                 android:text="@string/login"
                 android:textColor="@color/primary_color"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
 
             <TextView
                 android:id="@+id/tv_login_forget_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/ed_login_password"
-                android:layout_marginRight="28dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="40dp"
                 android:text="@string/forget_password"
-                android:textColor="@color/divider_color"/>
+                android:textColor="@color/divider_color"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="28dp"
+                android:layout_above="@+id/btn_qq_login" />
+
+            <ImageView
+                android:id="@+id/btn_qq_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
+                android:layout_marginLeft="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:src="@mipmap/image_qq_login" />
 
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
-    <ImageView
-        android:id="@+id/btn_qq_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:src="@mipmap/image_qq_login"/>
 
 
 </RelativeLayout>

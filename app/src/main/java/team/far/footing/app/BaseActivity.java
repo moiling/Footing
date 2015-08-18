@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity {
         ActivityCollector.removeActivity(this);
     }
 
-    public void showProgress(String title){
+    public void showProgress(String title) {
         dialog = new MaterialDialog.Builder(this)
                 .title(title)
                 .content("请稍候")
@@ -62,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void dismissProgress(){
+    public void dismissProgress() {
         dialog.dismiss();
     }
 

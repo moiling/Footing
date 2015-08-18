@@ -17,7 +17,7 @@ public class RegisterPresenter {
 
     public RegisterPresenter(IRegsterVu mIRegsterVu) {
         this.mIRegsterVu = mIRegsterVu;
-        mUserModel =UserModel.getInstance();
+        mUserModel = UserModel.getInstance();
     }
 
     public void Regster() {

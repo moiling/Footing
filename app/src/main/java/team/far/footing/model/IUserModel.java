@@ -76,7 +76,7 @@ public interface IUserModel {
     /**
      * @param nickname              ----------查询的用户的nickname
      * @param onQueryFriendListener -----------查询的监听器
-     *                              <p>
+     *                              <p/>
      *                              ## 按照nickname查找
      */
     void queryUserByName(String nickname, OnQueryFriendListener onQueryFriendListener);

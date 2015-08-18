@@ -10,7 +10,7 @@ public class Friends extends BmobObject {
 
     private BmobRelation friends;
     private Userbean userbean;
-    private  String  username;
+    private String username;
 
     public String getUsername() {
         return username;

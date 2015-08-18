@@ -20,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_drawer"/>
+            android:src="@mipmap/ic_drawer" />
+
         <team.far.footing.ui.widget.CircleImageView
             android:id="@+id/iv_home_toolbar_user_image"
             android:layout_marginLeft="6dp"
@@ -28,7 +29,8 @@
             android:layout_height="38dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_user_pic_default"/>
+            android:src="@mipmap/ic_user_pic_default" />
+
         <TextView
             android:id="@+id/tv_home_toolbar_user_name"
             tools:text="哔啪哩吧啦"
@@ -37,7 +39,7 @@
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

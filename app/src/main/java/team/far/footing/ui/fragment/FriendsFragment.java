@@ -22,6 +22,7 @@ public class FriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.inject(this, view);
         init();
+
         return view;
     }
 

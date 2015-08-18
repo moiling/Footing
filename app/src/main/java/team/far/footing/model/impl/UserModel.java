@@ -67,7 +67,7 @@ public class UserModel implements IUserModel {
 
             @Override
             public void onFailure(int i, String s) {
-                onLoginListener.loginFailed(s);
+                onLoginListener.loginFailed(i, s);
             }
         });
 
@@ -75,8 +75,7 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void Regster(final String username, final String passwrod, final String email, final OnRegsterListener onRegsterListener)
-    {
+    public void Regster(final String username, final String passwrod, final String email, final OnRegsterListener onRegsterListener) {
         //每注册一个用户表，就建立一个好友表 -->Friend。
         //好友表的主键为  username
 

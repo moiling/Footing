@@ -36,8 +36,8 @@ public class LoginPresenter {
             }
 
             @Override
-            public void loginFailed(String reason) {
-                mILoginVu.showLoginFail(reason);
+            public void loginFailed(int i, String reason) {
+                mILoginVu.showLoginFail(i, reason);
             }
         });
 
@@ -52,7 +52,7 @@ public class LoginPresenter {
 
             @Override
             public void loginFailed(String reason) {
-                mILoginVu.showLoginFail(reason);
+                mILoginVu.showLoginFail(-1, reason);
             }
 
             @Override

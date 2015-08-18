@@ -156,6 +156,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
                     public void onSucess(Bitmap bitmap) {
                         holder.circleImageView.setImageBitmap(bitmap);
                     }
+
                     @Override
                     public void onError() {
                     }

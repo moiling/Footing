@@ -124,7 +124,7 @@ public class WalkPresenter {
         mLocationClient.setLocOption(option);
 
         mMapPointer = BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pointer);
-        mOrientationListener = new MyOrientationListener((Activity)v);
+        mOrientationListener = new MyOrientationListener((Activity) v);
         mOrientationListener.setmOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
             @Override
             public void onOrientationChanged(float x) {
