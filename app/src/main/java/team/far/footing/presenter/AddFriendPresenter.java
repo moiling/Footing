@@ -29,13 +29,30 @@ public class AddFriendPresenter {
     }
 
 
-    public void query(String s) {
+    public void query(final String s) {
 
         userModel.queryUserById(s, new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
-                friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                iAddFriendVu.showfriends(friendsRyViewAdapter);
+                if (object.size() == 0) {
+
+                    userModel.queryUserByName(s, new OnQueryFriendListener() {
+                        @Override
+                        public void onSuccess(List<Userbean> object) {
+                            friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                            iAddFriendVu.showfriends(friendsRyViewAdapter);
+                        }
+
+                        @Override
+                        public void onError(int code, String msg) {
+
+                        }
+                    });
+
+                } else {
+                    friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                    iAddFriendVu.showfriends(friendsRyViewAdapter);
+                }
             }
 
             @Override
