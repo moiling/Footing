@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView;
 /**
  * Created by luoyy on 2015/8/18 0018.
  */
-public interface IFgFriendVu {
+public interface IAddFriendVu {
 
-    void showFriends(RecyclerView.Adapter adapter);
+
+    void showfriends(RecyclerView.Adapter adapter);
 
     void stopRefresh();
-
 }

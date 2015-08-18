@@ -4,38 +4,38 @@ import java.util.List;
 
 import team.far.footing.model.IFriendModel;
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.bean.Friends;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.impl.FriendModel;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.adapter.FriendsRyViewAdapter;
-import team.far.footing.ui.vu.IFgFriendVu;
+import team.far.footing.ui.vu.IAddFriendVu;
 
 /**
  * Created by luoyy on 2015/8/18 0018.
  */
-public class FgFriendPresenter {
+public class AddFriendPresenter {
 
-    private IFgFriendVu iFgFriendVu;
+    private IAddFriendVu iAddFriendVu;
     private IFriendModel friendModel;
     private IUserModel userModel;
     private FriendsRyViewAdapter friendsRyViewAdapter;
 
-
-    public FgFriendPresenter(IFgFriendVu iFgFriendVu) {
-        this.iFgFriendVu = iFgFriendVu;
+    public AddFriendPresenter(IAddFriendVu iAddFriendVu) {
+        this.iAddFriendVu = iAddFriendVu;
         friendModel = FriendModel.getInstance();
         userModel = UserModel.getInstance();
-        showFriends();
+        showAllUser();
     }
 
-    private void showFriends() {
-        friendModel.getAllFriends(new OnQueryFriendListener() {
+
+    public void query(String s) {
+
+        userModel.queryUserById(s, new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
                 friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                iFgFriendVu.showFriends(friendsRyViewAdapter);
+                iAddFriendVu.showfriends(friendsRyViewAdapter);
             }
 
             @Override
@@ -43,25 +43,26 @@ public class FgFriendPresenter {
 
             }
         });
+
     }
 
+    private void showAllUser() {
+        friendModel.getAllFriends(new OnQueryFriendListener() {
+            @Override
+            public void onSuccess(List<Userbean> object) {
+                friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                iAddFriendVu.showfriends(friendsRyViewAdapter);
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+
+            }
+        });
+
+    }
 
     public void Refresh() {
-        friendModel.getAllFriends(new OnQueryFriendListener() {
-            @Override
-            public void onSuccess(List<Userbean> object) {
-                friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                iFgFriendVu.showFriends(friendsRyViewAdapter);
-                iFgFriendVu.stopRefresh();
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-
-            }
-        });
-
+        iAddFriendVu.stopRefresh();
     }
-
-
 }

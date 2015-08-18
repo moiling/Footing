@@ -1,38 +1,42 @@
-package team.far.footing.ui.fragment;
+package team.far.footing.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
-import team.far.footing.presenter.FgFriendPresenter;
-import team.far.footing.ui.vu.IFgFriendVu;
+import team.far.footing.presenter.AddFriendPresenter;
+import team.far.footing.ui.vu.IAddFriendVu;
 import team.far.footing.ui.widget.DividerItemDecoration;
 
-public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefreshLayout.OnRefreshListener {
+public class AddFriendActivity extends AppCompatActivity implements IAddFriendVu, SwipeRefreshLayout.OnRefreshListener {
 
+    @InjectView(R.id.edit_addfriend)
+    EditText editAddfriend;
     @InjectView(R.id.firends_recyclerview)
     RecyclerView mRecyclerview;
     @InjectView(R.id.swipe_refresh_widget)
     SwipeRefreshLayout swipeRefreshWidget;
+    @InjectView(R.id.bt_query)
+    Button btQuery;
 
-    private FgFriendPresenter presenter;
+    private AddFriendPresenter addFriendPresenter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_friends, container, false);
-        ButterKnife.inject(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_friend);
+        ButterKnife.inject(this);
         init();
-        presenter = new FgFriendPresenter(this);
-        return view;
+        addFriendPresenter = new AddFriendPresenter(this);
     }
 
     private void init() {
@@ -41,16 +45,18 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
         swipeRefreshWidget.setOnRefreshListener(this);
         swipeRefreshWidget.setColorSchemeResources(android.R.color.holo_purple, android.R.color.holo_blue_bright, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        btQuery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFriendPresenter.query(editAddfriend.getText().toString());
+            }
+        });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
 
     @Override
-    public void showFriends(RecyclerView.Adapter adapter) {
+    public void showfriends(RecyclerView.Adapter adapter) {
         mRecyclerview.setAdapter(adapter);
     }
 
@@ -59,9 +65,8 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
         swipeRefreshWidget.setRefreshing(false);
     }
 
-    //下拉刷新
     @Override
     public void onRefresh() {
-        presenter.Refresh();
+        addFriendPresenter.Refresh();
     }
 }

@@ -88,6 +88,10 @@
             android:name=".ui.activity.FriendInfoActivity"
             android:label="@string/title_activity_friend_info" >
         </activity>
+        <activity
+            android:name=".ui.activity.AddFriendActivity"
+            android:label="@string/title_activity_add_friend" >
+        </activity>
     </application>
 
 </manifest>

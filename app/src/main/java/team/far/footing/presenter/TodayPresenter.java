@@ -11,7 +11,7 @@ import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.model.impl.FriendModel;
 import team.far.footing.model.impl.UserModel;
-import team.far.footing.ui.vu.IFgTodayVU;
+import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 
@@ -19,14 +19,14 @@ import team.far.footing.util.LogUtils;
  * Created by luoyy on 2015/8/13 0013.
  */
 public class TodayPresenter {
-    private IFgTodayVU iFgTodayVU;
+    private IFgTodayVu iFgTodayVu;
     private IFileModel fileModel;
     private IFriendModel friendModel;
     private IUserModel userModel;
     private List<Userbean> list = new ArrayList<>();
 
-    public TodayPresenter(IFgTodayVU iFgTodayVU) {
-        this.iFgTodayVU = iFgTodayVU;
+    public TodayPresenter(IFgTodayVu iFgTodayVu) {
+        this.iFgTodayVu = iFgTodayVu;
         fileModel = FileModel.getInstance();
         friendModel = FriendModel.getInstance();
         userModel = UserModel.getInstance();
@@ -40,12 +40,12 @@ public class TodayPresenter {
             public void onSuccess(List<Userbean> object) {
                 LogUtils.e("===============>>>>>>>>>>>>", object.toString());
                 list = object;
-                iFgTodayVU.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
+                iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
             }
 
             @Override
             public void onError(int code, String msg) {
-                iFgTodayVU.oninit_error(code, msg);
+                iFgTodayVu.oninit_error(code, msg);
             }
 
 
@@ -57,13 +57,13 @@ public class TodayPresenter {
     public void choose_spinner(int position) {
         switch (position) {
             case 0:
-                iFgTodayVU.choose_alldistance(getSortListByAll(list));
+                iFgTodayVu.choose_alldistance(getSortListByAll(list));
                 break;
             case 1:
-                iFgTodayVU.choose_distance(getSortListByToday(list));
+                iFgTodayVu.choose_distance(getSortListByToday(list));
                 break;
             case 2:
-                iFgTodayVU.choose_level(getSortListBylevel(list));
+                iFgTodayVu.choose_level(getSortListBylevel(list));
                 break;
             case 3:
                 break;
