@@ -128,7 +128,7 @@ public class TodayFragment extends Fragment implements IFgTodayVU {
         myAdapter.notifyDataSetChanged();
     }
 
-    class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_today_friends_list, null);

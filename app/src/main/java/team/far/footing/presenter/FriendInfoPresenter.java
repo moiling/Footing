@@ -17,10 +17,13 @@ public class FriendInfoPresenter {
     public FriendInfoPresenter(IFriendInfoVu v) {
         this.v = v;
         friendModel = (IFriendModel) FileModel.getInstance();
+
     }
 
     // 判断是否为好友
     public void isFriend(Userbean userbean) {
+     //friendModel.isMyFriendByNickname();
+     //friendModel.isMyFriendByUsername();
 
     }
 
@@ -66,4 +69,7 @@ public class FriendInfoPresenter {
     public void onRelieveView() {
         v = null;
     }
+
+
+
 }
