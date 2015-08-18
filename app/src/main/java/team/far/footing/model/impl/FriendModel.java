@@ -34,14 +34,25 @@ public class FriendModel implements IFriendModel {
     @Override
     public void addFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
 
+        //把其他人加为好友
         Userbean CurrentUser = BmobUtils.getCurrentUser();
         Friends friends = new Friends();
-        friends.setObjectId(BmobUtils.getCurrentUser().getFriendId());
+        friends.setObjectId(CurrentUser.getFriendId());
         friends.setUserbean(CurrentUser);
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.add(userbean);
         friends.setFriends(bmobRelation);
         update_friend(friends, onUpdateUserListener);
+
+        //其他人把你加为好友
+        Friends friends1 = new Friends();
+        friends1.setObjectId(userbean.getObjectId());
+        friends1.setUserbean(userbean);
+        BmobRelation bmobRelation1 = new BmobRelation();
+        bmobRelation1.add(CurrentUser);
+        friends1.setFriends(bmobRelation1);
+        update_friend(friends1, null);
+
 
     }
 
