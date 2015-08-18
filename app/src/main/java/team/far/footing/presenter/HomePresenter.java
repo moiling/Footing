@@ -9,6 +9,7 @@ import team.far.footing.model.IFileModel;
 import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
+import team.far.footing.ui.activity.AddFriendActivity;
 import team.far.footing.ui.activity.SettingActivity;
 import team.far.footing.ui.activity.UserInfoActivity;
 import team.far.footing.ui.activity.WalkActivity;
@@ -84,6 +85,14 @@ public class HomePresenter {
 
             }
         });
+
+    }
+
+
+    public void startAddFriendActivity(Context context) {
+        Intent intent = new Intent(context, AddFriendActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        context.startActivity(intent);
 
     }
 

@@ -26,11 +26,11 @@ import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.presenter.TodayPresenter;
-import team.far.footing.ui.vu.IFgTodayVU;
+import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.ui.widget.DividerItemDecoration;
 
-public class TodayFragment extends Fragment implements IFgTodayVU {
+public class TodayFragment extends Fragment implements IFgTodayVu {
 
     @InjectView(R.id.tv_today_distance)
     TextView tvTodayDistance;
