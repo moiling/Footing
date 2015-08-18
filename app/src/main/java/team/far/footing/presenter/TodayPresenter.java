@@ -11,7 +11,7 @@ import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.model.impl.FriendModel;
 import team.far.footing.model.impl.UserModel;
-import team.far.footing.ui.vu.IFgTodayVU;
+import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 
@@ -19,13 +19,13 @@ import team.far.footing.util.LogUtils;
  * Created by luoyy on 2015/8/13 0013.
  */
 public class TodayPresenter {
-    private IFgTodayVU iFgTodayVU;
+    private IFgTodayVu iFgTodayVU;
     private IFileModel fileModel;
     private IFriendModel friendModel;
     private IUserModel userModel;
     private List<Userbean> list = new ArrayList<>();
 
-    public TodayPresenter(IFgTodayVU iFgTodayVU) {
+    public TodayPresenter(IFgTodayVu iFgTodayVU) {
         this.iFgTodayVU = iFgTodayVU;
         fileModel = FileModel.getInstance();
         friendModel = FriendModel.getInstance();
