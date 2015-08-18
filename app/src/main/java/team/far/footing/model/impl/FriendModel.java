@@ -11,6 +11,7 @@ import team.far.footing.app.APP;
 import team.far.footing.model.IFriendModel;
 import team.far.footing.model.bean.Friends;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OnIsMyFriendListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.util.BmobUtils;
@@ -79,6 +80,51 @@ public class FriendModel implements IFriendModel {
         friends.setFriends(bmobRelation);
         update_friend(friends, onUpdateUserListener);
     }
+
+
+    @Override
+    public void isMyFriendByNickname(final String nickname, final OnIsMyFriendListener onIsMyFriendListener) {
+        UserModel.getInstance().queryAlluser(new OnQueryFriendListener() {
+            @Override
+            public void onSuccess(List<Userbean> object) {
+                for (Userbean userbean : object) {
+                    if (nickname.equals(userbean.getUsername())) {
+                        onIsMyFriendListener.onSuccess(true);
+                        return;
+                    }
+                }
+                onIsMyFriendListener.onSuccess(false);
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                onIsMyFriendListener.onError(code, msg);
+            }
+        });
+    }
+
+    @Override
+    public void isMyFriendByUsername(final String username, final OnIsMyFriendListener onIsMyFriendListener) {
+        UserModel.getInstance().queryAlluser(new OnQueryFriendListener() {
+            @Override
+            public void onSuccess(List<Userbean> object) {
+                for (Userbean userbean : object) {
+                    if (username.equals(userbean.getUsername())) {
+                        onIsMyFriendListener.onSuccess(true);
+                        return;
+                    }
+                }
+                onIsMyFriendListener.onSuccess(false);
+
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                onIsMyFriendListener.onError(code, msg);
+            }
+        });
+    }
+
 
     private void update_friend(Friends friends, final OnUpdateUserListener onUpdateUserListener) {
 

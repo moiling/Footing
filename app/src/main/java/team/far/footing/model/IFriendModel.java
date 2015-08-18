@@ -1,5 +1,6 @@
 package team.far.footing.model;
 
+import team.far.footing.model.callback.OnIsMyFriendListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.bean.Userbean;
@@ -22,5 +23,16 @@ public interface IFriendModel {
      */
     void getAllFriends(OnQueryFriendListener onQueryFriendListener);
 
+    /**
+     * 删除朋友
+     *
+     * @param userbean
+     * @param onUpdateUserListener
+     */
     void deleteFriend(Userbean userbean, OnUpdateUserListener onUpdateUserListener);
+
+    void isMyFriendByUsername(String username, OnIsMyFriendListener onIsMyFriendListener);
+
+    void isMyFriendByNickname(String username, OnIsMyFriendListener onIsMyFriendListener);
+
 }
