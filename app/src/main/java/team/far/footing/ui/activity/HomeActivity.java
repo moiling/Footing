@@ -160,8 +160,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.RIGHT);
             layoutParams.setMargins(0, 0, (int) (getResources()
                     .getDimension(R.dimen.codelab_fab_margin_right)), (int) (getResources()
-                                                                                     .getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils
-                                                                                     .getNavigationBarHeight(this)));
+                    .getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils.getNavigationBarHeight(this)));
             mFabBtn.setLayoutParams(layoutParams);
         }
     }
@@ -169,7 +168,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     @Override
     public void showUserInformation(Userbean userbean) {
         LogUtils.d(userbean.getUsername());
-        // TODO: 完善bean
         if (!(userbean.getNickName() == null)) {
             userName.setText(userbean.getNickName());
             mToolbarUserName.setText(userbean.getNickName());

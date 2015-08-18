@@ -4,15 +4,15 @@
         <item
             android:id="@+id/item_drawer_my_map"
             android:icon="@mipmap/ic_mission"
-            android:title="我的地图"/>
+            android:title="我的地图" />
         <item
             android:id="@+id/item_drawer_my_info"
             android:icon="@mipmap/ic_user"
-            android:title="个人资料"/>
+            android:title="个人资料" />
         <item
             android:id="@+id/item_drawer_draw_footing"
             android:icon="@mipmap/ic_mission"
-            android:title="绘制路线"/>
+            android:title="绘制路线" />
     </group>
 
     <group android:checkableBehavior="single">

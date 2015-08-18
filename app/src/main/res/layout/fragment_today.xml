@@ -21,7 +21,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_friends_status"/>
+                android:src="@mipmap/ic_friends_status" />
 
             <TextView
                 android:text="好友状态"
@@ -30,7 +30,7 @@
                 android:textColor="@color/secondary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="好友排名"
                     android:textColor="@color/primary_text"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview"
@@ -91,7 +91,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_my_status"/>
+                android:src="@mipmap/ic_my_status" />
 
             <TextView
                 android:text="我的状态"
@@ -100,7 +100,7 @@
                 android:textColor="@color/secondary_text"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -127,17 +127,17 @@
                     android:layout_marginRight="22dp"
                     android:layout_centerVertical="true"
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"/>
+                    android:layout_height="0.5dp" />
 
-           <!--     <TextView
-                    android:id="@+id/tv_tt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:gravity="center"
-                    android:text="行走路程"
-                    android:textColor="@color/primary_text"
-                    android:textSize="16sp" />-->
+                <!--     <TextView
+                         android:id="@+id/tv_tt"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="22dp"
+                         android:gravity="center"
+                         android:text="行走路程"
+                         android:textColor="@color/primary_text"
+                         android:textSize="16sp" />-->
 
                 <TextView
                     android:id="@+id/tv_today_distance"
@@ -148,16 +148,16 @@
                     android:textColor="@color/accent_color"
                     android:textSize="18sp" />
 
-       <!--         <TextView
-                    android:id="@+id/tv_mission_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_tt"
-                    android:layout_marginLeft="22dp"
-                    android:text="任务情况"
-                    android:layout_marginTop="30dp"
-                    android:textColor="@color/primary_text"
-                    android:textSize="16sp" />-->
+                <!--         <TextView
+                             android:id="@+id/tv_mission_status"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@+id/tv_tt"
+                             android:layout_marginLeft="22dp"
+                             android:text="任务情况"
+                             android:layout_marginTop="30dp"
+                             android:textColor="@color/primary_text"
+                             android:textSize="16sp" />-->
 
                 <TextView
                     android:id="@+id/tv_Is_finish_today"

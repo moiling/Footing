@@ -3,16 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="team.far.footing.ui.activity.HomeActivity">
 
-    <item android:id="@+id/action_message"
+    <item
+        android:id="@+id/action_message"
         android:title="MESSAGE"
         android:icon="@mipmap/ic_message"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_mission"
+    <item
+        android:id="@+id/action_mission"
         android:title="mission"
         android:icon="@mipmap/ic_mission"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

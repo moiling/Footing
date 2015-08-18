@@ -26,6 +26,7 @@ import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.UserInfoPresenter;
 import team.far.footing.ui.vu.IUserInfoVu;
 import team.far.footing.ui.widget.CircleImageView;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.ScreenUtils;
 
 public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener {
@@ -130,8 +131,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     }
 
     @Override
-    public void showUpdateFailed(String errormsg) {
-        new MaterialDialog.Builder(this).title("上传失败").content(errormsg).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+    public void showUpdateFailed(int i) {
+        new MaterialDialog.Builder(this).title("上传失败").content(BmobUtils.searchCode(i)).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
                 dialog.dismiss();

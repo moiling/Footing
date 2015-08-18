@@ -8,5 +8,5 @@ import team.far.footing.model.bean.Userbean;
 public interface OnLoginListener {
     void loginSuccess(Userbean userbean);
 
-    void loginFailed(String reason);
+    void loginFailed(int i, String reason);
 }

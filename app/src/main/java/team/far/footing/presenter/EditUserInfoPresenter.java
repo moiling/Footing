@@ -33,7 +33,7 @@ public class EditUserInfoPresenter {
 
             @Override
             public void onFailure(int i, String s) {
-                v.showEditFail(s);
+                v.showEditFail(i);
             }
         });
     }

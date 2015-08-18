@@ -19,7 +19,7 @@ public class BmobUtils {
     }
 
     /**
-     *   退出登录
+     * 退出登录
      */
     public static void LogOutUser() {
         BmobUser.logOut(APP.getContext());

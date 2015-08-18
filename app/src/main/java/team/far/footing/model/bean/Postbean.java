@@ -9,8 +9,8 @@ import cn.bmob.v3.datatype.BmobRelation;
 public class Postbean extends BmobObject {
 
 
-    private  String title;
-    private  String content;
+    private String title;
+    private String content;
     private Userbean author;
     private BmobRelation likes;
     private String picUrl;
@@ -23,7 +23,7 @@ public class Postbean extends BmobObject {
         this.picName = picName;
     }
 
-    private  String picName;
+    private String picName;
     private int praise;
 
     public int getPraise() {

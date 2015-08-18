@@ -18,6 +18,7 @@
         <item name="colorAccent">@color/accent_color</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
+
     <style name="LoginLayoutTheme" parent="AppTheme.Base">
         <item name="colorAccent">@color/accent_color</item>
         <item name="colorControlNormal">@color/primary_color</item>

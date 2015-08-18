@@ -9,7 +9,7 @@ public class Commentbean extends BmobObject {
 
     private String content;
     private Postbean postbean;
-     private  Userbean userbean;
+    private Userbean userbean;
 
     public Postbean getPostbean() {
         return postbean;

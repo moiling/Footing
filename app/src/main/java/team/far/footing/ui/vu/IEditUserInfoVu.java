@@ -19,5 +19,5 @@ public interface IEditUserInfoVu {
 
     void showEditSuccee();
 
-    void showEditFail(String reason);
+    void showEditFail(int i);
 }

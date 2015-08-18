@@ -9,7 +9,7 @@ import team.far.footing.model.bean.Userbean;
  */
 public interface IUserInfoVu {
 
-    void showUserInformation(Userbean userbean,Bitmap bitmap);
+    void showUserInformation(Userbean userbean, Bitmap bitmap);
 
     void showUserPic(Bitmap bitmap);
 
@@ -17,7 +17,7 @@ public interface IUserInfoVu {
 
     void showUpdateSuccess();
 
-    void showUpdateFailed(String errormsg);
+    void showUpdateFailed(int i);
 
     void dismissLoading();
 }

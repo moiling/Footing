@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="team.far.footing.ui.activity.SettingActivity">
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/btn_setting_logout"

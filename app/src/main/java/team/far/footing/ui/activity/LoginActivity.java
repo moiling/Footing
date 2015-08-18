@@ -21,7 +21,9 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.LoginPresenter;
 import team.far.footing.ui.vu.ILoginVu;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.MIUIV6;
 
 /**
  * Created by Luoyy on 2015/8/7 0007.
@@ -48,7 +50,8 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         loginPresenter = new LoginPresenter(this);
-        setBarTintColor(getResources().getColor(R.color.login_blue));
+        MIUIV6.setStatusBarTextColor(this, 1);
+        setBarTintColor(getResources().getColor(R.color.background_material_light));
         init();
     }
 
@@ -108,14 +111,23 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
     }
 
     @Override
-    public void showLoginFail(String reason) {
-        if (type == 0) dismissProgress();
-        new MaterialDialog.Builder(this).title("登录失败").content(reason).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-                dialog.dismiss();
-            }
-        }).show();
+    public void showLoginFail(int i, String s) {
+        if (type == 0) {
+            dismissProgress();
+            new MaterialDialog.Builder(this).title("登录失败").content(BmobUtils.searchCode(i)).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+                @Override
+                public void onPositive(MaterialDialog dialog) {
+                    dialog.dismiss();
+                }
+            }).show();
+        } else {
+            new MaterialDialog.Builder(this).title("登录失败").content(s).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+                @Override
+                public void onPositive(MaterialDialog dialog) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
     }
 
     @Override
