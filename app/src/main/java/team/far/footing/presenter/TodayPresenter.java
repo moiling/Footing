@@ -30,17 +30,23 @@ public class TodayPresenter {
         fileModel = FileModel.getInstance();
         friendModel = FriendModel.getInstance();
         userModel = UserModel.getInstance();
-        getUserbeans();
+        getUserbeans(0);
     }
 
 
-    public void getUserbeans() {
+    public void refresh(int type) {
+        getUserbeans(type);
+    }
+
+    public void getUserbeans(final int type) {
         friendModel.getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
                 LogUtils.e("===============>>>>>>>>>>>>", object.toString());
                 list = object;
                 iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
+                iFgTodayVu.stopRefresh();
+                choose_spinner(type);
             }
 
             @Override

@@ -3,6 +3,7 @@ package team.far.footing.ui.fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,15 +23,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
-import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.ui.widget.CircleImageView;
-import team.far.footing.ui.widget.DividerItemDecoration;
 
-public class TodayFragment extends Fragment implements IFgTodayVu {
+public class TodayFragment extends Fragment implements IFgTodayVu, SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.tv_today_distance)
     TextView tvTodayDistance;
@@ -44,6 +44,7 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
     CardView cvFgFriends;
     @InjectView(R.id.tv_Is_finish_today)
     TextView tvIsFinishToday;
+    @InjectView(R.id.swipe_refresh_widget) SwipeRefreshLayout swipeRefreshWidget;
 
     private List<Userbean> userbeanList = new ArrayList<>();
     private TodayPresenter todayPresenter;
@@ -74,7 +75,6 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
 
     private void initRecycler() {
         recyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), DividerItemDecoration.VERTICAL_LIST));
         myAdapter = new MyAdapter();
         recyclerview.setAdapter(myAdapter);
     }
@@ -98,6 +98,9 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
         }
         this.userbeanList = userbeanList;
         myAdapter.notifyDataSetChanged();
+        swipeRefreshWidget.setOnRefreshListener(this);
+        swipeRefreshWidget.setColorSchemeResources(android.R.color.holo_purple, android.R.color.holo_blue_bright, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override
@@ -126,6 +129,16 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
     public void choose_level(List<Userbean> userbeanList) {
         this.userbeanList = userbeanList;
         myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        todayPresenter.refresh(type);
+    }
+
+    @Override
+    public void stopRefresh() {
+        swipeRefreshWidget.setRefreshing(false);
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {

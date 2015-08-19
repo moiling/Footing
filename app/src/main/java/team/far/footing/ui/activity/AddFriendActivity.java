@@ -2,9 +2,9 @@ package team.far.footing.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,11 +13,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.APP;
+import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.AddFriendPresenter;
 import team.far.footing.ui.vu.IAddFriendVu;
 import team.far.footing.ui.widget.DividerItemDecoration;
 
-public class AddFriendActivity extends AppCompatActivity implements IAddFriendVu, SwipeRefreshLayout.OnRefreshListener {
+public class AddFriendActivity extends BaseActivity implements IAddFriendVu, SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.edit_addfriend)
     EditText editAddfriend;
@@ -27,6 +28,7 @@ public class AddFriendActivity extends AppCompatActivity implements IAddFriendVu
     SwipeRefreshLayout swipeRefreshWidget;
     @InjectView(R.id.bt_query)
     Button btQuery;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
 
     private AddFriendPresenter addFriendPresenter;
 
@@ -36,7 +38,20 @@ public class AddFriendActivity extends AppCompatActivity implements IAddFriendVu
         setContentView(R.layout.activity_add_friend);
         ButterKnife.inject(this);
         init();
+        initToolbar();
         addFriendPresenter = new AddFriendPresenter(this);
+    }
+
+    private void initToolbar() {
+        mToolbar.setTitle("找朋友");
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_back));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void init() {
