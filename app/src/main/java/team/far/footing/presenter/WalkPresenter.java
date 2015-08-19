@@ -181,7 +181,7 @@ public class WalkPresenter {
         v = null;
     }
 
-    private class MyLocationListener implements BDLocationListener {
+    public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             LogUtils.d("现在的状态：" + appStatus);

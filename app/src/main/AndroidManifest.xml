@@ -28,7 +28,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.RegisterActivty" />
         //baidu
         <meta-data
@@ -60,7 +60,7 @@
         <activity
             android:name=".ui.activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.WalkActivity"
             android:label="@string/title_activity_walk"
@@ -68,7 +68,7 @@
         <activity
             android:name=".ui.activity.LaunchActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,25 +78,32 @@
         <activity
             android:name=".ui.activity.UserInfoActivity"
             android:label="@string/title_activity_user_info"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EditUserInfoActivity"
             android:label="@string/title_activity_edit_user_info"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SettingActivity"
             android:label="@string/title_activity_setting"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.FriendInfoActivity"
             android:label="@string/title_activity_friend_info"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ui.activity.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activity.MyMapActivity"
+            android:label="@string/title_activity_my_map" >
+        </activity>
+        <activity
+            android:name=".ui.activity.ShowMapActivity"
+            android:label="@string/title_activity_show_map" >
         </activity>
     </application>
 
