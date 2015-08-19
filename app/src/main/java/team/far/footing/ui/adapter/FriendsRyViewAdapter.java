@@ -32,7 +32,7 @@ public class FriendsRyViewAdapter extends RecyclerView.Adapter<FriendsRyViewAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_today_friends_list, null);
+        View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friends_list, null);
         return new ViewHolder(V);
     }
 
@@ -40,7 +40,7 @@ public class FriendsRyViewAdapter extends RecyclerView.Adapter<FriendsRyViewAdap
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.ripple.setRippleColor(APP.getContext().getResources().getColor(R.color.accent_light_color));
         holder.tv_name.setText(list.get(position).getNickName());
-
+        holder.tv_signature.setText(list.get(position).getSignature());
         if (list.get(position).getHeadPortraitFileName() != null) {
             FileModel.getInstance().getUserPic(list.get(position), new OngetUserPicListener() {
                 @Override
@@ -66,7 +66,7 @@ public class FriendsRyViewAdapter extends RecyclerView.Adapter<FriendsRyViewAdap
 
         private CircleImageView circleImageView;
         private TextView tv_name;
-        private TextView tv_distance;
+        private TextView tv_signature;
         private MaterialRippleLayout ripple;
 
         public ViewHolder(View itemView) {
@@ -74,7 +74,7 @@ public class FriendsRyViewAdapter extends RecyclerView.Adapter<FriendsRyViewAdap
             ripple = (MaterialRippleLayout) itemView.findViewById(R.id.ripple);
             circleImageView = (CircleImageView) itemView.findViewById(R.id.item_image_friend);
             tv_name = (TextView) itemView.findViewById(R.id.item_tv_name);
-            tv_distance = (TextView) itemView.findViewById(R.id.item_tv_distance);
+            tv_signature = (TextView) itemView.findViewById(R.id.item_tv_signature);
         }
     }
 
