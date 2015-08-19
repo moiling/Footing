@@ -1,11 +1,13 @@
 package team.far.footing.model.bean;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * Created by luoyy on 2015/8/14 0014.
  */
-public class MapBean extends BmobObject {
+public class MapBean extends BmobObject implements Serializable {
 
     private Userbean userbean;
     private String map_url;

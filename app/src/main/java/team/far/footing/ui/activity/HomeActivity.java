@@ -190,9 +190,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             userName.setText("未取名");
             mToolbarUserName.setText("未取名");
         }
-        //userPic.setImageBitmap();
-        //mToolbarUserImage.set
-
 
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
@@ -242,6 +239,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             case R.id.home_drawer_head:
                 presenter.startUserInfoActivity(this);
                 break;
+
+
         }
     }
 
@@ -254,6 +253,9 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
                 break;
             case R.id.item_drawer_setting:
                 presenter.startSettingActivity(this);
+                break;
+            case R.id.item_drawer_my_map:
+                presenter.startMyMapActivity(this);
                 break;
         }
         return false;

@@ -10,6 +10,7 @@ import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.ui.activity.AddFriendActivity;
+import team.far.footing.ui.activity.MyMapActivity;
 import team.far.footing.ui.activity.SettingActivity;
 import team.far.footing.ui.activity.UserInfoActivity;
 import team.far.footing.ui.activity.WalkActivity;
@@ -71,6 +72,11 @@ public class HomePresenter {
         context.startActivity(intent);
     }
 
+    public void startMyMapActivity(Context context) {
+        Intent intent = new Intent(context, MyMapActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FROM_BACKGROUND);
+        context.startActivity(intent);
+    }
 
     public void setUserPic(String filename) {
 

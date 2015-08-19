@@ -30,7 +30,7 @@ import team.far.footing.presenter.TodayPresenter;
 import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.ui.widget.CircleImageView;
 
-public class TodayFragment extends Fragment implements IFgTodayVu, SwipeRefreshLayout.OnRefreshListener {
+public class TodayFragment extends Fragment implements IFgTodayVu {
 
     @InjectView(R.id.tv_today_distance)
     TextView tvTodayDistance;
@@ -44,7 +44,8 @@ public class TodayFragment extends Fragment implements IFgTodayVu, SwipeRefreshL
     CardView cvFgFriends;
     @InjectView(R.id.tv_Is_finish_today)
     TextView tvIsFinishToday;
-    @InjectView(R.id.swipe_refresh_widget) SwipeRefreshLayout swipeRefreshWidget;
+    @InjectView(R.id.tv_friends)
+    TextView tvFriends;
 
     private List<Userbean> userbeanList = new ArrayList<>();
     private TodayPresenter todayPresenter;
@@ -98,9 +99,6 @@ public class TodayFragment extends Fragment implements IFgTodayVu, SwipeRefreshL
         }
         this.userbeanList = userbeanList;
         myAdapter.notifyDataSetChanged();
-        swipeRefreshWidget.setOnRefreshListener(this);
-        swipeRefreshWidget.setColorSchemeResources(android.R.color.holo_purple, android.R.color.holo_blue_bright, android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
     }
 
     @Override
@@ -112,6 +110,7 @@ public class TodayFragment extends Fragment implements IFgTodayVu, SwipeRefreshL
     public void onclickwork() {
 
     }
+
 
     @Override
     public void choose_distance(List<Userbean> userbeanList) {
@@ -131,15 +130,6 @@ public class TodayFragment extends Fragment implements IFgTodayVu, SwipeRefreshL
         myAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onRefresh() {
-        todayPresenter.refresh(type);
-    }
-
-    @Override
-    public void stopRefresh() {
-        swipeRefreshWidget.setRefreshing(false);
-    }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         @Override

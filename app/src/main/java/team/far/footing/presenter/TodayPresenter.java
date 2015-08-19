@@ -45,7 +45,6 @@ public class TodayPresenter {
                 LogUtils.e("===============>>>>>>>>>>>>", object.toString());
                 list = object;
                 iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
-                iFgTodayVu.stopRefresh();
                 choose_spinner(type);
             }
 
