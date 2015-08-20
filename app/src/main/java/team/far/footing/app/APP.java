@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 import team.far.footing.R;
 import team.far.footing.util.LogUtils;
 

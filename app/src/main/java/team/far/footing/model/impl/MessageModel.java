@@ -80,7 +80,6 @@ public class MessageModel implements IMessageModel {
         messageBean.update(APP.getContext());
     }
 
-
     @Override
     public void sendMssageToUser(final Userbean userbean, String message, final OnUpdateUserListener onUpdateUserListener) {
         final MessageBean messageBean = new MessageBean();

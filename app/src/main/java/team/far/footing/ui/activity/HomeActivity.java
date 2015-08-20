@@ -28,6 +28,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.bmob.push.BmobPush;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.listener.FindListener;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
@@ -89,6 +91,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation(this).save();
+        // 启动推送服务
+        BmobPush.startWork(this, this.getString(R.string.Bmob_Key));
+
+
         ButterKnife.inject(this);
         noUseBarTint();
         initToolbar();
