@@ -3,6 +3,9 @@ package team.far.footing.model;
 
 import android.app.Activity;
 
+import cn.bmob.v3.listener.FindListener;
+import team.far.footing.model.bean.MessageBean;
+import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OnLoginForQQListener;
 import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
@@ -107,6 +110,5 @@ public interface IUserModel {
      * @param onUpdateUserListener ------------更新用户数据的监听器
      */
     void resetPasswordByEmail(String email, OnUpdateUserListener onUpdateUserListener);
-
 
 }

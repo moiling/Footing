@@ -44,6 +44,8 @@ public class TodayPresenter {
             public void onSuccess(List<Userbean> object) {
                 LogUtils.e("===============>>>>>>>>>>>>", object.toString());
                 list = object;
+                //把自己加进去
+                list.add(BmobUtils.getCurrentUser());
                 iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
                 choose_spinner(type);
             }

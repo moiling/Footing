@@ -95,23 +95,23 @@ public class FriendModel implements IFriendModel {
 
     @Override
     public void isMyFriendByNickname(final String nickname, final OnIsMyFriendListener onIsMyFriendListener) {
-        getAllFriends(new OnQueryFriendListener() {
-            @Override
-            public void onSuccess(List<Userbean> object) {
-                for (Userbean userbean : object) {
-                    if (nickname.equals(userbean.getUsername())) {
-                        onIsMyFriendListener.onSuccess(true);
-                        return;
-                    }
-                }
-                onIsMyFriendListener.onSuccess(false);
-            }
+      getAllFriends(new OnQueryFriendListener() {
+          @Override
+          public void onSuccess(List<Userbean> object) {
+              for (Userbean userbean : object) {
+                  if (nickname.equals(userbean.getUsername())) {
+                      onIsMyFriendListener.onSuccess(true);
+                      return;
+                  }
+              }
+              onIsMyFriendListener.onSuccess(false);
+          }
 
-            @Override
-            public void onError(int code, String msg) {
-                onIsMyFriendListener.onError(code, msg);
-            }
-        });
+          @Override
+          public void onError(int code, String msg) {
+              onIsMyFriendListener.onError(code, msg);
+          }
+      });
     }
 
     @Override

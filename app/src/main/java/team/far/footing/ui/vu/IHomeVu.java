@@ -2,6 +2,9 @@ package team.far.footing.ui.vu;
 
 import android.graphics.Bitmap;
 
+import java.util.List;
+
+import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.bean.Userbean;
 
 /**
@@ -15,7 +18,7 @@ public interface IHomeVu {
      *
      * @param userbean bmob得到登录的用户
      */
-    void showUserInformation(Userbean userbean);
+    void showUserInformation(Userbean userbean,List<MessageBean> messageBeanList);
 
     /**
      * 显示任务

@@ -3,6 +3,7 @@ package team.far.footing.model.bean;
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by moi on 2015/8/7.
@@ -35,6 +36,17 @@ public class Userbean extends BmobUser implements Serializable {
     private Integer all_distance;
     //今日任务完成没  0表示未完成  1表示完成。
     private Integer is_finish_today;
+
+
+    private BmobRelation messages;
+
+    public BmobRelation getMessages() {
+        return messages;
+    }
+
+    public void setMessages(BmobRelation messages) {
+        this.messages = messages;
+    }
 
     public Integer getToday_distance() {
         return today_distance;
