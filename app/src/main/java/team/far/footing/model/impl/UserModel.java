@@ -1,6 +1,7 @@
 package team.far.footing.model.impl;
 
 import android.app.Activity;
+import android.app.backup.BackupManager;
 
 import com.bmob.BTPFileResponse;
 import com.bmob.BmobProFile;
@@ -18,6 +19,8 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.OtherLoginListener;
 import cn.bmob.v3.listener.ResetPasswordByEmailListener;
@@ -26,6 +29,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.model.IUserModel;
+import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.callback.OnLoginForQQListener;
 import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
@@ -106,6 +110,8 @@ public class UserModel implements IUserModel {
                         onRegsterListener.RegsterFail(i);
                     }
                 });
+
+
             }
 
             @Override
@@ -197,6 +203,53 @@ public class UserModel implements IUserModel {
         Userbean newUser = new Userbean();
         newUser.setSignature(signature);
         updateUser(newUser, onUpdateUserListener);
+    }
+
+
+    @Override
+    public void sendMssageToUser(final Userbean userbean, String message, final OnUpdateUserListener onUpdateUserListener) {
+        final MessageBean messageBean = new MessageBean();
+        messageBean.setGetuser(userbean);
+        messageBean.setSenduser(BmobUtils.getCurrentUser());
+        messageBean.setIsread(0);
+        messageBean.setMessage(message);
+        messageBean.save(APP.getContext(), new SaveListener() {
+            @Override
+            public void onSuccess() {
+                AddMessage(userbean, messageBean, onUpdateUserListener);
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                onUpdateUserListener.onFailure(i, s);
+            }
+        });
+
+    }
+
+    @Override
+    public void AddMessage(Userbean userbean, MessageBean messageBean, final OnUpdateUserListener onUpdateUserListener) {
+        BmobRelation bmobRelation = new BmobRelation();
+        bmobRelation.add(messageBean);
+        userbean.setMessages(bmobRelation);
+        userbean.update(APP.getContext(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                onUpdateUserListener.onSuccess();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                onUpdateUserListener.onFailure(i, s);
+            }
+        });
+    }
+
+    @Override
+    public void getAllMessage(FindListener<MessageBean> findListener) {
+        BmobQuery<MessageBean> query = new BmobQuery<MessageBean>();
+        query.addWhereRelatedTo("messages", new BmobPointer(BmobUtils.getCurrentUser()));
+        query.findObjects(APP.getContext(), findListener);
     }
 
     @Override

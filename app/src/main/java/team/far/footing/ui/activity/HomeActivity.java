@@ -32,6 +32,7 @@ import cn.bmob.v3.listener.FindListener;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.MapBean;
+import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.MapModel;
 import team.far.footing.presenter.HomePresenter;
@@ -181,7 +182,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     }
 
     @Override
-    public void showUserInformation(Userbean userbean) {
+    public void showUserInformation(Userbean userbean, List<MessageBean> messageBeanList) {
         LogUtils.d(userbean.getUsername());
         if (!(userbean.getNickName() == null)) {
             userName.setText(userbean.getNickName());
@@ -193,11 +194,16 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
 
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
+        /**
+         * 展示消息
+         */
+
     }
 
     private void refreshUserInforimation() {
         presenter.refreshUserInformation();
     }
+
 
     /**
      * 任务
