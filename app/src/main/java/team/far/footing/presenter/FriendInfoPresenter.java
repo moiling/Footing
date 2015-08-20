@@ -2,9 +2,11 @@ package team.far.footing.presenter;
 
 import team.far.footing.model.IFriendModel;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OnIsMyFriendListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
-import team.far.footing.model.impl.FileModel;
+import team.far.footing.model.impl.FriendModel;
 import team.far.footing.ui.vu.IFriendInfoVu;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by moi on 2015/8/18.
@@ -13,21 +15,35 @@ public class FriendInfoPresenter {
 
     private IFriendModel friendModel;
     private IFriendInfoVu v;
+    private Userbean userbean;
 
-    public FriendInfoPresenter(IFriendInfoVu v) {
+    public FriendInfoPresenter(IFriendInfoVu v, Userbean userbean) {
         this.v = v;
-        friendModel = (IFriendModel) FileModel.getInstance();
-
+        friendModel = FriendModel.getInstance();
+        this.userbean = userbean;
     }
 
-    // 判断是否为好友
-    public void isFriend(Userbean userbean) {
-     //friendModel.isMyFriendByNickname();
-     //friendModel.isMyFriendByUsername();
+    public void initView() {
+        friendModel.isMyFriendByUsername(userbean.getUsername(), new OnIsMyFriendListener() {
+            @Override
+            public void onSuccess(boolean b) {
+                LogUtils.d("是不是好友？" + b);
+                if (b) {
+                    v.initFriendView();
+                } else {
+                    v.initNotFriendView();
+                }
+            }
 
+            @Override
+            public void onError(int code, String msg) {
+                v.initNotFriendView();
+                v.onError("加载出错了！");
+            }
+        });
     }
 
-    public void addFriend(Userbean userbean) {
+    public void addFriend() {
         v.showProgress();
         friendModel.addFriend(userbean, new OnUpdateUserListener() {
             @Override
@@ -44,7 +60,7 @@ public class FriendInfoPresenter {
         });
     }
 
-    public void deleteFriend(Userbean userbean) {
+    public void deleteFriend() {
         v.showProgress();
         friendModel.deleteFriend(userbean, new OnUpdateUserListener() {
             @Override

@@ -36,7 +36,7 @@ public interface IFriendModel {
      * @param username
      * @param onIsMyFriendListener
      */
-  void isMyFriendByUsername(String username, OnIsMyFriendListener onIsMyFriendListener);
+    void isMyFriendByUsername(String username, OnIsMyFriendListener onIsMyFriendListener);
 
     void isMyFriendByNickname(String username, OnIsMyFriendListener onIsMyFriendListener);
 
