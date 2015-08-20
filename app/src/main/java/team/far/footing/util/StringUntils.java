@@ -15,7 +15,7 @@ public class StringUntils {
         for (String string : list_map) {
             try {
                 String[] array = string.split("=");
-                latLngs.add(new LatLng(Double.valueOf(array[0]), Double.valueOf(array[1])));
+                latLngs.add(new LatLng(Double.valueOf(array[1]), Double.valueOf(array[0])));
             } catch (Exception e) {
                 LogUtils.e("在StringUntils中：解析出错");
             }
