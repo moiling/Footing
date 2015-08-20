@@ -1,7 +1,9 @@
 package team.far.footing.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
+import org.hybridsquad.android.library.CropHandler;
 import org.hybridsquad.android.library.CropHelper;
 import org.hybridsquad.android.library.CropParams;
 
@@ -29,7 +32,7 @@ import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.ScreenUtils;
 
-public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener {
+public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener, CropHandler {
 
     @InjectView(R.id.toolbar_t) Toolbar mToolbar;
     @InjectView(R.id.user_info_bar) FrameLayout barLayout;
@@ -41,6 +44,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @InjectView(R.id.btn_user_info_photo) Button btnPhoto;
 
     private UserInfoPresenter presenter;
+    private CropParams mCropParams = new CropParams();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,12 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
 
         init();
         presenter = new UserInfoPresenter(this);
+
+    }
+
+    public void cropDestroy() {
+        if (this.getCropParams() != null)
+            CropHelper.clearCachedCropFile(this.getCropParams().uri);
     }
 
     private void init() {
@@ -68,7 +78,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.cropDestroy();
+        cropDestroy();
         presenter.onRelieveView();
     }
 
@@ -159,7 +169,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        CropHelper.handleResult(presenter.getCropHandler(), requestCode, resultCode, data);
+        CropHelper.handleResult(this, requestCode, resultCode, data);
     }
 
     @Override
@@ -171,9 +181,34 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 break;
             case R.id.btn_user_info_photo:
                 Intent intent2 = CropHelper.buildCropFromGalleryIntent(new CropParams());
-                if (presenter.getCropParams() != null) CropHelper.clearCachedCropFile(presenter.getCropParams().uri);
+                CropHelper.clearCachedCropFile(mCropParams.uri);
                 startActivityForResult(intent2, CropHelper.REQUEST_CROP);
                 break;
         }
+    }
+
+    @Override
+    public void onPhotoCropped(Uri uri) {
+        presenter.updatePic(uri);
+    }
+
+    @Override
+    public void onCropCancel() {
+
+    }
+
+    @Override
+    public void onCropFailed(String s) {
+
+    }
+
+    @Override
+    public CropParams getCropParams() {
+        return mCropParams;
+    }
+
+    @Override
+    public Activity getContext() {
+        return getContext();
     }
 }
