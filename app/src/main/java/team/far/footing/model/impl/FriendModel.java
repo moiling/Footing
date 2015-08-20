@@ -95,7 +95,7 @@ public class FriendModel implements IFriendModel {
 
     @Override
     public void isMyFriendByNickname(final String nickname, final OnIsMyFriendListener onIsMyFriendListener) {
-        UserModel.getInstance().queryAlluser(new OnQueryFriendListener() {
+        getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
                 for (Userbean userbean : object) {
@@ -116,7 +116,7 @@ public class FriendModel implements IFriendModel {
 
     @Override
     public void isMyFriendByUsername(final String username, final OnIsMyFriendListener onIsMyFriendListener) {
-        UserModel.getInstance().queryAlluser(new OnQueryFriendListener() {
+        getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
                 for (Userbean userbean : object) {

@@ -35,6 +35,12 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.refresh();
+    }
+
     private void init() {
         mRecyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
         mRecyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), LinearLayoutManager.VERTICAL));
@@ -62,6 +68,6 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
     //下拉刷新
     @Override
     public void onRefresh() {
-        presenter.Refresh();
+        presenter.refresh();
     }
 }

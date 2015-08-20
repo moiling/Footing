@@ -4,7 +4,6 @@ import java.util.List;
 
 import team.far.footing.model.IFriendModel;
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.bean.Friends;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.impl.FriendModel;
@@ -46,7 +45,7 @@ public class FgFriendPresenter {
     }
 
 
-    public void Refresh() {
+    public void refresh() {
         friendModel.getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {

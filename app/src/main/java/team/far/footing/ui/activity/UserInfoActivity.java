@@ -174,7 +174,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 if (presenter.getCropParams() != null) CropHelper.clearCachedCropFile(presenter.getCropParams().uri);
                 startActivityForResult(intent2, CropHelper.REQUEST_CROP);
                 break;
-
         }
     }
 }
