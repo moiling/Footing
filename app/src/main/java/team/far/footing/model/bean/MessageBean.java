@@ -10,8 +10,17 @@ public class MessageBean extends BmobObject {
     private Userbean getuser;
     private Userbean senduser;
     private String message;
-    //  未读 1  已读 2
+    private String content;
+    //  未读 0  已读 1
     private Integer isread;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Userbean getGetuser() {
         return getuser;

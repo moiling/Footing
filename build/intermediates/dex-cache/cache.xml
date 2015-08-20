@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\luoyy\.gradle\caches\modules-2\files-2.1\cn.bmob.android\bmob-push\0.6\db21ec99c2c7bf91c67bf80f5c5c49a92dd0562e\bmob-push-0.6.jar"
+        jar="C:\Users\moi\.gradle\caches\modules-2\files-2.1\cn.bmob.android\bmob-push\0.6\db21ec99c2c7bf91c67bf80f5c5c49a92dd0562e\bmob-push-0.6.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="db21ec99c2c7bf91c67bf80f5c5c49a92dd0562e">
-        <dex dex="E:\Android\Footing\app\build\intermediates\pre-dexed\debug\bmob-push-0.6-f7b7f3de182108c48b6b261316cd03ed89a49f78.jar" />
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\bmob-push-0.6-168bf6790f538ed8b50b753e2035b452ff5903e3.jar" />
     </item>
 
 </items>

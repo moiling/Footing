@@ -81,10 +81,10 @@ public class TodayPresenter {
         Userbean temp;
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - 1 - i; j++) {
-                if (list.get(i).getAll_distance() < list.get(i + 1).getAll_distance()) {
-                    temp = list.get(i);
-                    list.set(i, list.get(i + 1));
-                    list.set(i + 1, temp);
+                if (list.get(j).getAll_distance() < list.get(j + 1).getAll_distance()) {
+                    temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
@@ -95,10 +95,10 @@ public class TodayPresenter {
         Userbean temp;
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - 1 - i; j++) {
-                if (list.get(i).getToday_distance() < list.get(i + 1).getToday_distance()) {
-                    temp = list.get(i);
-                    list.set(i, list.get(i + 1));
-                    list.set(i + 1, temp);
+                if (list.get(j).getToday_distance() < list.get(j + 1).getToday_distance()) {
+                    temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
@@ -110,64 +110,14 @@ public class TodayPresenter {
         Userbean temp;
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - 1 - i; j++) {
-                if (list.get(i).getLevel() < list.get(i + 1).getLevel()) {
-                    temp = list.get(i);
-                    list.set(i, list.get(i + 1));
-                    list.set(i + 1, temp);
+                if (list.get(j).getLevel() < list.get(j + 1).getLevel()) {
+                    temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
         return list;
-    }
-
-
-    //测试用的
-    public void add_friends() {
-        userModel.queryUserById("yy", new OnQueryFriendListener() {
-            @Override
-            public void onSuccess(List<Userbean> object) {
-                friendModel.addFriend(object.get(0), null);
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-
-            }
-        });
-        userModel.queryUserById("321", new OnQueryFriendListener() {
-            @Override
-            public void onSuccess(List<Userbean> object) {
-                friendModel.addFriend(object.get(0), null);
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-
-            }
-        });
-        userModel.queryUserById("123", new OnQueryFriendListener() {
-            @Override
-            public void onSuccess(List<Userbean> object) {
-                friendModel.addFriend(object.get(0), null);
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-
-            }
-        });
-
-        userModel.queryUserById("12345", new OnQueryFriendListener() {
-            @Override
-            public void onSuccess(List<Userbean> object) {
-                friendModel.addFriend(object.get(0), null);
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-
-            }
-        });
     }
 
 }

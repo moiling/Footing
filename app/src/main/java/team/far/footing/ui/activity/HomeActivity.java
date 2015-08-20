@@ -10,8 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,17 +44,21 @@ import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.impl.MapModel;
 import team.far.footing.presenter.HomePresenter;
+import team.far.footing.presenter.MessagePresenter;
 import team.far.footing.ui.adapter.HomePagerAdapter;
+import team.far.footing.ui.adapter.MessageBoxAdapter;
 import team.far.footing.ui.fragment.FriendsFragment;
 import team.far.footing.ui.fragment.SquareFragment;
 import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
+import team.far.footing.ui.vu.IMessageVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 
-public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, View.OnClickListener,
+        NavigationView.OnNavigationItemSelectedListener, Toolbar.OnMenuItemClickListener {
 
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
@@ -78,9 +88,9 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     TextView mToolbarUserName;
     @InjectView(R.id.home_drawer_head)
     RelativeLayout mDrawerHead;
-    @InjectView(R.id.btn_home_drawer)
-    LinearLayout mDrawerBtn;
+    @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
     private HomePresenter presenter;
+    private MessagePresenter messagePresenter;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
     private boolean isDrawerOpened;
@@ -103,6 +113,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         initToolbar();
         init();
         presenter = new HomePresenter(this);
+        messagePresenter = new MessagePresenter(this);
     }
 
     @Override
@@ -115,6 +126,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     protected void onStart() {
         super.onStart();
         presenter.refreshUserInformation();
+        messagePresenter.refreshMessage();
     }
 
     @Override
@@ -128,8 +140,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
             homeBar.setPadding(0, ScreenUtils.getStatusHeight(this), 0, 0);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        Test();
-
+        mToolbar.setOnMenuItemClickListener(this);
     }
 
     private void init() {
@@ -191,7 +202,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     }
 
     @Override
-    public void showUserInformation(Userbean userbean, List<MessageBean> messageBeanList) {
+    public void showUserInformation(Userbean userbean) {
         LogUtils.d(userbean.getUsername());
         if (!(userbean.getNickName() == null)) {
             userName.setText(userbean.getNickName());
@@ -203,10 +214,6 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
 
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
-        /**
-         * 展示历史消息
-         * */
-
     }
 
     private void refreshUserInforimation() {
@@ -226,6 +233,23 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
     public void showUserImg(Bitmap bitmap) {
         userPic.setImageBitmap(bitmap);
         mToolbarUserImage.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void showMessage(List<MessageBean> list) {
+        /**
+         * 展示历史消息
+         * */
+    }
+
+    @Override
+    public void onMsgSuccess(String s) {
+
+    }
+
+    @Override
+    public void onMsgFail(String s) {
+
     }
 
     @Override
@@ -276,10 +300,26 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         return false;
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_mission:
+                break;
+            case R.id.action_message:
+                MessageBoxAdapter adapter = new MessageBoxAdapter(this, messagePresenter.getAllMessage());
+                View messageBoxView = LayoutInflater.from(this).inflate(R.layout.view_message_box, null);
+                final RecyclerView recyclerView = (RecyclerView) messageBoxView.findViewById(R.id.message_box_recycler_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                recyclerView.setAdapter(adapter);
+                new MaterialDialog.Builder(this)
+                        .title("消息")
+                        .customView(messageBoxView, false)
+                        .positiveText("看完了")
+                        .theme(Theme.LIGHT)
+                        .show();
 
-    public void Test() {
-
-
+                break;
+        }
+        return false;
     }
-
 }
