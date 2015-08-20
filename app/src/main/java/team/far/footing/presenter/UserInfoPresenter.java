@@ -1,20 +1,15 @@
 package team.far.footing.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 
-import org.hybridsquad.android.library.CropHandler;
-import org.hybridsquad.android.library.CropHelper;
-import org.hybridsquad.android.library.CropParams;
-
 import cn.bmob.v3.datatype.BmobFile;
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.callback.OnUploadListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OnUploadListener;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.activity.EditUserInfoActivity;
@@ -30,90 +25,52 @@ public class UserInfoPresenter {
     private Userbean userbean;
     private IUserModel userModel;
     private FileModel fileModel;
-    private CropHandler cropHandler;
-    private CropParams mCropParams;
 
     public UserInfoPresenter(final IUserInfoVu v) {
         this.v = v;
         userModel = UserModel.getInstance();
         fileModel = FileModel.getInstance();
         userbean = BmobUtils.getCurrentUser();
-        cropHandler = new CropHandler() {
+        showUserInformation();
+    }
+
+    public void updatePic(Uri uri) {
+        v.showUpdateLoading();
+        userModel.uploadHeadPortrait(uri.getPath(), new OnUploadListener() {
             @Override
-            public void onPhotoCropped(Uri uri) {
-                v.showUpdateLoading();
-                userModel.uploadHeadPortrait(uri.getPath(), new OnUploadListener() {
-                    @Override
-                    public void onSuccess(String fileName, String url, BmobFile file) {
-                        v.dismissLoading();
-                        v.showUpdateSuccess();
-                        fileModel.downloadPic(fileName, new com.bmob.btp.callback.DownloadListener() {
-
-                            @Override
-                            public void onError(int i, String s) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(String s) {
-                                v.showUserPic(BitmapFactory.decodeFile(s));
-                            }
-
-                            @Override
-                            public void onProgress(String s, int i) {
-
-                            }
-                        });
-                    }
+            public void onSuccess(String fileName, String url, BmobFile file) {
+                v.dismissLoading();
+                v.showUpdateSuccess();
+                fileModel.downloadPic(fileName, new com.bmob.btp.callback.DownloadListener() {
 
                     @Override
-                    public void onProgress(int progress) {
+                    public void onError(int i, String s) {
 
                     }
 
                     @Override
-                    public void onError(int statuscode, String errormsg) {
-                        v.dismissLoading();
-                        v.showUpdateFailed(statuscode);
+                    public void onSuccess(String s) {
+                        v.showUserPic(BitmapFactory.decodeFile(s));
+                    }
+
+                    @Override
+                    public void onProgress(String s, int i) {
+
                     }
                 });
             }
 
             @Override
-            public void onCropCancel() {
+            public void onProgress(int progress) {
 
             }
 
             @Override
-            public void onCropFailed(String s) {
-
+            public void onError(int statuscode, String errormsg) {
+                v.dismissLoading();
+                v.showUpdateFailed(statuscode);
             }
-
-            @Override
-            public CropParams getCropParams() {
-                mCropParams = new CropParams();
-                return mCropParams;
-            }
-
-            @Override
-            public Activity getContext() {
-                return (Activity) v;
-            }
-        };
-        showUserInformation();
-    }
-
-    public void cropDestroy() {
-        if (cropHandler.getCropParams() != null)
-            CropHelper.clearCachedCropFile(cropHandler.getCropParams().uri);
-    }
-
-    public CropParams getCropParams() {
-        return mCropParams;
-    }
-
-    public CropHandler getCropHandler() {
-        return cropHandler;
+        });
     }
 
     public void refreshUserInformation() {
