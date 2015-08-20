@@ -20,9 +20,12 @@ import java.util.List;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.model.IMapModel;
+import team.far.footing.model.IUserModel;
 import team.far.footing.model.bean.MapBean;
 import team.far.footing.model.callback.OnUpdateMapListener;
+import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.impl.MapModel;
+import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.vu.IWalkVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
@@ -66,11 +69,13 @@ public class WalkPresenter {
 
     //model
     private IMapModel mapModel;
+    private IUserModel userModel;
 
     public WalkPresenter(IWalkVu v) {
         this.v = v;
         // 定位
         mapModel = MapModel.getInstance();
+        userModel = UserModel.getInstance();
         initLocation();
     }
 
@@ -118,14 +123,7 @@ public class WalkPresenter {
 
     public void stopWalk() {
         isWalking = false;
-        // 坐标点清零
-        latLngs.clear();
-        // 清除地图上的轨迹
-        v.getBaiduMap().clear();
-        // 总距离清零
-        distanceTotal = 0;
-        // 总距离的显示清零
-        v.showDistanceTotal(distanceTotal);
+        save();
     }
 
     private void initLocation() {
@@ -153,7 +151,22 @@ public class WalkPresenter {
         });
     }
 
-    public void save() {
+    private void cleanMap() {
+        //清除数据
+        map_list.clear();
+        // 坐标点清零
+        latLngs.clear();
+        // 总距离清零
+        distanceTotal = 0;
+        // 清除地图上的轨迹
+        if (v != null) {
+            v.getBaiduMap().clear();
+            // 总距离的显示清零
+            v.showDistanceTotal(distanceTotal);
+        }
+    }
+
+    private void save() {
         LogUtils.e("map_list", (map_list == null) + "");
 
         end_date = TimeUtils.getcurrentTime();
@@ -162,16 +175,27 @@ public class WalkPresenter {
                 new OnUpdateMapListener() {
                     @Override
                     public void onSuccess(MapBean mapBean) {
-                        LogUtils.d("上传成功");
-                        //清除数据
-                        distanceTotal = 0.0;
-                        map_list.clear();
-                        latLngs.clear();
+                        LogUtils.d("路线上传成功");
+                        userModel.update_distance((int) (BmobUtils.getCurrentUser().getToday_distance() + distanceTotal),
+                                (int) (BmobUtils.getCurrentUser().getAll_distance() + distanceTotal), new OnUpdateUserListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        LogUtils.d("用户信息上传成功");
+                                        cleanMap();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int i, String s) {
+                                        LogUtils.e("上传失败");
+                                        cleanMap();
+                                    }
+                                });
                     }
 
                     @Override
                     public void onFailure(int i, String s) {
                         LogUtils.e("上传失败");
+                        cleanMap();
                     }
                 });
     }

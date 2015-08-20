@@ -3,7 +3,6 @@ package team.far.footing.ui.fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -72,6 +71,12 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        todayPresenter.refresh(type);
     }
 
     private void initRecycler() {

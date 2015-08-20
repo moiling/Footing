@@ -222,6 +222,14 @@ public class UserModel implements IUserModel {
     }
 
     @Override
+    public void update_distance(int today_distance, int all_distance, OnUpdateUserListener onUpdateUserListener) {
+        Userbean newUser = new Userbean();
+        newUser.setAll_distance(all_distance);
+        newUser.setToday_distance(today_distance);
+        updateUser(newUser, onUpdateUserListener);
+    }
+
+    @Override
     public void update_today_distance(int today_distance, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
         newUser.setToday_distance(today_distance);

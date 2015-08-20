@@ -54,6 +54,8 @@ public interface IUserModel {
      */
     void update_PraiseCount(int PraiseCount, OnUpdateUserListener onUpdateUserListener);
 
+    void update_distance(int today_distance, int all_distance, OnUpdateUserListener onUpdateUserListener);
+
     /**
      * @param today_distance       ----------今日路程
      * @param onUpdateUserListener ---------用户更新的监听器

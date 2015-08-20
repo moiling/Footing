@@ -77,11 +77,21 @@ public class FriendInfoActivity extends BaseActivity implements IFriendInfoVu {
 
     @Override
     public void onDeleteSuccess() {
-
+        new MaterialDialog.Builder(this).title("删除好友成功").content("已经删除了~").positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 
     @Override
     public void onDeleteFail(int i) {
-
+        new MaterialDialog.Builder(this).title("删除好友失败").content(BmobUtils.searchCode(i)).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 }
