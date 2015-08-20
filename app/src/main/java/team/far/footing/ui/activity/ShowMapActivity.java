@@ -10,7 +10,12 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.model.LatLng;
 import com.balysv.materialripple.MaterialRippleLayout;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,8 +45,6 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
 
     private BaiduMap mBaiduMap;
 
-    private MapBean mapBean;
-
     private ShowMapPresenter presenter;
 
     @Override
@@ -49,21 +52,16 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
         ButterKnife.inject(this);
-        mapBean = (MapBean) getIntent().getSerializableExtra("map");
         initMap();
-        init();
-        presenter = new ShowMapPresenter(this);
-    }
-
-    private void init() {
-        tvAlltime.setText("总时间： " + TimeUtils.formatTime(Long.parseLong(mapBean.getAll_time())));
-        tvDistance.setText("总距离： " + mapBean.getAll_distance() + " m");
-        tvStarttime.setText("时间：" + mapBean.getStart_time());
+        presenter = new ShowMapPresenter(this, (MapBean) getIntent().getSerializableExtra("map"));
     }
 
     private void initMap() {
-       
+        mBaiduMap = mMapView.getMap();
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(16.5f);
+        mBaiduMap.setMapStatus(msu);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -81,4 +79,25 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
         mMapView.onPause();
     }
 
+    @Override
+    public void showMap(ArrayList<LatLng> latLngs) {
+        if (latLngs.size() > 1) {
+            // 得到数组中点
+            LatLng middle = latLngs.get(latLngs.size() / 2);
+            LogUtils.d(latLngs.get(latLngs.size() / 2).toString());
+            // 将地图中心点和数组中点对齐
+            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(middle);
+            mBaiduMap.animateMapStatus(msu);
+            OverlayOptions polylineOptions = new PolylineOptions().points(latLngs)
+                    .color(getResources().getColor(R.color.accent_color)).width(10);
+            mBaiduMap.addOverlay(polylineOptions);
+        }
+    }
+
+    @Override
+    public void showWalkInfo(String allTime, String allDistance, String startTime) {
+        tvAlltime.setText("总时间： " + TimeUtils.formatTime(Long.parseLong(allTime)));
+        tvDistance.setText("总距离： " + allDistance + " m");
+        tvStarttime.setText("时间：" + startTime);
+    }
 }

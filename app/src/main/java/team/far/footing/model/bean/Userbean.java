@@ -1,12 +1,14 @@
 package team.far.footing.model.bean;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by moi on 2015/8/7.
  */
-public class Userbean extends BmobUser {
+public class Userbean extends BmobUser implements Serializable {
 
     /**
      * 继承的BmobUser

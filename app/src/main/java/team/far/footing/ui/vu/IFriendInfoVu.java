@@ -4,6 +4,13 @@ package team.far.footing.ui.vu;
  * Created by moi on 2015/8/18.
  */
 public interface IFriendInfoVu {
+
+    // 初始化好友界面
+    void initFriendView();
+
+    // 初始化非好友界面
+    void initNotFriendView();
+
     // 添加为好友
     void addFriend();
 
@@ -31,5 +38,7 @@ public interface IFriendInfoVu {
     // 删除好友失败
     void onDeleteFail(int i);
 
+    // 反正就是错了
+    void onError(String s);
 
 }

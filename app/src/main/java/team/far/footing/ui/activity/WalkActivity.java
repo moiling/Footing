@@ -244,7 +244,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 pauseWalk();
                 break;
             case R.id.iv_walk_stop:
-                presenter.save();
                 new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
                         .positiveText("分享").negativeText("不用了").theme(Theme.LIGHT)
                         .callback(new MaterialDialog.ButtonCallback() {
