@@ -12,6 +12,7 @@ import team.far.footing.model.IMessageModel;
 import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.callback.OnDateChangeListener;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by luoyy on 2015/8/20 0020.
@@ -36,14 +37,14 @@ public class MessageModel implements IMessageModel {
             @Override
             public void onConnectCompleted() {
                 //对当前用户对应的好友表中的自己那行进行监听
-                if (rtd.isConnected()) {
-                    rtd.unsubRowUpdate("_User", BmobUtils.getCurrentUser().getObjectId());
+                    rtd.subRowUpdate("_User", BmobUtils.getCurrentUser().getObjectId());
                     onDateChangeListener.onConnectCompleted();
-                }
             }
 
             @Override
             public void onDataChange(final JSONObject jsonObject) {
+
+                LogUtils.e("===============>>>>>>>>>>>>"+jsonObject.toString());
                 UserModel.getInstance().getAllMessage(new FindListener<MessageBean>() {
                     @Override
                     public void onSuccess(List<MessageBean> list) {

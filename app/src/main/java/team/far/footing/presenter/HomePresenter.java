@@ -54,9 +54,6 @@ public class HomePresenter {
         if (userbean.getHeadPortraitFileName() != null) {
             setUserPic(userbean.getHeadPortraitFileName());
         }
-        //开始监听
-        start_listen_date();
-        Test();
 
     }
 
@@ -72,6 +69,9 @@ public class HomePresenter {
         userModel.getAllMessage(new FindListener<MessageBean>() {
             @Override
             public void onSuccess(List<MessageBean> list) {
+                //开始监听
+                messageBeanList = list;
+                start_listen_date();
                 v.showUserInformation(userbean, list);
             }
 
@@ -143,8 +143,9 @@ public class HomePresenter {
 
                     @Override
                     public void onDataChange(List<MessageBean> list) {
-                        if (list.size() != messageBeanList.size()) {
-                            //有新的消息来了---在子线程哟
+                        if (list != null && list.size() != messageBeanList.size()) {
+                            //有新的消息来了---在子线程哟 === 更新UI吧
+
                             messageBeanList = list;
                             LogUtils.e("有消息来了");
                         }
@@ -159,22 +160,7 @@ public class HomePresenter {
 
     }
 
-    public void Test() {
-        MessageBean messageBean = new MessageBean();
-        messageBean.setObjectId("a373b72af0");
-        userModel.sendMssageToUser(BmobUtils.getCurrentUser(), "发出去吧。。。", new OnUpdateUserListener() {
-            @Override
-            public void onSuccess() {
-                LogUtils.e("发送成功");
-            }
 
-            @Override
-            public void onFailure(int i, String s) {
-                LogUtils.e("发送失败");
-            }
-        });
-
-    }
 
     //得到所有的消息
     public List<MessageBean> getAllMessage() {
