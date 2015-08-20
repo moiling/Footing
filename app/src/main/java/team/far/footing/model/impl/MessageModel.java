@@ -8,6 +8,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobRealTimeData;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -70,8 +71,18 @@ public class MessageModel implements IMessageModel {
     }
 
     @Override
-    public void deleteMsg(MessageBean messageBean) {
-        messageBean.delete(APP.getContext());
+    public void deleteMsg(MessageBean messageBean, final OnUpdateUserListener onUpdateUserListener) {
+        messageBean.delete(APP.getContext(), new DeleteListener() {
+            @Override
+            public void onSuccess() {
+                onUpdateUserListener.onSuccess();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                onUpdateUserListener.onFailure(i, s);
+            }
+        });
     }
 
     @Override

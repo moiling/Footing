@@ -17,7 +17,7 @@ public interface IMessageModel {
      *
      * @param messageBean
      */
-    void deleteMsg(MessageBean messageBean);
+    void deleteMsg(MessageBean messageBean, final OnUpdateUserListener onUpdateUserListener);
 
     /**
      * 把msg标记为 已读
