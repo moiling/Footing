@@ -56,8 +56,8 @@ public class HomePresenter {
         if (userbean.getHeadPortraitFileName() != null) {
             setUserPic(userbean.getHeadPortraitFileName());
         }
+        //开始监听
         start_listen_date();
-
     }
 
     public void refreshUserInformation() {
@@ -72,18 +72,14 @@ public class HomePresenter {
         messageModel.getAllMessage(new FindListener<MessageBean>() {
             @Override
             public void onSuccess(List<MessageBean> list) {
-                //开始监听
                 messageBeanList = list;
                 v.showUserInformation(userbean, list);
             }
-
             @Override
             public void onError(int i, String s) {
 
             }
         });
-
-
     }
 
     public void startWalkActivity(Context context) {
@@ -126,12 +122,10 @@ public class HomePresenter {
 
     }
 
-
     public void startAddFriendActivity(Context context) {
         Intent intent = new Intent(context, AddFriendActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         context.startActivity(intent);
-
     }
 
 
@@ -160,8 +154,6 @@ public class HomePresenter {
         );
 
     }
-
-
     //得到所有的消息
     public List<MessageBean> getAllMessage() {
         return messageBeanList;
