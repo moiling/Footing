@@ -108,6 +108,10 @@ public class UserInfoPresenter {
             CropHelper.clearCachedCropFile(cropHandler.getCropParams().uri);
     }
 
+    public CropParams getCropParams() {
+        return mCropParams;
+    }
+
     public CropHandler getCropHandler() {
         return cropHandler;
     }
