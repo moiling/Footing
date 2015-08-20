@@ -40,6 +40,7 @@ public class HomePresenter {
     private IMessageModel realTimeData;
     private IUserModel userModel;
     private List<MessageBean> messageBeanList;
+    private IMessageModel messageModel;
 
     public HomePresenter(IHomeVu v) {
         this.v = v;
@@ -48,12 +49,14 @@ public class HomePresenter {
         fileModel = FileModel.getInstance();
         realTimeData = MessageModel.getInstance();
         userModel = UserModel.getInstance();
+        messageModel = MessageModel.getInstance();
         userbean = BmobUtils.getCurrentUser();
         LogUtils.d(userbean.getUsername());
         showUserInformation();
         if (userbean.getHeadPortraitFileName() != null) {
             setUserPic(userbean.getHeadPortraitFileName());
         }
+        start_listen_date();
 
     }
 
@@ -66,12 +69,11 @@ public class HomePresenter {
     }
 
     public void showUserInformation() {
-        userModel.getAllMessage(new FindListener<MessageBean>() {
+        messageModel.getAllMessage(new FindListener<MessageBean>() {
             @Override
             public void onSuccess(List<MessageBean> list) {
                 //开始监听
                 messageBeanList = list;
-                start_listen_date();
                 v.showUserInformation(userbean, list);
             }
 
@@ -145,7 +147,6 @@ public class HomePresenter {
                     public void onDataChange(List<MessageBean> list) {
                         if (list != null && list.size() != messageBeanList.size()) {
                             //有新的消息来了---在子线程哟 === 更新UI吧
-
                             messageBeanList = list;
                             LogUtils.e("有消息来了");
                         }
@@ -159,7 +160,6 @@ public class HomePresenter {
         );
 
     }
-
 
 
     //得到所有的消息

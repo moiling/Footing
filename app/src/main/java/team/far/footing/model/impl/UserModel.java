@@ -205,53 +205,6 @@ public class UserModel implements IUserModel {
         updateUser(newUser, onUpdateUserListener);
     }
 
-
-    @Override
-    public void sendMssageToUser(final Userbean userbean, String message, final OnUpdateUserListener onUpdateUserListener) {
-        final MessageBean messageBean = new MessageBean();
-        messageBean.setGetuser(userbean);
-        messageBean.setSenduser(BmobUtils.getCurrentUser());
-        messageBean.setIsread(0);
-        messageBean.setMessage(message);
-        messageBean.save(APP.getContext(), new SaveListener() {
-            @Override
-            public void onSuccess() {
-                AddMessage(userbean, messageBean, onUpdateUserListener);
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
-            }
-        });
-
-    }
-
-    @Override
-    public void AddMessage(Userbean userbean, MessageBean messageBean, final OnUpdateUserListener onUpdateUserListener) {
-        BmobRelation bmobRelation = new BmobRelation();
-        bmobRelation.add(messageBean);
-        userbean.setMessages(bmobRelation);
-        userbean.update(APP.getContext(), new UpdateListener() {
-            @Override
-            public void onSuccess() {
-                onUpdateUserListener.onSuccess();
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
-            }
-        });
-    }
-
-    @Override
-    public void getAllMessage(FindListener<MessageBean> findListener) {
-        BmobQuery<MessageBean> query = new BmobQuery<MessageBean>();
-        query.addWhereRelatedTo("messages", new BmobPointer(BmobUtils.getCurrentUser()));
-        query.findObjects(APP.getContext(), findListener);
-    }
-
     @Override
     public void updateUser_level(int level, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();

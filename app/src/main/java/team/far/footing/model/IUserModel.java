@@ -111,28 +111,4 @@ public interface IUserModel {
      */
     void resetPasswordByEmail(String email, OnUpdateUserListener onUpdateUserListener);
 
-
-    /**
-     * 给用户发送消息
-     *
-     * @param userbean
-     * @param messager
-     */
-    void sendMssageToUser(Userbean userbean, String messager, OnUpdateUserListener onUpdateUserListener);
-
-
-    /**
-     * 得到当前用户的所有 message
-     *
-     * @param findListener
-     */
-    void getAllMessage(FindListener<MessageBean> findListener);
-
-    /**
-     * 给指定的  userbean 添加一条消息
-     *
-     * @param userbean
-     * @param messageBean
-     */
-    void AddMessage(Userbean userbean, MessageBean messageBean,OnUpdateUserListener onUpdateUserListener);
 }

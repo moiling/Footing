@@ -195,8 +195,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, View.OnClickL
         userLV.setText("Lv." + userbean.getLevel());
         userSignature.setText(userbean.getSignature());
         /**
-         * 展示消息
-         */
+         * 展示历史消息
+         * */
 
     }
 
