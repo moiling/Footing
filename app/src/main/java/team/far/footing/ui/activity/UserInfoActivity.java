@@ -171,6 +171,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 break;
             case R.id.btn_user_info_photo:
                 Intent intent2 = CropHelper.buildCropFromGalleryIntent(new CropParams());
+                if (presenter.getCropParams() != null) CropHelper.clearCachedCropFile(presenter.getCropParams().uri);
                 startActivityForResult(intent2, CropHelper.REQUEST_CROP);
                 break;
 
