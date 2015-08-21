@@ -1,5 +1,9 @@
 package team.far.footing.ui.vu;
 
+import android.graphics.Bitmap;
+
+import team.far.footing.model.bean.Userbean;
+
 /**
  * Created by moi on 2015/8/18.
  */
@@ -40,5 +44,9 @@ public interface IFriendInfoVu {
 
     // 反正就是错了
     void onError(String s);
+
+    void showUserInformation(Userbean userbean, Bitmap bitmap);
+
+    void showUserPic(Bitmap bitmap);
 
 }

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,6 +43,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @InjectView(R.id.tv_user_info_user_signature) TextView mUserSignature;
     @InjectView(R.id.btn_user_info_camera) Button btnCamera;
     @InjectView(R.id.btn_user_info_photo) Button btnPhoto;
+    @InjectView(R.id.tv_my_today_distance) TextView tvMyTodayDistance;
+    @InjectView(R.id.tv_my_all_distance) TextView tvMyAllDistance;
+    @InjectView(R.id.tv_my_email) TextView tvMyEmail;
+    @InjectView(R.id.tv_my_exp) TextView tvMyExp;
+    @InjectView(R.id.btn_my_signature) RelativeLayout btnMySignature;
 
     private UserInfoPresenter presenter;
     private CropParams mCropParams = new CropParams();
@@ -67,6 +73,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     private void init() {
         btnCamera.setOnClickListener(this);
         btnPhoto.setOnClickListener(this);
+        btnMySignature.setOnClickListener(this);
     }
 
     @Override
@@ -116,6 +123,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
         }
         mUserLv.setText("Lv." + userbean.getLevel());
         mUserSignature.setText(userbean.getSignature());
+        tvMyAllDistance.setText(userbean.getAll_distance() + "m");
+        tvMyTodayDistance.setText(userbean.getToday_distance() + "m");
+        // TODO 经验值
+        //tvMyExp.setText(userbean.);
+        tvMyEmail.setText(userbean.getEmail());
     }
 
     @Override
@@ -183,6 +195,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 Intent intent2 = CropHelper.buildCropFromGalleryIntent(new CropParams());
                 CropHelper.clearCachedCropFile(mCropParams.uri);
                 startActivityForResult(intent2, CropHelper.REQUEST_CROP);
+                break;
+            case R.id.btn_my_signature:
+                if (mUserSignature.getText() != null) {
+                    new MaterialDialog.Builder(this).content(mUserSignature.getText()).theme(Theme.LIGHT).show();
+                }
                 break;
         }
     }

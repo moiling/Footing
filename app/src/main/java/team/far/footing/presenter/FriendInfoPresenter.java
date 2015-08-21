@@ -1,11 +1,18 @@
 package team.far.footing.presenter;
 
+import android.graphics.Bitmap;
+
+import team.far.footing.model.IFileModel;
 import team.far.footing.model.IFriendModel;
+import team.far.footing.model.IUserModel;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OnIsMyFriendListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
+import team.far.footing.model.impl.FileModel;
 import team.far.footing.model.impl.FriendModel;
+import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.vu.IFriendInfoVu;
+import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 
 /**
@@ -15,12 +22,17 @@ public class FriendInfoPresenter {
 
     private IFriendModel friendModel;
     private IFriendInfoVu v;
+    private IUserModel userModel;
+    private IFileModel fileModel;
     private Userbean userbean;
 
     public FriendInfoPresenter(IFriendInfoVu v, Userbean userbean) {
         this.v = v;
         friendModel = FriendModel.getInstance();
+        userModel = UserModel.getInstance();
+        fileModel = FileModel.getInstance();
         this.userbean = userbean;
+        showUserInformation();
     }
 
     public void initView() {
@@ -86,6 +98,15 @@ public class FriendInfoPresenter {
         v = null;
     }
 
+    public void refreshUserInformation() {
+        userbean = BmobUtils.getCurrentUser();
+        showUserInformation();
+    }
+
+    public void showUserInformation() {
+        Bitmap bitmap = fileModel.getLocalPic(userbean.getHeadPortraitFileName());
+        v.showUserInformation(userbean, bitmap);
+    }
 
 
 }
