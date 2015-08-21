@@ -48,4 +48,8 @@ public class MyMapPresenter {
     public void deletmap(MapBean mapBean) {
         mapModel.delete_mapbean(mapBean);
     }
+
+    public void onRelieveView() {
+        iMyMapVu = null;
+    }
 }

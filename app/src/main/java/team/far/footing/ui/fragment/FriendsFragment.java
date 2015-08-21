@@ -52,6 +52,7 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.onRelieveView();
         ButterKnife.reset(this);
     }
 

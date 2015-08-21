@@ -17,6 +17,25 @@ public class MapBean extends BmobObject implements Serializable {
     private String all_distance;
     private String start_time;
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    private String city;
+    private String address;
+
     public String getStart_time() {
         return start_time;
     }

@@ -14,7 +14,7 @@ public class TimeUtils {
 
 
     public static final String dateToString(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd  HH:mm");
 
         return simpleDateFormat.format(date);
     }
@@ -39,6 +39,6 @@ public class TimeUtils {
         String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;//毫秒
         strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
 
-        return strMinute + " 分钟 " + strSecond + " 秒";
+        return strMinute + "' " + strSecond + "''";
     }
 }

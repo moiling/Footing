@@ -67,6 +67,7 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
     protected void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        presenter.onRelieveView();
     }
     @Override
     protected void onResume() {

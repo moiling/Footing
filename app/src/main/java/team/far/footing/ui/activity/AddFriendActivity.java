@@ -42,6 +42,12 @@ public class AddFriendActivity extends BaseActivity implements IAddFriendVu, Swi
         addFriendPresenter = new AddFriendPresenter(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        addFriendPresenter.onRelieveView();
+    }
+
     private void initToolbar() {
         mToolbar.setTitle("找朋友");
         setSupportActionBar(mToolbar);

@@ -45,18 +45,17 @@ public class MessageBoxAdapter extends RecyclerView.Adapter<MessageBoxAdapter.Vi
         // 如果为未读则提亮颜色
         if (messageBeans.get(position).getIsread() == 0) {
             holder.tvMessageTitle.setTextColor(mContext.getResources().getColor(R.color.primary_color));
-            holder.tvMessageTitle.setText("（未读）  " + messageBeans.get(position).getMessage());
+            holder.tvMessageTitle.setText("！未读  " + messageBeans.get(position).getMessage());
         } else {
             holder.tvMessageTitle.setText(messageBeans.get(position).getMessage());
+            holder.tvMessageTitle.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
         }
         holder.tvMessageTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tempPosition = position;
                 messagePresenter.remarkMessage(messageBeans.get(position));
-                // 这是为了点进去就标记已读变色、因为这个时候刷新不了啊……
-                holder.tvMessageTitle.setText(messageBeans.get(position).getMessage());
-                holder.tvMessageTitle.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
+                MessageBoxAdapter.this.notifyDataSetChanged();
                 new MaterialDialog.Builder(mContext)
                         .title(messageBeans.get(position).getMessage())
                         .content(messageBeans.get(position).getContent())
@@ -77,7 +76,11 @@ public class MessageBoxAdapter extends RecyclerView.Adapter<MessageBoxAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return messageBeans.size();
+        if (messageBeans != null) {
+            return messageBeans.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -103,6 +106,11 @@ public class MessageBoxAdapter extends RecyclerView.Adapter<MessageBoxAdapter.Vi
                 .theme(Theme.LIGHT)
                 .positiveText("好的")
                 .show();
+    }
+
+    @Override
+    public void stopRefresh() {
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

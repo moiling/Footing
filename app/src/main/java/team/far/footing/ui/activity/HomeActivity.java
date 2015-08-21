@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -36,13 +37,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.BmobInstallation;
-import cn.bmob.v3.listener.FindListener;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
-import team.far.footing.model.bean.MapBean;
 import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.bean.Userbean;
-import team.far.footing.model.impl.MapModel;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.presenter.MessagePresenter;
 import team.far.footing.ui.adapter.HomePagerAdapter;
@@ -53,12 +51,11 @@ import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.ui.vu.IMessageVu;
 import team.far.footing.ui.widget.CircleImageView;
-import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, View.OnClickListener,
-        NavigationView.OnNavigationItemSelectedListener, Toolbar.OnMenuItemClickListener {
+        NavigationView.OnNavigationItemSelectedListener, Toolbar.OnMenuItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
@@ -78,21 +75,20 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
     ImageView userPic;
     @InjectView(R.id.tv_home_user_signature)
     TextView userSignature;
-    @InjectView(R.id.navigation)
-    NavigationView navigation;
-    @InjectView(R.id.home_bar)
-    LinearLayout homeBar;
-    @InjectView(R.id.iv_home_toolbar_user_image)
-    CircleImageView mToolbarUserImage;
-    @InjectView(R.id.tv_home_toolbar_user_name)
-    TextView mToolbarUserName;
-    @InjectView(R.id.home_drawer_head)
-    RelativeLayout mDrawerHead;
+    @InjectView(R.id.navigation) NavigationView navigation;
+    @InjectView(R.id.home_bar) LinearLayout homeBar;
+    @InjectView(R.id.iv_home_toolbar_user_image) CircleImageView mToolbarUserImage;
+    @InjectView(R.id.tv_home_toolbar_user_name) TextView mToolbarUserName;
+    @InjectView(R.id.home_drawer_head) RelativeLayout mDrawerHead;
     @InjectView(R.id.btn_home_drawer) LinearLayout mDrawerBtn;
     private HomePresenter presenter;
     private MessagePresenter messagePresenter;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private HomePagerAdapter fragmentPagerAdapter;
+    // 消息盒子
+    private SwipeRefreshLayout messageBoxRefresh;
+    private MessageBoxAdapter messageBoxAdapter;
+    private RecyclerView messageBoxRy;
     private boolean isDrawerOpened;
     // 保存page的选择，默认为第一页
     private int pageSelect = 0;
@@ -126,7 +122,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
     protected void onStart() {
         super.onStart();
         presenter.refreshUserInformation();
-        messagePresenter.refreshMessage();
+        messagePresenter.initMessage();
     }
 
     @Override
@@ -237,9 +233,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
 
     @Override
     public void showMessage(List<MessageBean> list) {
-        /**
-         * 展示历史消息
-         * */
+        if (messageBoxRy != null) messageBoxRy.setAdapter(new MessageBoxAdapter(this, messagePresenter.getAllMessage()));
     }
 
     @Override
@@ -250,6 +244,17 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
     @Override
     public void onMsgFail(String s) {
 
+    }
+
+    @Override
+    public void stopRefresh() {
+        messageBoxRefresh.setRefreshing(false);
+    }
+
+    //下拉刷新
+    @Override
+    public void onRefresh() {
+        messagePresenter.refreshMessage();
     }
 
     @Override
@@ -306,11 +311,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
             case R.id.action_mission:
                 break;
             case R.id.action_message:
-                MessageBoxAdapter adapter = new MessageBoxAdapter(this, messagePresenter.getAllMessage());
+                messageBoxAdapter = new MessageBoxAdapter(this, messagePresenter.getAllMessage());
                 View messageBoxView = LayoutInflater.from(this).inflate(R.layout.view_message_box, null);
-                final RecyclerView recyclerView = (RecyclerView) messageBoxView.findViewById(R.id.message_box_recycler_view);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(adapter);
+                messageBoxRefresh = (SwipeRefreshLayout) messageBoxView.findViewById(R.id.swipe_refresh_widget);
+                messageBoxRefresh.setOnRefreshListener(this);
+                messageBoxRy = (RecyclerView) messageBoxView.findViewById(R.id.message_box_recycler_view);
+                messageBoxRy.setLayoutManager(new LinearLayoutManager(this));
+                messageBoxRy.setAdapter(messageBoxAdapter);
                 new MaterialDialog.Builder(this)
                         .title("消息")
                         .customView(messageBoxView, false)

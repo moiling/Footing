@@ -33,8 +33,10 @@ public class FgFriendPresenter {
         friendModel.getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
-                friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                iFgFriendVu.showFriends(friendsRyViewAdapter);
+                if (iFgFriendVu != null) {
+                    friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                    iFgFriendVu.showFriends(friendsRyViewAdapter);
+                }
             }
 
             @Override
@@ -49,9 +51,11 @@ public class FgFriendPresenter {
         friendModel.getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
-                friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                iFgFriendVu.showFriends(friendsRyViewAdapter);
-                iFgFriendVu.stopRefresh();
+                if (iFgFriendVu != null) {
+                    friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                    iFgFriendVu.showFriends(friendsRyViewAdapter);
+                    iFgFriendVu.stopRefresh();
+                }
             }
 
             @Override
@@ -61,6 +65,8 @@ public class FgFriendPresenter {
         });
 
     }
-
+    public void onRelieveView() {
+        iFgFriendVu = null;
+    }
 
 }

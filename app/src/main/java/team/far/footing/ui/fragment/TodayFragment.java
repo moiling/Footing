@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +46,19 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
     TextView tvIsFinishToday;
     @InjectView(R.id.tv_friends)
     TextView tvFriends;
+    @InjectView(R.id.progress_wheel) ProgressWheel progressWheel;
 
     private List<Userbean> userbeanList = new ArrayList<>();
     private TodayPresenter todayPresenter;
     private MyAdapter myAdapter;
     private int type = 0;
+    private View parentView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
+        parentView = view;
         ButterKnife.inject(this, view);
         initRecycler();
         todayPresenter = new TodayPresenter(this);
@@ -77,6 +81,7 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
     public void onStart() {
         super.onStart();
         todayPresenter.refresh(type);
+        onProgress();
     }
 
     private void initRecycler() {
@@ -88,7 +93,18 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        todayPresenter.onRelieveView();
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onProgress() {
+        progressWheel.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onProgressEnd() {
+        progressWheel.setVisibility(View.GONE);
     }
 
     @Override

@@ -39,6 +39,7 @@ public class TodayPresenter {
     }
 
     public void getUserbeans(final int type) {
+        iFgTodayVu.onProgress();
         friendModel.getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
@@ -46,13 +47,15 @@ public class TodayPresenter {
                 list = object;
                 //把自己加进去
                 list.add(BmobUtils.getCurrentUser());
-                iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
+                if (iFgTodayVu != null) iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
                 choose_spinner(type);
+                iFgTodayVu.onProgressEnd();
             }
 
             @Override
             public void onError(int code, String msg) {
                 iFgTodayVu.oninit_error(code, msg);
+                iFgTodayVu.onProgressEnd();
             }
 
 
@@ -120,4 +123,7 @@ public class TodayPresenter {
         return list;
     }
 
+    public void onRelieveView() {
+        iFgTodayVu = null;
+    }
 }

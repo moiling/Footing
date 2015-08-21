@@ -82,4 +82,8 @@ public class AddFriendPresenter {
     public void Refresh() {
         iAddFriendVu.stopRefresh();
     }
+
+    public void onRelieveView() {
+        iAddFriendVu = null;
+    }
 }
