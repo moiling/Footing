@@ -35,4 +35,7 @@ public class ShowMapPresenter {
         iShowMapVu.showMap(latLngs);
     }
 
+    public void onRelieveView() {
+        iShowMapVu = null;
+    }
 }

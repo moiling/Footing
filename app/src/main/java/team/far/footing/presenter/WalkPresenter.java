@@ -13,6 +13,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +49,9 @@ public class WalkPresenter {
     private BitmapDescriptor mMapPointer;
     private MyOrientationListener mOrientationListener;
     private float mCurrentX;
+    // 记录城市
+    private String city;
+    private String address;
     // 存放绘制路线的端点
     private ArrayList<LatLng> latLngs = new ArrayList<>();
     // 上一次的距离
@@ -171,7 +175,7 @@ public class WalkPresenter {
 
         end_date = TimeUtils.getcurrentTime();
         mapModel.save_map_finish(BmobUtils.getCurrentUser(), "url",
-                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", distanceTotal + "", TimeUtils.dateToString(start_date),
+                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "",TimeUtils.dateToString(start_date), city, address,
                 new OnUpdateMapListener() {
                     @Override
                     public void onSuccess(MapBean mapBean) {
@@ -223,6 +227,9 @@ public class WalkPresenter {
             if (isFirstIn) {
                 v.moveCamera2Location(latLng);
                 isFirstIn = false;
+                city = bdLocation.getCity();
+                address = bdLocation.getDistrict();
+                LogUtils.d("城市：" + city + "，位置：" + address);
             }
             // 开始步行才记录（请求失败就不要记录了）
             if (isWalking && bdLocation.getLatitude() != 4.9E-324) {

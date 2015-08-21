@@ -37,15 +37,31 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mymap_recycler_item, null);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mymap_recycler, null);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tvAlltime.setText("总时间： " +TimeUtils.formatTime(Long.parseLong( mapBeanList.get(position).getAll_time())));
-        holder.tvDistance.setText("总距离： " + mapBeanList.get(position).getAll_distance()+" m");
-        holder.tvStarttime.setText("时间：" + mapBeanList.get(position).getStart_time());
+        MapBean mapBean = mapBeanList.get(position);
+        String allTime = TimeUtils.formatTime(Long.parseLong(mapBean.getAll_time()));
+        String distance = mapBean.getAll_distance()+"m";
+        String startTime = mapBean.getStart_time();
+        String startAddress = mapBean.getAddress();
+        String startCity = mapBean.getCity();
+        holder.tvAlltime.setText(allTime);
+        holder.tvDistance.setText(distance);
+        holder.tvStarttime.setText(startTime);
+        if (startAddress != null) {
+            holder.tvStartAddress.setText(startAddress);
+        } else {
+            holder.tvStartAddress.setText("未知区");
+        }
+        if (startCity != null) {
+            holder.tvStartCity.setText(startCity);
+        } else {
+            holder.tvStartCity.setText("未知市");
+        }
         holder.ripple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +100,8 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
         private TextView tvDistance;
         private TextView tvAlltime;
         private CardView CVFgToday;
+        private TextView tvStartCity;
+        private TextView tvStartAddress;
         private MaterialRippleLayout ripple;
 
         public ViewHolder(View itemView) {
@@ -92,6 +110,8 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
             tvStarttime = (TextView) itemView.findViewById(R.id.tv_starttime);
             tvAlltime = (TextView) itemView.findViewById(R.id.tv_alltime);
             CVFgToday = (CardView) itemView.findViewById(R.id.cv_fg_friends);
+            tvStartCity = (TextView) itemView.findViewById(R.id.tv_start_city);
+            tvStartAddress = (TextView) itemView.findViewById(R.id.tv_start_address);
             ripple = (MaterialRippleLayout) itemView.findViewById(R.id.ripple);
         }
     }

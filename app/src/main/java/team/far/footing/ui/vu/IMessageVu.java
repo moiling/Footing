@@ -14,4 +14,7 @@ public interface IMessageVu {
     void onMsgSuccess(String s);
 
     void onMsgFail(String s);
+
+    void stopRefresh();
+
 }

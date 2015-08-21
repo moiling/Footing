@@ -14,6 +14,9 @@ public interface IFgTodayVu {
 
     void onclickwork();
 
+    void onProgress();
+
+    void onProgressEnd();
 
     void choose_distance(List<Userbean> userbeanList);
 

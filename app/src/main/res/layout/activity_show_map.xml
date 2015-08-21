@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/layout_item"
-        layout="@layout/mymap_recycler_item" />
+        layout="@layout/item_mymap_recycler" />
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/map"
