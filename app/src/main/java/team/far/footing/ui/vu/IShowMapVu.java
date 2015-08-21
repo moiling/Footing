@@ -14,7 +14,7 @@ public interface IShowMapVu {
 
     void showMap(ArrayList<LatLng> latLngs);
 
-    void showWalkInfo(String allTime, String allDistance, String startTime);
+    void showWalkInfo(String allTime, String allDistance, String startTime,String ct ,String ad);
 
     BaiduMap getBaiduMap();
 

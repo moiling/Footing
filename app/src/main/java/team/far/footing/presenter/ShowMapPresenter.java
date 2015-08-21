@@ -64,7 +64,7 @@ public class ShowMapPresenter {
     private void showMap() {
         latLngs = StringUntils.getLaLngs(Arrays.asList(mapBean.getMap_array()));
         LogUtils.d(latLngs.size() + "");
-        iShowMapVu.showWalkInfo(mapBean.getAll_time(), mapBean.getAll_distance(), mapBean.getStart_time());
+        iShowMapVu.showWalkInfo(mapBean.getAll_time(), mapBean.getAll_distance(), mapBean.getStart_time(),mapBean.getCity(),mapBean.getAddress());
         iShowMapVu.showMap(latLngs);
     }
 

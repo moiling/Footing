@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -48,6 +49,12 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
     MapView mMapView;
     @InjectView(R.id.bt_share)
     Button btShare;
+    @InjectView(R.id.tv_start_city)
+    TextView tvStartCity;
+    @InjectView(R.id.tv_start_address)
+    TextView tvStartAddress;
+    @InjectView(R.id.ll_position)
+    LinearLayout llPosition;
 
     private BaiduMap mBaiduMap;
     private ShowMapPresenter presenter;
@@ -117,10 +124,12 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
     }
 
     @Override
-    public void showWalkInfo(String allTime, String allDistance, String startTime) {
-        tvAlltime.setText("总时间： " + TimeUtils.formatTime(Long.parseLong(allTime)));
-        tvDistance.setText("总距离： " + allDistance + " m");
-        tvStarttime.setText("时间：" + startTime);
+    public void showWalkInfo(String allTime, String allDistance, String startTime, String ct, String ad) {
+        tvStartCity.setText(ct);
+        tvStartAddress.setText(ad);
+        tvAlltime.setText(TimeUtils.formatTime(Long.parseLong(allTime)));
+        tvDistance.setText(allDistance + " m");
+        tvStarttime.setText(startTime);
     }
 
     @Override
@@ -162,13 +171,7 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
         View v = LayoutInflater.from(this).inflate(R.layout.dialog_layout, null, false);
         barWithNumber = (HorizontalProgressBarWithNumber) v.findViewById(R.id.progressBar);
         textView = (TextView) v.findViewById(R.id.tv_text);
-        materialDialog = new MaterialDialog(ShowMapActivity.this).setView(v).setNegativeButton("取消", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUtils.e("点击了");
-                materialDialog.dismiss();
-            }
-        });
+        materialDialog = new MaterialDialog(ShowMapActivity.this).setView(v);
         materialDialog.show();
     }
 
