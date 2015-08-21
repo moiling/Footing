@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.balysv.materialripple.MaterialRippleLayout;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import team.far.footing.R;
@@ -45,7 +46,7 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
         MapBean mapBean = mapBeanList.get(position);
         String allTime = TimeUtils.formatTime(Long.parseLong(mapBean.getAll_time()));
-        String distance = mapBean.getAll_distance()+"m";
+        String distance = new DecimalFormat("0.##").format((Double.parseDouble(mapBean.getAll_distance()) / 1000)) + "km";
         String startTime = mapBean.getStart_time();
         String startAddress = mapBean.getAddress();
         String startCity = mapBean.getCity();

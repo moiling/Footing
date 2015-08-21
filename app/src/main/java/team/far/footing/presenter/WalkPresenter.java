@@ -230,6 +230,9 @@ public class WalkPresenter {
                 city = bdLocation.getCity();
                 address = bdLocation.getDistrict();
                 LogUtils.d("城市：" + city + "，位置：" + address);
+                LogUtils.d(bdLocation.getCity() + "," + bdLocation.getCountry()
+                        + "," + bdLocation.getAddrStr() + "," + bdLocation.getFloor()
+                        + "," + bdLocation.getProvince() + "," + bdLocation.getStreet());
             }
             // 开始步行才记录（请求失败就不要记录了）
             if (isWalking && bdLocation.getLatitude() != 4.9E-324) {
