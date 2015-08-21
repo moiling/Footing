@@ -1,7 +1,9 @@
 package team.far.footing.model;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 
+import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 
 /**
@@ -10,13 +12,13 @@ import com.tencent.tauth.IUiListener;
 public interface IShareModel {
 
     //分享至微博
-    void ShareToWeiBo();
+    void ShareToWeiBo(String content,Bitmap bitmap,IRequestListener iRequestListener);
 
     /***
      * 下面三种方法都是分享qq群和个人
      */
     //图文分享
-    void ShareToQQWithPT(Activity activity, IUiListener iUiListener);
+    void ShareToQQWithPT(Activity activity,String pic_url,  String net_url,IUiListener iUiListener);
 
     //纯图分享
     void ShareToQQWithP(Activity activity, IUiListener iUiListener);

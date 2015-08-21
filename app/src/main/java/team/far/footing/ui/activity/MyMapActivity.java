@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
@@ -23,6 +25,7 @@ public class MyMapActivity extends BaseActivity implements IMyMapVu, SwipeRefres
     SwipeRefreshLayout swipeRefreshWidget;
     @InjectView(R.id.toolbar) Toolbar mToolbar;
 
+    private MaterialDialog dialog;
     private MyMapPresenter myMapPresenter;
 
     @Override

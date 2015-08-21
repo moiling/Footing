@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.bmob.push.PushConstants;
+import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.ui.activity.HomeActivity;
 import team.far.footing.util.LogUtils;
