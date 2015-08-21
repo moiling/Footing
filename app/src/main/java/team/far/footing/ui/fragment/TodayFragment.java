@@ -1,5 +1,6 @@
 package team.far.footing.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,8 +28,11 @@ import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OngetUserPicListener;
 import team.far.footing.model.impl.FileModel;
 import team.far.footing.presenter.TodayPresenter;
+import team.far.footing.ui.activity.FriendInfoActivity;
+import team.far.footing.ui.activity.UserInfoActivity;
 import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.ui.widget.CircleImageView;
+import team.far.footing.util.BmobUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVu {
 
@@ -160,7 +164,7 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
             holder.ripple.setRippleColor(getResources().getColor(R.color.accent_light_color));
             switch (type) {
@@ -171,8 +175,30 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
                     holder.tv_distance.setText(userbeanList.get(position).getToday_distance() + "  m");
                     break;
                 case 2:
-                    holder.tv_distance.setText(userbeanList.get(position).getLevel() + " 级");
+                    holder.tv_distance.setText("Lv." + userbeanList.get(position).getLevel());
                     break;
+            }
+            // 自己就跳到自己的个人页面去
+            if (userbeanList.get(position).getUsername().equals(BmobUtils.getCurrentUser().getUsername())) {
+                holder.ripple.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), UserInfoActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+            } else {
+                holder.ripple.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), FriendInfoActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("user", userbeanList.get(position));
+                        intent.putExtras(bundle);
+                        v.getContext().startActivity(intent);
+                    }
+                });
             }
             if (userbeanList.get(position).getHeadPortraitFileName() != null) {
                 FileModel.getInstance().getUserPic(userbeanList.get(position), new OngetUserPicListener() {
