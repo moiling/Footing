@@ -122,6 +122,7 @@
                 <action android:name="cn.bmob.push.lib.service.PushService" />
             </intent-filter>
         </service>
+        <service android:name=".service.UpdateService" />
 
         <receiver android:name="cn.bmob.push.PushReceiver">
             <intent-filter android:priority="2147483647"><!--优先级加最高-->
@@ -137,7 +138,7 @@
 
         <receiver android:name=".MyPushMessageReceiver">
             <intent-filter>
-                <action android:name="cn.bmob.push.action.MESSAGE"/>
+                <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>
         </receiver>
 
