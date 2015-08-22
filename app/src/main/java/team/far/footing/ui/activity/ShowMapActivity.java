@@ -1,9 +1,14 @@
 package team.far.footing.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -19,10 +24,12 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
 import team.far.footing.R;
 import team.far.footing.model.bean.MapBean;
 import team.far.footing.presenter.ShowMapPresenter;
 import team.far.footing.ui.vu.IShowMapVu;
+import team.far.footing.ui.widget.HorizontalProgressBarWithNumber;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.TimeUtils;
 
@@ -42,10 +49,18 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
     MapView mMapView;
     @InjectView(R.id.bt_share)
     Button btShare;
+    @InjectView(R.id.tv_start_city)
+    TextView tvStartCity;
+    @InjectView(R.id.tv_start_address)
+    TextView tvStartAddress;
+    @InjectView(R.id.ll_position)
+    LinearLayout llPosition;
 
     private BaiduMap mBaiduMap;
-
     private ShowMapPresenter presenter;
+    private HorizontalProgressBarWithNumber barWithNumber;
+    private MaterialDialog materialDialog;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,13 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
         ButterKnife.inject(this);
         initMap();
         presenter = new ShowMapPresenter(this, (MapBean) getIntent().getSerializableExtra("map"));
+
+        btShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.printScreen();
+            }
+        });
     }
 
     private void initMap() {
@@ -69,15 +91,21 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
         mMapView.onDestroy();
         presenter.onRelieveView();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
+        if (materialDialog != null) materialDialog.dismiss();
+        materialDialog = null;
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         mMapView.onPause();
+        if (materialDialog != null) materialDialog.dismiss();
+        materialDialog = null;
     }
 
     @Override
@@ -96,9 +124,64 @@ public class ShowMapActivity extends AppCompatActivity implements IShowMapVu {
     }
 
     @Override
-    public void showWalkInfo(String allTime, String allDistance, String startTime) {
-        tvAlltime.setText("总时间： " + TimeUtils.formatTime(Long.parseLong(allTime)));
-        tvDistance.setText("总距离： " + allDistance + " m");
-        tvStarttime.setText("时间：" + startTime);
+    public void showWalkInfo(String allTime, String allDistance, String startTime, String ct, String ad) {
+        tvStartCity.setText(ct);
+        tvStartAddress.setText(ad);
+        tvAlltime.setText(TimeUtils.formatTime(Long.parseLong(allTime)));
+        tvDistance.setText(allDistance + " m");
+        tvStarttime.setText(startTime);
+    }
+
+    @Override
+    public BaiduMap getBaiduMap() {
+        return mBaiduMap;
+    }
+
+    @Override
+    public Activity getActivity() {
+        return ShowMapActivity.this;
+    }
+
+    @Override
+    public void show_shareProgress(int progress) {
+        if (materialDialog == null) showdialog();
+        barWithNumber.setProgress(progress);
+    }
+
+    @Override
+    public void show_shareSuccess() {
+        dismissProgress();
+        materialDialog = null;
+    }
+
+    @Override
+    public void show_shareError() {
+        textView.setText("分享失败,请稍后重试。");
+        barWithNumber.setVisibility(1);
+        materialDialog = null;
+    }
+
+    @Override
+    public void show_shareCancel() {
+        dismissProgress();
+        materialDialog = null;
+    }
+
+    private void showdialog() {
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_layout, null, false);
+        barWithNumber = (HorizontalProgressBarWithNumber) v.findViewById(R.id.progressBar);
+        textView = (TextView) v.findViewById(R.id.tv_text);
+        materialDialog = new MaterialDialog(ShowMapActivity.this).setView(v);
+        materialDialog.show();
+    }
+
+    public void dismissProgress() {
+        materialDialog.dismiss();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.getTencent().onActivityResult(requestCode, resultCode, data);
+
     }
 }

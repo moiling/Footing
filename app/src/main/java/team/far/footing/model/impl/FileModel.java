@@ -55,7 +55,7 @@ public class FileModel implements IFileModel {
             public void onSuccess(String fileName, String url, BmobFile file) {
                 // TODO Auto-generated method stub
                 LogUtils.i("bmob", "文件上传成功：" + fileName + ",可访问的文件地址：" + file.getUrl());
-                onUploadListener.onSuccess(fileName, url, file);
+                onUploadListener.onSuccess(fileName, file.getUrl(), file);
             }
 
             @Override
@@ -68,7 +68,7 @@ public class FileModel implements IFileModel {
             @Override
             public void onError(int statuscode, String errormsg) {
                 // TODO Auto-generated method stub
-                LogUtils.i("bmob", "文件上传失败：" + errormsg);
+                LogUtils.i("bmob", "文件上传失败：" + errormsg+"====>>"+statuscode);
                 onUploadListener.onError(statuscode, errormsg);
             }
         });

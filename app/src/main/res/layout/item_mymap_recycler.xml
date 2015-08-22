@@ -36,7 +36,7 @@
                     android:id="@+id/ll_position"
                     android:orientation="horizontal"
                     android:layout_marginTop="18dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
@@ -73,12 +73,12 @@
                     android:id="@+id/tv_starttime"
                     tools:text="2015/8/19  17:30"
                     android:layout_below="@+id/ll_position"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="46dp"
                     android:textColor="@color/secondary_text"
                     android:textSize="16sp"
                     android:gravity="center_vertical"
                     android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView

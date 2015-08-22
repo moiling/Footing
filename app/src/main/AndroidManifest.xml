@@ -135,7 +135,7 @@
         </receiver>
 
 
-        <receiver android:name="team.far.footing.MyPushMessageReceiver">
+        <receiver android:name=".MyPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE"/>
             </intent-filter>
