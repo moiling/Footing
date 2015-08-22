@@ -76,6 +76,7 @@
             app:headerLayout="@layout/layout_home_nav_header"
             app:itemIconTint="@color/icon_color"
             app:itemTextColor="@color/primary_text"
-            app:menu="@menu/navigation_home_drawer_items" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            app:menu="@menu/navigation_home_drawer_items"/>
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>

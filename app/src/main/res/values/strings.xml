@@ -27,4 +27,6 @@
     <string name="title_activity_add_friend">AddFriendActivity</string>
     <string name="title_activity_my_map">MyMapActivity</string>
     <string name="title_activity_show_map">ShowMapActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_suggestion">SuggestionActivity</string>
 </resources>

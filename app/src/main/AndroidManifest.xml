@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="team.far.footing">
+    package="team.far.footing" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -20,9 +20,10 @@
 
     <permission
         android:name="cn.bmob.permission.push"
-        android:protectionLevel="normal"/>
+        android:protectionLevel="normal" />
+
     <uses-permission android:name="cn.bmob.permission.push" />
-    <!-- 添加自定义的权限-->
+    <!-- 添加自定义的权限 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -33,26 +34,26 @@
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        tools:replace="android:icon" >
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.RegisterActivty" />
-        <!--baidu-->
+        <!-- baidu -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="@string/BaiDu_Key" />
-        <!--百度定位服务-->
+        <!-- 百度定位服务 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        <!--qq-->
+        <!-- qq -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -77,7 +78,7 @@
         <activity
             android:name=".ui.activity.LaunchActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -99,35 +100,34 @@
         <activity
             android:name=".ui.activity.FriendInfoActivity"
             android:label="@string/title_activity_friend_info"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MyMapActivity"
             android:label="@string/title_activity_my_map"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ShowMapActivity"
             android:label="@string/title_activity_show_map"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"
             android:exported="true"
             android:label="PushService"
             android:permission="cn.bmob.permission.push"
-            android:process="cn.bmob.push">
+            android:process="cn.bmob.push" >
             <intent-filter>
                 <action android:name="cn.bmob.push.lib.service.PushService" />
             </intent-filter>
         </service>
         <service android:name=".service.UpdateService" />
 
-        <receiver android:name="cn.bmob.push.PushReceiver">
-            <intent-filter android:priority="2147483647"><!--优先级加最高-->
+        <receiver android:name="cn.bmob.push.PushReceiver" >
+            <intent-filter android:priority="2147483647" > <!-- 优先级加最高 -->
                 <!-- 系统启动完成后会调用 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <!-- 解锁完成后会调用 -->
@@ -136,14 +136,22 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
-
-        <receiver android:name=".MyPushMessageReceiver">
+        <receiver android:name=".MyPushMessageReceiver" >
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activity.SuggestionActivity"
+            android:label="@string/title_activity_suggestion"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

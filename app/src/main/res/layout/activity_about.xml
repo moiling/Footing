@@ -1,0 +1,70 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    tools:context="team.far.footing.ui.activity.AboutActivity">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <ImageView
+        android:id="@+id/iv_about_logo"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/image_login_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_width="120dp"
+        android:scaleType="fitCenter"
+        android:layout_height="120dp"/>
+
+    <TextView
+        android:id="@+id/tv_about_title"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/primary_text"
+        android:layout_below="@+id/iv_about_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="足下"/>
+
+    <TextView
+        android:id="@+id/tv_about_version"
+        android:layout_below="@+id/tv_about_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/secondary_text"
+        android:textSize="16sp"
+        tools:text="Ver.1.0.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="26dp"
+        app:mrl_rippleColor="@color/divider_color"
+        app:mrl_rippleDuration="500">
+
+        <TextView
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/accent_color"
+            android:text="检查更新"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+    <!--toolbar下方阴影-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_shadow_height"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/shadow"/>
+</RelativeLayout>

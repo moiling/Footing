@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group>
         <item
             android:id="@+id/item_drawer_my_map"
             android:icon="@mipmap/ic_foot"
@@ -9,16 +9,22 @@
             android:id="@+id/item_drawer_my_info"
             android:icon="@mipmap/ic_user"
             android:title="个人资料" />
-    </group>
-
-    <group android:checkableBehavior="single">
         <item
             android:id="@+id/item_drawer_setting"
             android:icon="@mipmap/ic_setting"
-            android:title="设置" />
-        <item
-            android:id="@+id/item_drawer_about"
-            android:icon="@mipmap/ic_about"
-            android:title="关于足下" />
+            android:title="应用设置" />
     </group>
+
+    <item android:title="帮助">
+        <menu>
+            <item
+                android:id="@+id/item_drawer_suggestion"
+                android:icon="@mipmap/ic_suggestion"
+                android:title="意见反馈"/>
+            <item
+                android:id="@+id/item_drawer_about"
+                android:icon="@mipmap/ic_about"
+                android:title="关于足下" />
+        </menu>
+    </item>
 </menu>

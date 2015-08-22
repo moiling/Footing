@@ -14,13 +14,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -188,13 +185,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
             navigation.setNavigationItemSelectedListener(this);
         }
 
-        if (ScreenUtils.checkDeviceHasNavigationBar(this)) {
+/*        if (ScreenUtils.checkDeviceHasNavigationBar(this)) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.RIGHT);
             layoutParams.setMargins(0, 0, (int) (getResources()
                     .getDimension(R.dimen.codelab_fab_margin_right)), (int) (getResources()
                     .getDimension(R.dimen.codelab_fab_margin_bottom) + ScreenUtils.getNavigationBarHeight(this)));
             mFabBtn.setLayoutParams(layoutParams);
-        }
+        }*/
     }
 
     @Override
@@ -300,6 +297,12 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
                 break;
             case R.id.item_drawer_my_map:
                 presenter.startMyMapActivity(this);
+                break;
+            case R.id.item_drawer_about:
+                presenter.startAboutActivity(this);
+                break;
+            case R.id.item_drawer_suggestion:
+                presenter.startSuggestionActivity(this);
                 break;
         }
         return false;

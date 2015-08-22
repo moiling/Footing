@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="15dp"
+        android:textSize="18sp"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="24dp"
         android:text="请稍等....."
-        android:textColor="@color/abc_primary_text_material_light" />
+        android:textColor="@color/primary_text" />
 
     <team.far.footing.ui.widget.HorizontalProgressBarWithNumber
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="20dp" />
+        app:progress_reached_color="@color/accent_color"
+        app:progress_text_color="@color/accent_color"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"/>
 </LinearLayout>
