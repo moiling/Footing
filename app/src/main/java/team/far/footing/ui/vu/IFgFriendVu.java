@@ -11,4 +11,6 @@ public interface IFgFriendVu {
 
     void stopRefresh();
 
+    void showEmpty();
+
 }

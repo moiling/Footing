@@ -17,10 +17,28 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/firends_recyclerview"
+            android:id="@+id/my_map_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/my_map_recycler_view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:lineSpacingExtra="16dp"
+        android:text="你还没有足迹哦！\n快去记录你的足迹吧~"
+        android:textColor="@color/accent_color"
+        android:textSize="16sp"
+        android:visibility="gone"/>
+
+    <!--toolbar下方阴影-->
+    <View
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_shadow_height"
+        android:background="@drawable/shadow"/>
 </RelativeLayout>

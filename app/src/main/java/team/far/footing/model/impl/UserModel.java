@@ -1,12 +1,10 @@
 package team.far.footing.model.impl;
 
 import android.app.Activity;
-import android.app.backup.BackupManager;
 
 import com.bmob.BTPFileResponse;
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadListener;
-import com.google.gson.Gson;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -19,8 +17,6 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.OtherLoginListener;
 import cn.bmob.v3.listener.ResetPasswordByEmailListener;
@@ -29,15 +25,14 @@ import cn.bmob.v3.listener.UpdateListener;
 import team.far.footing.R;
 import team.far.footing.app.APP;
 import team.far.footing.model.IUserModel;
-import team.far.footing.model.bean.MessageBean;
+import team.far.footing.model.bean.Friends;
+import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OnLoginForQQListener;
 import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.callback.OnRegsterListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.callback.OnUploadListener;
-import team.far.footing.model.bean.Friends;
-import team.far.footing.model.bean.Userbean;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 
@@ -163,10 +158,9 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void updataUserInfo(String nickname, String signature, String email, OnUpdateUserListener onUpdateUserListener) {
+    public void updataUserInfo(String nickname, String signature, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
         newUser.setNickName(nickname);
-        newUser.setEmail(email);
         newUser.setSignature(signature);
         updateUser(newUser, onUpdateUserListener);
     }

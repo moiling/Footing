@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -19,11 +20,12 @@ import team.far.footing.ui.vu.IMyMapVu;
 
 public class MyMapActivity extends BaseActivity implements IMyMapVu, SwipeRefreshLayout.OnRefreshListener {
 
-    @InjectView(R.id.firends_recyclerview)
-    RecyclerView firendsRecyclerview;
+    @InjectView(R.id.my_map_recyclerview)
+    RecyclerView mRecyclerview;
     @InjectView(R.id.swipe_refresh_widget)
     SwipeRefreshLayout swipeRefreshWidget;
     @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.my_map_recycler_view_empty) TextView mEmptyView;
 
     private MaterialDialog dialog;
     private MyMapPresenter myMapPresenter;
@@ -45,7 +47,7 @@ public class MyMapActivity extends BaseActivity implements IMyMapVu, SwipeRefres
     }
 
     private void init() {
-        firendsRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshWidget.setOnRefreshListener(this);
     }
 
@@ -68,7 +70,10 @@ public class MyMapActivity extends BaseActivity implements IMyMapVu, SwipeRefres
 
     @Override
     public void showmaplist(RecyclerView.Adapter adapter) {
-        firendsRecyclerview.setAdapter(adapter);
+        swipeRefreshWidget.setVisibility(View.VISIBLE);
+        mRecyclerview.setVisibility(View.VISIBLE);
+        mEmptyView.setVisibility(View.GONE);
+        mRecyclerview.setAdapter(adapter);
     }
 
     @Override
@@ -79,6 +84,13 @@ public class MyMapActivity extends BaseActivity implements IMyMapVu, SwipeRefres
     @Override
     public void stopLoading() {
         dismissProgress();
+    }
+
+    @Override
+    public void showEmpty() {
+        swipeRefreshWidget.setVisibility(View.GONE);
+        mRecyclerview.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override

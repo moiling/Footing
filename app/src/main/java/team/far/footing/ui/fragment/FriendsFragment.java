@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,6 +24,7 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
     RecyclerView mRecyclerview;
     @InjectView(R.id.swipe_refresh_widget)
     SwipeRefreshLayout swipeRefreshWidget;
+    @InjectView(R.id.firends_recycler_view_empty) TextView firendsRecyclerViewEmpty;
 
     private FgFriendPresenter presenter;
 
@@ -58,12 +60,23 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
 
     @Override
     public void showFriends(RecyclerView.Adapter adapter) {
+        swipeRefreshWidget.setVisibility(View.VISIBLE);
+        mRecyclerview.setVisibility(View.VISIBLE);
+        firendsRecyclerViewEmpty.setVisibility(View.GONE);
         mRecyclerview.setAdapter(adapter);
     }
 
     @Override
     public void stopRefresh() {
         swipeRefreshWidget.setRefreshing(false);
+    }
+
+    @Override
+    public void showEmpty() {
+        // 必须去掉、否则下拉刷新卡顿
+        swipeRefreshWidget.setVisibility(View.GONE);
+        mRecyclerview.setVisibility(View.GONE);
+        firendsRecyclerViewEmpty.setVisibility(View.VISIBLE);
     }
 
     //下拉刷新

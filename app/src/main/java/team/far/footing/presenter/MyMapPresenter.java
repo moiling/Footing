@@ -33,8 +33,12 @@ public class MyMapPresenter {
             @Override
             public void onSuccess(List<MapBean> list) {
                 iMyMapVu.stopLoading();
-                mapRyViewAdapter = new MapRyViewAdapter(list, iMyMapVu.getActivity());
-                iMyMapVu.showmaplist(mapRyViewAdapter);
+                if(list.size() != 0) {
+                    mapRyViewAdapter = new MapRyViewAdapter(list, iMyMapVu.getActivity());
+                    iMyMapVu.showmaplist(mapRyViewAdapter);
+                } else {
+                    iMyMapVu.showEmpty();
+                }
             }
 
             @Override

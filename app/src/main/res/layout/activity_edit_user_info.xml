@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,8 +10,47 @@
 
     <include layout="@layout/layout_toolbar" />
 
+    <RelativeLayout
+        android:id="@+id/btn_edit_user_pic"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/white"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <team.far.footing.ui.widget.CircleImageView
+            android:id="@+id/iv_edit_user_pic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_user_pic_default"/>
+
+        <TextView
+            android:id="@+id/tv_edit_user_pic"
+            android:text="修改头像"
+            android:textColor="@color/secondary_text"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_edit_user_pic"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider_edit_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/btn_edit_user_pic"
+        android:background="@color/background_material_light"/>
+
     <LinearLayout
         android:id="@+id/btn_edit_nick_name"
+        android:background="@color/white"
+        android:layout_below="@+id/divider_edit_user_info"
         android:padding="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -26,15 +66,25 @@
         <TextView
             android:id="@+id/tv_edit_nick_name"
             tools:text="哔啪哩吧啦"
-            android:textColor="@color/primary_text"
+            android:textColor="@color/secondary_text"
+            android:textSize="16sp"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/divider_edit_user_info2"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/btn_edit_nick_name"
+        android:background="@color/background_material_light"/>
+
     <LinearLayout
         android:id="@+id/btn_edit_signature"
+        android:background="@color/white"
+        android:layout_below="@+id/divider_edit_user_info2"
         android:padding="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -50,35 +100,19 @@
         <TextView
             android:id="@+id/tv_edit_signature"
             tools:text="我就是我，傻逼一个"
-            android:textColor="@color/primary_text"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btn_edit_email"
-        android:padding="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:text="邮箱"
+            android:textColor="@color/secondary_text"
             android:textSize="16sp"
-            android:textColor="@color/primary_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_edit_email"
-            tools:text="896001088@qq.com"
-            android:textColor="@color/primary_text"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-</LinearLayout>
+    <!--toolbar下方阴影-->
+    <View
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@drawable/shadow"
+        android:layout_height="@dimen/toolbar_shadow_height" />
+
+</RelativeLayout>

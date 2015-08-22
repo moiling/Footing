@@ -8,5 +8,19 @@
         sha1="75c54c470e19b251749e6e6c2cf3d73c0b50aa64">
         <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-f15f5e3b00cca3bec977f648707fe6ee42762a8f.jar" />
     </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\me.drakeet.materialdialog\library\1.2.2\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8646b1e69dd5d923d8866dc4311859f0fbca456c">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-b1f2c8f113a18cb2ffd8d22ace10b6aa7ea5004f.jar" />
+    </item>
+    <item
+        jar="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\exploded-aar\com.jude\imageprovider\1.0.7\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3e11d7f4c1a5fb847b7de058848a51e5c269e55">
+        <dex dex="D:\Projects\Footing\Footing_fork\Footing\app\build\intermediates\pre-dexed\debug\classes-7e342ea2a490b5ad8c3ded728b3f6f1b9679b417.jar" />
+    </item>
 
 </items>

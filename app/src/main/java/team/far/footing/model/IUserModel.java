@@ -3,9 +3,6 @@ package team.far.footing.model;
 
 import android.app.Activity;
 
-import cn.bmob.v3.listener.FindListener;
-import team.far.footing.model.bean.MessageBean;
-import team.far.footing.model.bean.Userbean;
 import team.far.footing.model.callback.OnLoginForQQListener;
 import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
@@ -24,7 +21,7 @@ public interface IUserModel {
     void loginForQQ(Activity activity, OnLoginForQQListener onLoginForQQListener);
 
     // 在编辑页面要一口气更新多个数据
-    void updataUserInfo(String nickname, String signature, String email, OnUpdateUserListener onUpdateUserListener);
+    void updataUserInfo(String nickname, String signature, OnUpdateUserListener onUpdateUserListener);
 
     /**
      * @param filePath                     ------- 文件路径

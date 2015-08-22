@@ -12,5 +12,8 @@ public interface IMyMapVu {
 
     void showLoading(String s);
     void stopLoading();
+
+    void showEmpty();
+
     Context getActivity();
 }

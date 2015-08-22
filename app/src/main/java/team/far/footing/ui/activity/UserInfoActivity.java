@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,8 +40,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @InjectView(R.id.tv_user_info_user_lv) TextView mUserLv;
     @InjectView(R.id.tv_user_info_user_name) TextView mUserName;
     @InjectView(R.id.tv_user_info_user_signature) TextView mUserSignature;
-    @InjectView(R.id.btn_user_info_camera) Button btnCamera;
-    @InjectView(R.id.btn_user_info_photo) Button btnPhoto;
     @InjectView(R.id.tv_my_today_distance) TextView tvMyTodayDistance;
     @InjectView(R.id.tv_my_all_distance) TextView tvMyAllDistance;
     @InjectView(R.id.tv_my_email) TextView tvMyEmail;
@@ -71,9 +68,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     }
 
     private void init() {
-        btnCamera.setOnClickListener(this);
-        btnPhoto.setOnClickListener(this);
         btnMySignature.setOnClickListener(this);
+        mUserPic.setOnClickListener(this);
     }
 
     @Override
@@ -187,14 +183,27 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_user_info_camera:
-                Intent intent = CropHelper.buildCaptureIntent(new CropParams().uri);
-                startActivityForResult(intent, CropHelper.REQUEST_CAMERA);
-                break;
-            case R.id.btn_user_info_photo:
-                Intent intent2 = CropHelper.buildCropFromGalleryIntent(new CropParams());
-                CropHelper.clearCachedCropFile(mCropParams.uri);
-                startActivityForResult(intent2, CropHelper.REQUEST_CROP);
+            case R.id.iv_user_info_user_pic:
+                new MaterialDialog.Builder(this)
+                        .theme(Theme.LIGHT)
+                        .items(new String[]{"图片上传", "拍照上传"})
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                switch (which) {
+                                    case 0:
+                                        Intent intent2 = CropHelper.buildCropFromGalleryIntent(new CropParams());
+                                        CropHelper.clearCachedCropFile(mCropParams.uri);
+                                        startActivityForResult(intent2, CropHelper.REQUEST_CROP);
+                                        break;
+                                    case 1:
+                                        Intent intent = CropHelper.buildCaptureIntent(new CropParams().uri);
+                                        startActivityForResult(intent, CropHelper.REQUEST_CAMERA);
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
                 break;
             case R.id.btn_my_signature:
                 if (mUserSignature.getText() != null) {
