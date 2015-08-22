@@ -85,6 +85,7 @@ public class UserModel implements IUserModel {
 
         final Friends friends = new Friends();
         friends.setUsername(username);
+
         friends.save(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
@@ -94,6 +95,7 @@ public class UserModel implements IUserModel {
                 regsterBean.setEmail(email);
                 regsterBean.setToday_distance(0);
                 regsterBean.setAll_distance(0);
+                regsterBean.setIsAuth(0);
                 regsterBean.setPraiseCount(0);
                 regsterBean.setIs_finish_today(0);
                 regsterBean.setLevel(1);
@@ -128,6 +130,7 @@ public class UserModel implements IUserModel {
 
         Tencent mTencent =
                 Tencent.createInstance(APP.getContext().getString(R.string.QQ_ID), APP.getContext());
+
         if (!mTencent.isSessionValid()) {
             mTencent.login(activity, "all", new IUiListener() {
                 @Override
@@ -141,6 +144,7 @@ public class UserModel implements IUserModel {
                             BmobUser.BmobThirdUserAuth authInfo = new BmobUser.BmobThirdUserAuth(BmobUser.BmobThirdUserAuth.SNS_TYPE_QQ, token, expires, openId);
                             loginWithAuth(authInfo, onLoginForQQListener);
                         } catch (JSONException e) {
+
                         }
                     }
                 }
@@ -300,13 +304,51 @@ public class UserModel implements IUserModel {
 
     //调用第三方登录  -- 暂时先写qq
     public void loginWithAuth(final BmobUser.BmobThirdUserAuth authInfo, final OnLoginForQQListener onLoginForQQListener) {
+
         BmobUser.loginWithAuthData(APP.getContext(), authInfo, new OtherLoginListener() {
             @Override
             public void onSuccess(JSONObject userAuth) {
                 // TODO Auto-generated method stub
-                LogUtils.i("smile", authInfo.getSnsType() + "登陆成功返回:" + userAuth);
-                Gson gson = new Gson();
-                onLoginForQQListener.loginSuccess(BmobUtils.getCurrentUser());
+                LogUtils.e(" " + (BmobUtils.getCurrentUser().getIsAuth() == null));
+
+                // 判断是否首次登陆 如果是首次登陆  就开始初始化的操作 ==
+                if (BmobUtils.getCurrentUser().getIsAuth() == null) {
+                    final Friends friends = new Friends();
+                    friends.setUsername(BmobUtils.getCurrentUser().getUsername());
+                    friends.save(APP.getContext(), new SaveListener() {
+                        @Override
+                        public void onSuccess() {
+                            final Userbean regsterBean = BmobUtils.getCurrentUser();
+                            regsterBean.setToday_distance(0);
+                            regsterBean.setAll_distance(0);
+                            regsterBean.setIsAuth(1);
+                            regsterBean.setPraiseCount(0);
+                            regsterBean.setIs_finish_today(0);
+                            regsterBean.setLevel(1);
+                            regsterBean.setFriendId(friends.getObjectId());
+                            //注册更新用户表
+                            regsterBean.update(APP.getContext(), new UpdateListener() {
+                                @Override
+                                public void onSuccess() {
+                                    onLoginForQQListener.loginSuccess(BmobUtils.getCurrentUser());
+                                }
+
+                                @Override
+                                public void onFailure(int i, String s) {
+                                  onLoginForQQListener.loginFailed(s);
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+                            onLoginForQQListener.loginFailed(s);
+                        }
+                    });
+                } else {
+                    onLoginForQQListener.loginSuccess(BmobUtils.getCurrentUser());
+                }
             }
 
             @Override
