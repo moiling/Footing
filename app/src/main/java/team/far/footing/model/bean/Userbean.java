@@ -37,8 +37,21 @@ public class Userbean extends BmobUser implements Serializable {
     //今日任务完成没  0表示未完成  1表示完成。
     private Integer is_finish_today;
 
+    //  0表示不是第三方登陆  1 为第三方登陆
+    private Integer isAuth;
+
 
     private BmobRelation messages;
+
+    public Integer getIsAuth() {
+        return isAuth;
+    }
+
+    public void setIsAuth(Integer isAuth) {
+        this.isAuth = isAuth;
+    }
+
+
 
     public BmobRelation getMessages() {
         return messages;
