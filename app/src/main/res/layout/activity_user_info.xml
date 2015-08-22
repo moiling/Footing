@@ -228,22 +228,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:visibility="gone"
-            android:id="@+id/btn_user_info_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="CAMERA"/>
-
-        <Button
-            android:visibility="gone"
-            android:id="@+id/btn_user_info_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="PHOTO"/>
-
     </RelativeLayout>
     </ScrollView>
     <!--toolbar下方阴影-->

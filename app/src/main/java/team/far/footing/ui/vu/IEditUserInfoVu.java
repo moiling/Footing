@@ -1,5 +1,7 @@
 package team.far.footing.ui.vu;
 
+import android.graphics.Bitmap;
+
 import team.far.footing.model.bean.Userbean;
 
 /**
@@ -9,15 +11,23 @@ public interface IEditUserInfoVu {
 
     String getNickName();
 
-    String getEmail();
-
     String getSignature();
 
-    void showUserInformation(Userbean userbean);
+    void showUserInformation(Userbean userbean, Bitmap bitmap);
 
     void showEditLoading();
 
     void showEditSuccee();
+
+    void showUpdatePicLoading();
+
+    void showUpdatePicSuccess();
+
+    void showUpdatePicFailed(int i);
+
+    void dismissPicLoading();
+
+    void showUserPic(Bitmap bitmap);
 
     void showEditFail(int i);
 }

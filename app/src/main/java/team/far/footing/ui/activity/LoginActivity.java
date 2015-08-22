@@ -23,7 +23,6 @@ import team.far.footing.presenter.LoginPresenter;
 import team.far.footing.ui.vu.ILoginVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
-import team.far.footing.util.MIUIV6;
 
 /**
  * Created by Luoyy on 2015/8/7 0007.
@@ -50,7 +49,6 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         loginPresenter = new LoginPresenter(this);
-        MIUIV6.setStatusBarTextColor(this, 1);
         setBarTintColor(getResources().getColor(R.color.background_material_light));
         init();
     }

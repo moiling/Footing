@@ -34,8 +34,12 @@ public class FgFriendPresenter {
             @Override
             public void onSuccess(List<Userbean> object) {
                 if (iFgFriendVu != null) {
-                    friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                    iFgFriendVu.showFriends(friendsRyViewAdapter);
+                    if (object.size() != 0) {
+                        friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                        iFgFriendVu.showFriends(friendsRyViewAdapter);
+                    } else {
+                        iFgFriendVu.showEmpty();
+                    }
                 }
             }
 
@@ -52,8 +56,12 @@ public class FgFriendPresenter {
             @Override
             public void onSuccess(List<Userbean> object) {
                 if (iFgFriendVu != null) {
-                    friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                    iFgFriendVu.showFriends(friendsRyViewAdapter);
+                    if (object.size() != 0) {
+                        friendsRyViewAdapter = new FriendsRyViewAdapter(object);
+                        iFgFriendVu.showFriends(friendsRyViewAdapter);
+                    } else {
+                        iFgFriendVu.showEmpty();
+                    }
                     iFgFriendVu.stopRefresh();
                 }
             }
