@@ -38,6 +38,7 @@ import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.MessageBean;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OnAnimationEndListener;
 import team.far.footing.presenter.HomePresenter;
 import team.far.footing.presenter.MessagePresenter;
 import team.far.footing.ui.adapter.HomePagerAdapter;
@@ -50,6 +51,8 @@ import team.far.footing.ui.vu.IMessageVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
+import team.far.footing.util.animation.ScaleXYAnimation;
+import team.far.footing.util.animation.YAnimation;
 
 public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener, Toolbar.OnMenuItemClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -89,6 +92,8 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
     private boolean isDrawerOpened;
     // 保存page的选择，默认为第一页
     private int pageSelect = 0;
+    //上一页
+    private int lastPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,21 +151,44 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
         mViewPager.setAdapter(fragmentPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
+                lastPage = pageSelect;
                 pageSelect = position;
                 switch (position) {
                     case 0:
+                        if (fragmentList.get(0) != null && fragmentList.get(0).getView() != null) {
+                            fragmentList.get(0).getView().findViewById(R.id.cv_fg_friends).setVisibility(View.VISIBLE);
+                            fragmentList.get(0).getView().findViewById(R.id.CV_fg_today).setVisibility(View.VISIBLE);
+                            YAnimation.topIN(fragmentList.get(0).getView().findViewById(R.id.cv_fg_friends));
+                            YAnimation.buttomIN(fragmentList.get(0).getView().findViewById(R.id.CV_fg_today));
+                        }
+                        mFabBtn.setVisibility(View.VISIBLE);
                         mFabBtn.setImageResource(R.mipmap.ic_run);
+                        ScaleXYAnimation.show(mFabBtn, null);
                         break;
                     case 1:
+                        if (fragmentList.get(0) != null && fragmentList.get(0).getView() != null) {
+                            fragmentList.get(0).getView().findViewById(R.id.CV_fg_today).setVisibility(View.INVISIBLE);
+                            fragmentList.get(0).getView().findViewById(R.id.cv_fg_friends).setVisibility(View.INVISIBLE);
+                        }
+                        mFabBtn.setVisibility(View.VISIBLE);
                         mFabBtn.setImageResource(R.mipmap.ic_person_add);
+                        ScaleXYAnimation.show(mFabBtn, null);
                         break;
                     case 2:
-                        mFabBtn.setImageResource(R.mipmap.ic_plus);
+                        if (fragmentList.get(0) != null && fragmentList.get(0).getView() != null) {
+                            fragmentList.get(0).getView().findViewById(R.id.CV_fg_today).setVisibility(View.INVISIBLE);
+                            fragmentList.get(0).getView().findViewById(R.id.cv_fg_friends).setVisibility(View.INVISIBLE);
+                        }
+                        ScaleXYAnimation.hide(mFabBtn, new OnAnimationEndListener() {
+                            @Override
+                            public void onEnd() {
+                                mFabBtn.setVisibility(View.GONE);
+                            }
+                        });
                         break;
                 }
             }

@@ -7,6 +7,9 @@
     <color name="icon_color">#888888</color>
     <color name="divider_color">#B6B6B6</color>
 
+    <color name="square_black">#5d5d5d</color>
+    <color name="square_yellow">#ffcf4f</color>
+
     <color name="primary_light_color">#e7754d</color>
     <!--    <color name="primary_color">#f16332</color>-->
     <color name="primary_color">#ff7043</color>
