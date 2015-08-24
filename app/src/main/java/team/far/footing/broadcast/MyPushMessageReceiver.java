@@ -1,4 +1,4 @@
-package team.far.footing;
+package team.far.footing.broadcast;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -74,6 +74,4 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
         //用mNotificationManager的notify方法通知用户生成标题栏消息通知
         mNotificationManager.notify(1, notification);
     }
-
-
 }

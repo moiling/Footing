@@ -1,6 +1,12 @@
 package team.far.footing.presenter;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -13,6 +19,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
+import java.io.BufferedReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +34,7 @@ import team.far.footing.model.callback.OnUpdateMapListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.impl.MapModel;
 import team.far.footing.model.impl.UserModel;
+import team.far.footing.service.MapService;
 import team.far.footing.ui.vu.IWalkVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
@@ -38,12 +46,14 @@ import team.far.footing.util.listener.MyOrientationListener;
  * Created by moi on 2015/8/10.
  */
 public class WalkPresenter {
-
+/*
     private IWalkVu v;
     private Date start_date, end_date;
     // 定位
+   *//*
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
+    *//*
     private boolean isFirstIn = true;
 
     private BitmapDescriptor mMapPointer;
@@ -98,9 +108,11 @@ public class WalkPresenter {
         LogUtils.d("开始定位了");
         start_date = TimeUtils.getcurrentTime();
         v.getBaiduMap().setMyLocationEnabled(true);
-        if (!mLocationClient.isStarted()) {
+       *//*
+       if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
+        *//*
         mOrientationListener.start();
     }
 
@@ -108,7 +120,9 @@ public class WalkPresenter {
     public void stopLocation() {
         LogUtils.d("停止定位了");
         v.getBaiduMap().setMyLocationEnabled(false);
-        mLocationClient.stop();
+      *//*
+       mLocationClient.stop();
+       *//*
         mOrientationListener.stop();
 
     }
@@ -131,6 +145,7 @@ public class WalkPresenter {
     }
 
     private void initLocation() {
+       *//*
         mLocationClient = new LocationClient(APP.getContext());
         mLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(mLocationListener);
@@ -145,6 +160,7 @@ public class WalkPresenter {
         // 请求的频率
         option.setScanSpan(span * 1000);
         mLocationClient.setLocOption(option);
+        *//*
         mMapPointer = BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pointer);
         mOrientationListener = new MyOrientationListener((Activity) v);
         mOrientationListener.setmOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
@@ -172,10 +188,9 @@ public class WalkPresenter {
 
     private void save() {
         LogUtils.e("map_list", (map_list == null) + "");
-
         end_date = TimeUtils.getcurrentTime();
         mapModel.save_map_finish(BmobUtils.getCurrentUser(), "url",
-                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "",TimeUtils.dateToString(start_date), city, address,
+                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "", TimeUtils.dateToString(start_date), city, address,
                 new OnUpdateMapListener() {
                     @Override
                     public void onSuccess(MapBean mapBean) {
@@ -213,15 +228,20 @@ public class WalkPresenter {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             LogUtils.d("现在的状态：" + appStatus);
-            LogUtils.d("LatLng's size: " + latLngs.size());
+            LogUtils.d("LatLng‘s size: " + map_list.size());
             map_list.add(bdLocation.getLongitude() + "=" + bdLocation.getLatitude());
+
             MyLocationData data = new MyLocationData.Builder().direction(mCurrentX)
                     .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude()).build();
             MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mMapPointer);
             v.getBaiduMap().setMyLocationData(data);
             v.getBaiduMap().setMyLocationConfigeration(config);
+
+
             LogUtils.d(bdLocation.getLatitude() + " , " + bdLocation.getLongitude());
+
+
             LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             // 第一次定位把镜头移向用户当前位置
             if (isFirstIn) {
@@ -278,5 +298,188 @@ public class WalkPresenter {
                 timeSpan += span;
             }
         }
+    }*/
+
+    private static IWalkVu v;
+    //model
+    private IMapModel mapModel;
+    private IUserModel userModel;
+    private MapService mapService;
+    //  数据
+    private static List<LatLng> latLngs = new ArrayList<>();
+    private static List<String> map_list = new ArrayList<>();
+
+    private static float mCurrentX = 0;
+    private static double distanceTotal = 0;
+    private static double currentDistance = 0;
+    private static double lastDistance = 0;
+    private static double acceleration = 0;
+    private static int timeSpan = 3;
+    private Intent intent;
+
+    private static boolean isWalking = false;
+
+
+    private MyOrientationListener mOrientationListener;
+
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mapService = ((MapService.MyBind) service).getMapService();
+            LogUtils.e("返回service实例对象成功");
+            if (isWalking) {
+                mapService.start_location();
+                mapService.setIsWalking(true);
+            }
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mapService = null;
+        }
+    };
+
+    public WalkPresenter(IWalkVu v) {
+        this.v = v;
+        startAndBindService();
+        mapModel = MapModel.getInstance();
+        userModel = UserModel.getInstance();
+        init();
+        showMap();
+    }
+
+    private void startAndBindService() {
+        if (intent == null) intent = new Intent((Activity) v, MapService.class);
+        APP.getContext().startService(intent);
+        APP.getContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void stopAndOnbindService() {
+        APP.getContext().stopService(intent);
+        APP.getContext().unbindService(serviceConnection);
+    }
+
+    //只是 画线
+    private void showMap() {
+        //表示 步行返回
+        if (latLngs.size() != 0) {
+            LogUtils.e("画了开始的吐了的哟！！！");
+            v.drawAllPolyline(latLngs);
+            v.showDistanceTotal(distanceTotal);
+            v.showstart();
+            startWalk();
+        }
+    }
+
+    private void init() {
+        v.getBaiduMap().setMyLocationEnabled(true);
+        mOrientationListener = new MyOrientationListener((Activity) v);
+        mOrientationListener.setmOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
+            @Override
+            public void onOrientationChanged(float x) {
+                mCurrentX = x;
+            }
+        });
+    }
+
+    public void startWalk() {
+        isWalking = true;
+        v.getBaiduMap().setMyLocationEnabled(true);
+        //mapService.start_location();
+        startAndBindService();
+        // mapService.setIsWalking(true);
+    }
+
+    public void endWalk() {
+        isWalking = false;
+        v.getBaiduMap().setMyLocationEnabled(false);
+        mapService.setIsWalking(false);
+        mapService.stop_location();
+        stopAndOnbindService();
+        recovery();
+    }
+
+    public static class MapReceive extends BroadcastReceiver {
+
+        private boolean isFirstIn = true;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            double Latitude = intent.getDoubleExtra("Latitude", 0);
+            double Longitude = intent.getDoubleExtra("Longitude", 0);
+            float Radius = intent.getFloatExtra("Radius", 0);
+            String city = intent.getStringExtra("city");
+            String address = intent.getStringExtra("address");
+            map_list.add(Latitude + "=" + Longitude);
+
+            LogUtils.d("收到service传来的：", city + "--" + address + "--" + Latitude + "--" + Longitude);
+            LatLng latLng = new LatLng(Latitude, Longitude);
+
+            MyLocationData data = new MyLocationData.Builder()
+                    .direction(mCurrentX)
+                    .accuracy(Radius)
+                    .longitude(Longitude).build();
+            MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pointer));
+            try {
+
+                if (v != null && v.getBaiduMap() != null) {
+                    v.getBaiduMap().setMyLocationData(data);
+                    v.getBaiduMap().setMyLocationConfigeration(config);
+                }
+                if (isFirstIn && v != null) {
+                    v.moveCamera2Location(latLng);
+                    isFirstIn = false;
+                }
+                if (isWalking && Latitude != 4.9E-324) {
+                    LogUtils.e("已经在画图了哟！！！");
+
+                    LogUtils.e("maplist=====>>>", map_list.size() + "");
+                    // 先不管怎么样，加入第一个点再说
+                    if (latLngs.isEmpty()) latLngs.add(latLng);
+                    // 先从距离和加速度两方面控制某一点是否添加到数组中
+                    // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
+                    if (latLngs.size() > 0) {
+                        currentDistance = DistanceUtil
+                                .getDistance(latLng, latLngs.get(latLngs.size() - 1));
+                    }
+                    // 距离大于10
+                    if (currentDistance >= 10) {
+                        if (lastDistance == 0) {
+                            latLngs.add(latLng);
+                            v.drawPolyline(latLngs);
+                            lastDistance = currentDistance;
+                        } else {
+                            // 加速度
+                            acceleration = (currentDistance - lastDistance) / (timeSpan * timeSpan);
+                            // 加速度小于10
+                            if (acceleration <= 10) {
+                                latLngs.add(latLng);
+                                // 加入点之后重置间隔时间
+                                timeSpan = 0;
+                                lastDistance = currentDistance;
+                                distanceTotal += currentDistance;
+                                v.drawPolyline(latLngs);
+                                v.showDistanceTotal(distanceTotal);
+                            }
+                        }
+                    }
+
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+    }
+
+    public void recovery() {
+        latLngs.clear();
+        map_list.clear();
+        distanceTotal = 0;
+        lastDistance = 0;
+        mCurrentX = 0;
+        timeSpan = 3;
+        isWalking = false;
+        mOrientationListener = null;
     }
 }
