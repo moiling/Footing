@@ -25,6 +25,7 @@ import com.baidu.mapapi.model.LatLng;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -152,8 +153,9 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         }
     }
 
+
     @Override
-    public void drawPolyline(ArrayList<LatLng> latLngs) {
+    public void drawPolyline(List<LatLng> latLngs) {
         LogUtils.d("开始画线");
         // 现在才反应过来……原来画线的方法每一次都重绘了整个图……走得时间长了会变得好卡好卡
         // 现在两点两点一画，但这样图就更抖了、还会出现断层、但是至少比界面卡住要好
@@ -172,7 +174,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     }
 
     @Override
-    public void drawAllPolyline(ArrayList<LatLng> latLngs) {
+    public void drawAllPolyline(List<LatLng> latLngs) {
         LogUtils.d("开始画所有的线");
         mBaiduMap.clear();
         if (latLngs.size() > 1) {
@@ -219,6 +221,11 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         ivWalkStart.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
         presenter.pauseWalk();
+    }
+
+    @Override
+    public void showstart() {
+
     }
 
     // 分享的相关操作

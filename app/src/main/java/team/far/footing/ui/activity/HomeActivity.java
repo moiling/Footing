@@ -49,6 +49,7 @@ import team.far.footing.ui.fragment.TodayFragment;
 import team.far.footing.ui.vu.IHomeVu;
 import team.far.footing.ui.vu.IMessageVu;
 import team.far.footing.ui.widget.CircleImageView;
+import team.far.footing.util.LevelUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 import team.far.footing.util.animation.ScaleXYAnimation;
@@ -233,7 +234,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
             mToolbarUserName.setText("未取名");
         }
 
-        userLV.setText("Lv." + userbean.getLevel());
+        userLV.setText("Lv." + LevelUtils.getLevel(userbean.getLevel()));
         userSignature.setText(userbean.getSignature());
     }
 

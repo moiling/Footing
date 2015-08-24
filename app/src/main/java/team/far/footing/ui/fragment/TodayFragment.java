@@ -33,6 +33,7 @@ import team.far.footing.ui.activity.UserInfoActivity;
 import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LevelUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVu {
 
@@ -175,7 +176,7 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
                     holder.tv_distance.setText(userbeanList.get(position).getToday_distance() + "  m");
                     break;
                 case 2:
-                    holder.tv_distance.setText("Lv." + userbeanList.get(position).getLevel());
+                    holder.tv_distance.setText("Lv." + LevelUtils.getLevel(userbeanList.get(position).getLevel()));
                     break;
             }
             // 自己就跳到自己的个人页面去

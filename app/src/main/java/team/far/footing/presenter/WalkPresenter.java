@@ -174,8 +174,9 @@ public class WalkPresenter {
         LogUtils.e("map_list", (map_list == null) + "");
 
         end_date = TimeUtils.getcurrentTime();
+        // 保存地图数据
         mapModel.save_map_finish(BmobUtils.getCurrentUser(), "url",
-                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "",TimeUtils.dateToString(start_date), city, address,
+                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "", TimeUtils.dateToString(start_date), city, address,
                 new OnUpdateMapListener() {
                     @Override
                     public void onSuccess(MapBean mapBean) {
@@ -202,6 +203,12 @@ public class WalkPresenter {
                         cleanMap();
                     }
                 });
+        // 保存用户 等级数据
+
+
+        userModel.updateUser_level(BmobUtils.getCurrentUser().getLevel() + ((int) distanceTotal / 5), null);
+
+
     }
 
     // 解除view的绑定

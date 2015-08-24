@@ -30,21 +30,33 @@ import team.far.footing.presenter.UserInfoPresenter;
 import team.far.footing.ui.vu.IUserInfoVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LevelUtils;
 import team.far.footing.util.ScreenUtils;
 
 public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener, CropHandler {
 
-    @InjectView(R.id.toolbar_t) Toolbar mToolbar;
-    @InjectView(R.id.user_info_bar) FrameLayout barLayout;
-    @InjectView(R.id.iv_user_info_user_pic) CircleImageView mUserPic;
-    @InjectView(R.id.tv_user_info_user_lv) TextView mUserLv;
-    @InjectView(R.id.tv_user_info_user_name) TextView mUserName;
-    @InjectView(R.id.tv_user_info_user_signature) TextView mUserSignature;
-    @InjectView(R.id.tv_my_today_distance) TextView tvMyTodayDistance;
-    @InjectView(R.id.tv_my_all_distance) TextView tvMyAllDistance;
-    @InjectView(R.id.tv_my_email) TextView tvMyEmail;
-    @InjectView(R.id.tv_my_exp) TextView tvMyExp;
-    @InjectView(R.id.btn_my_signature) RelativeLayout btnMySignature;
+    @InjectView(R.id.toolbar_t)
+    Toolbar mToolbar;
+    @InjectView(R.id.user_info_bar)
+    FrameLayout barLayout;
+    @InjectView(R.id.iv_user_info_user_pic)
+    CircleImageView mUserPic;
+    @InjectView(R.id.tv_user_info_user_lv)
+    TextView mUserLv;
+    @InjectView(R.id.tv_user_info_user_name)
+    TextView mUserName;
+    @InjectView(R.id.tv_user_info_user_signature)
+    TextView mUserSignature;
+    @InjectView(R.id.tv_my_today_distance)
+    TextView tvMyTodayDistance;
+    @InjectView(R.id.tv_my_all_distance)
+    TextView tvMyAllDistance;
+    @InjectView(R.id.tv_my_email)
+    TextView tvMyEmail;
+    @InjectView(R.id.tv_my_exp)
+    TextView tvMyExp;
+    @InjectView(R.id.btn_my_signature)
+    RelativeLayout btnMySignature;
 
     private UserInfoPresenter presenter;
     private CropParams mCropParams = new CropParams();
@@ -117,7 +129,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
         if (bitmap != null) {
             mUserPic.setImageBitmap(bitmap);
         }
-        mUserLv.setText("Lv." + userbean.getLevel());
+        mUserLv.setText("Lv." + LevelUtils.getLevel(userbean.getLevel()));
         mUserSignature.setText(userbean.getSignature());
         tvMyAllDistance.setText(userbean.getAll_distance() + "m");
         tvMyTodayDistance.setText(userbean.getToday_distance() + "m");
