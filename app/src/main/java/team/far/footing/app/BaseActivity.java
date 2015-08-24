@@ -57,6 +57,7 @@ public class BaseActivity extends AppCompatActivity {
                 .title(title)
                 .content("请稍候")
                 .theme(Theme.LIGHT)
+                .backgroundColor(getResources().getColor(R.color.white))
                 .progress(true, 100)
                 .cancelable(false)
                 .show();

@@ -352,6 +352,7 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
                 new MaterialDialog.Builder(this)
                         .title("消息")
                         .customView(messageBoxView, false)
+                        .backgroundColor(getResources().getColor(R.color.white))
                         .positiveText("看完了")
                         .theme(Theme.LIGHT)
                         .show();
