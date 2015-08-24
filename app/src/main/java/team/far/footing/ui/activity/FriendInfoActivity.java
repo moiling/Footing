@@ -21,21 +21,33 @@ import team.far.footing.presenter.FriendInfoPresenter;
 import team.far.footing.ui.vu.IFriendInfoVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LevelUtils;
 import team.far.footing.util.ScreenUtils;
 
 public class FriendInfoActivity extends BaseActivity implements IFriendInfoVu, View.OnClickListener {
 
-    @InjectView(R.id.btn_add_friend) TextView btnAddFriend;
-    @InjectView(R.id.toolbar_t) Toolbar mToolbar;
-    @InjectView(R.id.iv_friend_info_user_pic) CircleImageView ivFriendInfoUserPic;
-    @InjectView(R.id.tv_friend_info_user_lv) TextView tvFriendInfoUserLv;
-    @InjectView(R.id.tv_friend_info_user_name) TextView tvFriendInfoUserName;
-    @InjectView(R.id.tv_friend_info_friend_signature) TextView tvFriendInfoFriendSignature;
-    @InjectView(R.id.btn_friend_signature) RelativeLayout btnFriendSignature;
-    @InjectView(R.id.tv_friend_today_distance) TextView tvFriendTodayDistance;
-    @InjectView(R.id.tv_friend_all_distance) TextView tvFriendAllDistance;
-    @InjectView(R.id.tv_friend_email) TextView tvFriendEmail;
-    @InjectView(R.id.friend_info_bar) FrameLayout barLayout;
+    @InjectView(R.id.btn_add_friend)
+    TextView btnAddFriend;
+    @InjectView(R.id.toolbar_t)
+    Toolbar mToolbar;
+    @InjectView(R.id.iv_friend_info_user_pic)
+    CircleImageView ivFriendInfoUserPic;
+    @InjectView(R.id.tv_friend_info_user_lv)
+    TextView tvFriendInfoUserLv;
+    @InjectView(R.id.tv_friend_info_user_name)
+    TextView tvFriendInfoUserName;
+    @InjectView(R.id.tv_friend_info_friend_signature)
+    TextView tvFriendInfoFriendSignature;
+    @InjectView(R.id.btn_friend_signature)
+    RelativeLayout btnFriendSignature;
+    @InjectView(R.id.tv_friend_today_distance)
+    TextView tvFriendTodayDistance;
+    @InjectView(R.id.tv_friend_all_distance)
+    TextView tvFriendAllDistance;
+    @InjectView(R.id.tv_friend_email)
+    TextView tvFriendEmail;
+    @InjectView(R.id.friend_info_bar)
+    FrameLayout barLayout;
     private FriendInfoPresenter presenter;
 
     @Override
@@ -194,7 +206,7 @@ public class FriendInfoActivity extends BaseActivity implements IFriendInfoVu, V
         if (bitmap != null) {
             ivFriendInfoUserPic.setImageBitmap(bitmap);
         }
-        tvFriendInfoUserLv.setText("Lv." + userbean.getLevel());
+        tvFriendInfoUserLv.setText("Lv." + LevelUtils.getLevel(userbean.getLevel()));
         tvFriendInfoFriendSignature.setText(userbean.getSignature());
         tvFriendAllDistance.setText(userbean.getAll_distance() + "m");
         tvFriendTodayDistance.setText(userbean.getToday_distance() + "m");
