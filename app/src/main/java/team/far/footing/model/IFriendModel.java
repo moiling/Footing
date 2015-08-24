@@ -39,5 +39,4 @@ public interface IFriendModel {
     void isMyFriendByUsername(String username, OnIsMyFriendListener onIsMyFriendListener);
 
     void isMyFriendByNickname(String username, OnIsMyFriendListener onIsMyFriendListener);
-
 }

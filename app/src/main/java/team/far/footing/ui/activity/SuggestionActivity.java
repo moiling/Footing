@@ -20,9 +20,12 @@ import team.far.footing.util.BmobUtils;
 
 public class SuggestionActivity extends BaseActivity implements ISuggestionVu {
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.ed_suggestion) EditText mSuggestion;
-    @InjectView(R.id.btn_suggestion_send) MaterialRippleLayout mSend;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+    @InjectView(R.id.ed_suggestion)
+    EditText mSuggestion;
+    @InjectView(R.id.btn_suggestion_send)
+    MaterialRippleLayout mSend;
     private SuggestionPresenter presenter;
 
     @Override
@@ -68,11 +71,13 @@ public class SuggestionActivity extends BaseActivity implements ISuggestionVu {
 
     @Override
     public void onSendSuccess() {
+        dismissProgress();
         new MaterialDialog.Builder(this).title("发送成功").content("我们已经收到你的信息了哦").backgroundColor(getResources().getColor(R.color.white)).theme(Theme.LIGHT).positiveText("知道了").show();
     }
 
     @Override
     public void onSendFail(int i) {
+        dismissProgress();
         new MaterialDialog.Builder(this).title("发送失败").content(BmobUtils.searchCode(i)).backgroundColor(getResources().getColor(R.color.white)).theme(Theme.LIGHT).positiveText("知道了").show();
     }
 }
