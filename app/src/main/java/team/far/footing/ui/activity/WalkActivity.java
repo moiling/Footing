@@ -256,6 +256,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             case R.id.iv_walk_stop:
                 stopWalk();
                 new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
+                        .backgroundColor(getResources().getColor(R.color.white))
                         .positiveText("分享").negativeText("不用了").theme(Theme.LIGHT)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override

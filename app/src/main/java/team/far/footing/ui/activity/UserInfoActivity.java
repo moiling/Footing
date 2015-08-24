@@ -140,7 +140,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
 
     @Override
     public void showUpdateSuccess() {
-        new MaterialDialog.Builder(this).title("上传成功").content("").positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+        new MaterialDialog.Builder(this).title("上传成功").backgroundColor(getResources().getColor(R.color.white)).content("").positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
                 dialog.dismiss();
@@ -150,7 +150,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
 
     @Override
     public void showUpdateFailed(int i) {
-        new MaterialDialog.Builder(this).title("上传失败").content(BmobUtils.searchCode(i)).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+        new MaterialDialog.Builder(this).title("上传失败").backgroundColor(getResources().getColor(R.color.white)).content(BmobUtils.searchCode(i)).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
                 dialog.dismiss();
@@ -187,6 +187,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 new MaterialDialog.Builder(this)
                         .theme(Theme.LIGHT)
                         .items(new String[]{"图片上传", "拍照上传"})
+                        .backgroundColor(getResources().getColor(R.color.white))
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
@@ -207,7 +208,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
                 break;
             case R.id.btn_my_signature:
                 if (mUserSignature.getText() != null) {
-                    new MaterialDialog.Builder(this).content(mUserSignature.getText()).theme(Theme.LIGHT).show();
+                    new MaterialDialog.Builder(this).backgroundColor(getResources().getColor(R.color.white)).content(mUserSignature.getText()).theme(Theme.LIGHT).show();
                 }
                 break;
         }

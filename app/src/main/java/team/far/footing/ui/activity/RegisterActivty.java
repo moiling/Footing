@@ -2,10 +2,12 @@ package team.far.footing.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,12 +23,11 @@ import team.far.footing.presenter.RegisterPresenter;
 import team.far.footing.ui.vu.IRegsterVu;
 import team.far.footing.util.BmobUtils;
 
-public class RegisterActivty extends BaseActivity implements IRegsterVu, View.OnClickListener {
+public class RegisterActivty extends BaseActivity implements IRegsterVu {
 
     @InjectView(R.id.ed_register_user_name) AppCompatEditText edRegisterUserName;
     @InjectView(R.id.ed_register_password) AppCompatEditText edRegisterPassword;
     @InjectView(R.id.ed_register_password_repeat) AppCompatEditText edRegisterPasswordRepeat;
-    @InjectView(R.id.btn_register) CardView btnRegister;
     @InjectView(R.id.toolbar) Toolbar mToolbar;
     @InjectView(R.id.ed_register_email) AppCompatEditText edRegisterEmail;
     private RegisterPresenter registerPresenter;
@@ -40,6 +41,12 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu, View.On
         //初始化 RegisterPresenter
         registerPresenter = new RegisterPresenter(this);
         init();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_register, menu);
+        return true;
     }
 
     private void init() {
@@ -63,13 +70,23 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu, View.On
                 }
             }
         });
-        btnRegister.setOnClickListener(this);
+        edRegisterEmail.setOnKeyListener(onKey);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         registerPresenter.onRelieveView();
+    }
+
+    private void register() {
+        if ((getUserName().isEmpty() || getPassword().isEmpty() || getPasswordRepeat().isEmpty()) || getEmail().isEmpty()) {
+            Toast.makeText(RegisterActivty.this, "请填写完整呀！", Toast.LENGTH_SHORT).show();
+        } else if (!getPassword().equals(getPasswordRepeat())) {
+            Toast.makeText(RegisterActivty.this, "两次密码都不一样！", Toast.LENGTH_SHORT).show();
+        } else {
+            registerPresenter.Regster();
+        }
     }
 
     private void initToolbar() {
@@ -80,6 +97,13 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu, View.On
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                register();
+                return false;
             }
         });
     }
@@ -134,19 +158,36 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu, View.On
         }).show();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_register:
-                //注册
-                if ((getUserName().isEmpty() || getPassword().isEmpty() || getPasswordRepeat().isEmpty()) || getEmail().isEmpty()) {
-                    Toast.makeText(this, "请填写完整呀！", Toast.LENGTH_SHORT).show();
-                } else if (!getPassword().equals(getPasswordRepeat())) {
-                    Toast.makeText(this, "两次密码都不一样！", Toast.LENGTH_SHORT).show();
-                } else {
-                    registerPresenter.Regster();
-                }
-                break;
+    private View.OnKeyListener onKey = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                register();
+            }
+            return false;
         }
+    };
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            if (!edRegisterEmail.getText().toString().isEmpty() ||
+                    !edRegisterPassword.getText().toString().isEmpty() ||
+                    !edRegisterPasswordRepeat.getText().toString().isEmpty() ||
+                    !edRegisterUserName.getText().toString().isEmpty()) {
+                new MaterialDialog.Builder(this).theme(Theme.LIGHT).title("放弃注册").backgroundColor(getResources().getColor(R.color.white)).content("是否放弃注册？").positiveText("放弃").negativeText("继续注册").callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        finish();
+                    }
+                }).show();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

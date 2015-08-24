@@ -76,7 +76,7 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
         holder.ripple.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                new MaterialDialog.Builder(context).title("提示").content("是否删除该足迹").positiveText("删除").negativeText("取消").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+                new MaterialDialog.Builder(context).title("提示").backgroundColor(context.getResources().getColor(R.color.white)).content("是否删除该足迹").positiveText("删除").negativeText("取消").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         MapModel.getInstance().delete_mapbean(mapBeanList.get(position));
