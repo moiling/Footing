@@ -5,13 +5,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -34,6 +33,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
 import team.far.footing.ui.vu.IWalkVu;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.animation.ScaleXYAnimation;
 
 public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickListener {
 
@@ -41,12 +41,10 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     Toolbar mToolbar;
     @InjectView(R.id.map_walk)
     MapView mMapView;
-    @InjectView(R.id.card_walk_status)
-    CardView cardWalkStatus;
     @InjectView(R.id.iv_walk_start)
     ImageView ivWalkStart;
-    @InjectView(R.id.iv_walk_pause)
-    ImageView ivWalkPause;
+    //@InjectView(R.id.iv_walk_pause)
+    //ImageView ivWalkPause;
     @InjectView(R.id.iv_walk_stop)
     ImageView ivWalkStop;
     @InjectView(R.id.tv_walk_distance)
@@ -69,7 +67,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     private void init() {
         ivWalkStart.setOnClickListener(this);
-        ivWalkPause.setOnClickListener(this);
+        //ivWalkPause.setOnClickListener(this);
         ivWalkStop.setOnClickListener(this);
     }
 
@@ -142,6 +140,22 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 finish();
             }
         });
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                new MaterialDialog.Builder(WalkActivity.this).title("分享").content("是否分享此次步行？")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("分享").negativeText("取消").theme(Theme.LIGHT)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                share();
+                                dialog.dismiss();
+                            }
+                        }).show();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -170,7 +184,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             //在地图上添加多边形Option，用于显示
             mBaiduMap.addOverlay(polylineOptions);
         }
-        Toast.makeText(this, "DrawPolyline, size: " + latLngs.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -179,10 +192,9 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         mBaiduMap.clear();
         if (latLngs.size() > 1) {
             OverlayOptions polylineOptions = new PolylineOptions().points(latLngs)
-                    .color(0x3364c2f5).width(10);
+                    .color(getResources().getColor(R.color.accent_color)).width(10);
             mBaiduMap.addOverlay(polylineOptions);
         }
-        Toast.makeText(this, "DrawAllPolyline, size: " + latLngs.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -200,28 +212,28 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     public void startWalk() {
         presenter.startWalk();
         ivWalkStart.setVisibility(View.GONE);
-        cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
-        ivWalkPause.setVisibility(View.VISIBLE);
+        ScaleXYAnimation.show(ivWalkStop, null);
+        //ivWalkPause.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void stopWalk() {
         presenter.stopWalk();
-        cardWalkStatus.setVisibility(View.INVISIBLE);
         ivWalkStop.setVisibility(View.GONE);
-        ivWalkPause.setVisibility(View.GONE);
+        //ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
+        ScaleXYAnimation.show(ivWalkStart, null);
     }
 
-    @Override
+/*    @Override
     public void pauseWalk() {
         ivWalkPause.setVisibility(View.GONE);
         cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStart.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
         presenter.pauseWalk();
-    }
+    }*/
 
     @Override
     public void showstart() {
@@ -242,8 +254,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 shareIntent.setType("image/png");
                 startActivity(Intent
                         .createChooser(shareIntent, getResources().getText(R.string.send_to)));
-                // 停止步行
-                stopWalk();
             }
         });
     }
@@ -254,9 +264,9 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             case R.id.iv_walk_start:
                 startWalk();
                 break;
-            case R.id.iv_walk_pause:
+            /*case R.id.iv_walk_pause:
                 pauseWalk();
-                break;
+                break;*/
             case R.id.iv_walk_stop:
                 new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
                         .backgroundColor(getResources().getColor(R.color.white))
@@ -265,6 +275,8 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                                 share();
+                                // 停止步行
+                                stopWalk();
                                 dialog.dismiss();
                             }
 

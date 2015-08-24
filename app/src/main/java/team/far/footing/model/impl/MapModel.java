@@ -30,7 +30,7 @@ public class MapModel implements IMapModel {
 
     @Override
     public void save_map_finish(Userbean userbean, String map_url, String map_file_name, List<String> map_list,
-                                String all_time, String all_distance, String start_time, String city, String address,
+                                String all_time, String all_distance, String start_time, String city, String address, String street,
                                 OnUpdateMapListener onUpdateUserListener) {
         MapBean mapBean = new MapBean();
         mapBean.setUserbean(userbean);
@@ -41,6 +41,7 @@ public class MapModel implements IMapModel {
         }
         mapBean.setAddress(address);
         mapBean.setCity(city);
+        mapBean.setStreet(street);
         mapBean.setStart_time(start_time);
         mapBean.setMap_url(map_url);
         mapBean.setMap_file_name(map_file_name);
