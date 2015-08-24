@@ -294,7 +294,7 @@ public class EditUserInfoActivity extends BaseActivity implements IEditUserInfoV
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
             if (isEdited) {
-                new MaterialDialog.Builder(this).theme(Theme.LIGHT).title("放弃修改").content("存在未保存的修改信息，是否放弃本次修改？").positiveText("放弃").negativeText("继续修改").callback(new MaterialDialog.ButtonCallback() {
+                new MaterialDialog.Builder(this).theme(Theme.LIGHT).title("放弃修改").backgroundColor(getResources().getColor(R.color.white)).content("存在未保存的修改信息，是否放弃本次修改？").positiveText("放弃").negativeText("继续修改").callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);

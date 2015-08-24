@@ -59,6 +59,7 @@ public class MessageBoxAdapter extends RecyclerView.Adapter<MessageBoxAdapter.Vi
                 new MaterialDialog.Builder(mContext)
                         .title(messageBeans.get(position).getMessage())
                         .content(messageBeans.get(position).getContent())
+                        .backgroundColor(mContext.getResources().getColor(R.color.white))
                         .theme(Theme.LIGHT)
                         .negativeText("删除")
                         .positiveText("关闭")
@@ -91,6 +92,7 @@ public class MessageBoxAdapter extends RecyclerView.Adapter<MessageBoxAdapter.Vi
         new MaterialDialog.Builder(mContext)
                 .title("提示")
                 .content(s)
+                .backgroundColor(mContext.getResources().getColor(R.color.white))
                 .theme(Theme.LIGHT)
                 .positiveText("好的")
                 .show();
@@ -104,6 +106,7 @@ public class MessageBoxAdapter extends RecyclerView.Adapter<MessageBoxAdapter.Vi
                 .title("提示")
                 .content(s)
                 .theme(Theme.LIGHT)
+                .backgroundColor(mContext.getResources().getColor(R.color.white))
                 .positiveText("好的")
                 .show();
     }

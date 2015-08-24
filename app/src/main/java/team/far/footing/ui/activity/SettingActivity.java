@@ -35,7 +35,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initToolbar() {
-        mToolbar.setTitle("设置");
+        mToolbar.setTitle("应用设置");
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_back));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
