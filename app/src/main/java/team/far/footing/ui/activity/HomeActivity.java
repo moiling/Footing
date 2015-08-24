@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -289,13 +288,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
             case R.id.fabBtn_home:
                 switch (pageSelect) {
                     case 0:
-                        presenter.startWalkActivity(this);
+                        presenter.startWalkActivity(HomeActivity.this);
                         break;
                     case 1:
-                        presenter.startAddFriendActivity(this);
+                        presenter.startAddFriendActivity(HomeActivity.this);
                         break;
                     case 2:
-                        Toast.makeText(this, "广场测试", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "广场测试", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 break;

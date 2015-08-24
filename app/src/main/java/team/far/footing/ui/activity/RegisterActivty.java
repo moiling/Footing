@@ -96,7 +96,20 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (!edRegisterEmail.getText().toString().isEmpty() ||
+                        !edRegisterPassword.getText().toString().isEmpty() ||
+                        !edRegisterPasswordRepeat.getText().toString().isEmpty() ||
+                        !edRegisterUserName.getText().toString().isEmpty()) {
+                    new MaterialDialog.Builder(RegisterActivty.this).theme(Theme.LIGHT).title("放弃注册").backgroundColor(getResources().getColor(R.color.white)).content("是否放弃注册？").positiveText("放弃").negativeText("继续注册").callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            finish();
+                        }
+                    }).show();
+                } else {
+                    finish();
+                }
             }
         });
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

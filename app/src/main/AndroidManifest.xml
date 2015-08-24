@@ -141,24 +141,18 @@
         <activity
             android:name=".ui.activity.AboutActivity"
             android:label="@string/title_activity_about"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SuggestionActivity"
             android:label="@string/title_activity_suggestion"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".service.MapService"
-            android:exported="false"></service>
+            android:exported="false"/>
 
-
-        <receiver android:name=".presenter.WalkPresenter$MapReceive">
-            <intent-filter>
-                <action android:name="android.intent.action.MY_BROADCAST" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
-
+        <activity android:name=".ui.activity.WalkActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

@@ -50,6 +50,7 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
         String startTime = mapBean.getStart_time();
         String startAddress = mapBean.getAddress();
         String startCity = mapBean.getCity();
+        String startStreet = mapBean.getStreet();
         holder.tvAlltime.setText(allTime);
         holder.tvDistance.setText(distance);
         holder.tvStarttime.setText(startTime);
@@ -62,6 +63,11 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
             holder.tvStartCity.setText(startCity);
         } else {
             holder.tvStartCity.setText("未知市");
+        }
+        if (startStreet != null) {
+            holder.tvStartStreet.setText(startStreet);
+        } else {
+            holder.tvStartStreet.setText("未知路");
         }
         holder.ripple.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +109,14 @@ public class MapRyViewAdapter extends RecyclerView.Adapter<MapRyViewAdapter.View
         private CardView CVFgToday;
         private TextView tvStartCity;
         private TextView tvStartAddress;
+        private TextView tvStartStreet;
         private MaterialRippleLayout ripple;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvDistance = (TextView) itemView.findViewById(R.id.tv_distance);
             tvStarttime = (TextView) itemView.findViewById(R.id.tv_starttime);
+            tvStartStreet = (TextView) itemView.findViewById(R.id.tv_start_street);
             tvAlltime = (TextView) itemView.findViewById(R.id.tv_alltime);
             CVFgToday = (CardView) itemView.findViewById(R.id.cv_fg_friends);
             tvStartCity = (TextView) itemView.findViewById(R.id.tv_start_city);

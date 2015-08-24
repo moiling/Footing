@@ -10,10 +10,10 @@
     <color name="square_black">#5d5d5d</color>
     <color name="square_yellow">#ffcf4f</color>
 
-    <color name="primary_light_color">#e7754d</color>
+    <color name="primary_light_color">#ffab91</color>
     <!--    <color name="primary_color">#f16332</color>-->
     <color name="primary_color">#ff7043</color>
-    <color name="primary_dark_color">#d56037</color>
+    <color name="primary_dark_color">#f4511e</color>
     <!--<color name="accent_color">#f16332</color>-->
     <color name="accent_color">#4fc3f7</color>
     <color name="accent_light_color">#a6dbf8</color>
