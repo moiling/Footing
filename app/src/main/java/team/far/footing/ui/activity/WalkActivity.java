@@ -64,6 +64,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         init();
         presenter = new WalkPresenter(this);
         // 开始定位
+        presenter.startLocation();
     }
 
     private void init() {
@@ -77,6 +78,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         super.onStart();
         // 从home返回
         LogUtils.d("从home回来");
+        presenter.onHomeBack();
     }
 
     @Override
@@ -84,13 +86,17 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         super.onStop();
         // 去home
         LogUtils.d("去home");
+        presenter.onHome();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //停止定位
+        presenter.stopLocation();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+        presenter.onRelieveView();
     }
 
     @Override
@@ -147,6 +153,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         }
     }
 
+
     @Override
     public void drawPolyline(List<LatLng> latLngs) {
         LogUtils.d("开始画线");
@@ -191,21 +198,20 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     @Override
     public void startWalk() {
+        presenter.startWalk();
         ivWalkStart.setVisibility(View.GONE);
         cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
         ivWalkPause.setVisibility(View.VISIBLE);
-        presenter.startWalk();
     }
-
 
     @Override
     public void stopWalk() {
+        presenter.stopWalk();
         cardWalkStatus.setVisibility(View.INVISIBLE);
         ivWalkStop.setVisibility(View.GONE);
         ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
-        presenter.endWalk();
     }
 
     @Override
@@ -214,14 +220,12 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         cardWalkStatus.setVisibility(View.VISIBLE);
         ivWalkStart.setVisibility(View.VISIBLE);
         ivWalkStop.setVisibility(View.VISIBLE);
+        presenter.pauseWalk();
     }
 
     @Override
     public void showstart() {
-        ivWalkStart.setVisibility(View.GONE);
-        cardWalkStatus.setVisibility(View.VISIBLE);
-        ivWalkStop.setVisibility(View.VISIBLE);
-        ivWalkPause.setVisibility(View.VISIBLE);
+
     }
 
     // 分享的相关操作
@@ -254,7 +258,6 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
                 pauseWalk();
                 break;
             case R.id.iv_walk_stop:
-                stopWalk();
                 new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
                         .backgroundColor(getResources().getColor(R.color.white))
                         .positiveText("分享").negativeText("不用了").theme(Theme.LIGHT)
@@ -267,6 +270,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
                             @Override
                             public void onNegative(MaterialDialog dialog) {
+                                stopWalk();
                                 dialog.dismiss();
                             }
                         }).show();
