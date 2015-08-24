@@ -3,9 +3,10 @@ package team.far.footing.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatEditText;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.LoginPresenter;
 import team.far.footing.ui.vu.ILoginVu;
+import team.far.footing.util.AppUtils;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 
@@ -30,11 +32,12 @@ import team.far.footing.util.LogUtils;
 public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClickListener {
 
 
-    @InjectView(R.id.ed_login_user_name) AppCompatEditText edUserName;
-    @InjectView(R.id.ed_login_password) AppCompatEditText edPassword;
+    @InjectView(R.id.ed_login_user_name) EditText edUserName;
+    @InjectView(R.id.ed_login_password) EditText edPassword;
     @InjectView(R.id.btn_login_login) TextView btnLogin;
-    @InjectView(R.id.btn_qq_login) ImageView btnQQLogin;
+    @InjectView(R.id.btn_qq_login) RelativeLayout btnQQLogin;
     @InjectView(R.id.btn_register) TextView btnRegister;
+    @InjectView(R.id.tv_login_version) TextView mVersion;
     private LoginPresenter loginPresenter;
     /**
      * type = 0 -->申请账号登录
@@ -63,6 +66,8 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
         btnLogin.setOnClickListener(this);
         btnQQLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
+        mVersion.setText("Ver." + AppUtils.getVersionName(this));
+        edPassword.setOnKeyListener(onPasswordKey);
     }
 
     @Override
@@ -150,17 +155,32 @@ public class LoginActivity extends BaseActivity implements ILoginVu, View.OnClic
         Tencent.createInstance(APP.getContext().getString(R.string.QQ_ID), APP.getContext()).onActivityResult(requestCode, resultCode, data);
     }
 
+    // 密码输入框回车键的监控
+    private View.OnKeyListener onPasswordKey = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                loginEvent();
+            }
+            return false;
+        }
+    };
+
+    private void loginEvent() {
+        if (getUserName().isEmpty()) {
+            Toast.makeText(this, "用户名都不填", Toast.LENGTH_SHORT).show();
+        } else if (getPassword().isEmpty()) {
+            Toast.makeText(this, "你以为，不要密码也能进？！", Toast.LENGTH_SHORT).show();
+        } else {
+            loginPresenter.Login();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login_login:
-                if (getUserName().isEmpty()) {
-                    Toast.makeText(this, "用户名都不填", Toast.LENGTH_SHORT).show();
-                } else if (getPassword().isEmpty()) {
-                    Toast.makeText(this, "你以为，不要密码也能进？！", Toast.LENGTH_SHORT).show();
-                } else {
-                    loginPresenter.Login();
-                }
+                loginEvent();
                 break;
             case R.id.btn_qq_login:
                 type = 1;
