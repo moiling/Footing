@@ -1,5 +1,6 @@
 package team.far.footing.presenter;
 
+import java.util.Collections;
 import java.util.List;
 
 import cn.bmob.v3.listener.FindListener;
@@ -32,6 +33,8 @@ public class MyMapPresenter {
         mapModel.get_map_byuserbean(BmobUtils.getCurrentUser(), new FindListener<MapBean>() {
             @Override
             public void onSuccess(List<MapBean> list) {
+                // 倒叙
+                Collections.reverse(list);
                 iMyMapVu.stopLoading();
                 if(list.size() != 0) {
                     mapRyViewAdapter = new MapRyViewAdapter(list, iMyMapVu.getActivity());

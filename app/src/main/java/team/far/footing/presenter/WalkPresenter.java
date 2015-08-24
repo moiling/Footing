@@ -52,6 +52,7 @@ public class WalkPresenter {
     // 记录城市
     private String city;
     private String address;
+    private String street;
     // 存放绘制路线的端点
     private ArrayList<LatLng> latLngs = new ArrayList<>();
     // 上一次的距离
@@ -176,7 +177,7 @@ public class WalkPresenter {
         end_date = TimeUtils.getcurrentTime();
         // 保存地图数据
         mapModel.save_map_finish(BmobUtils.getCurrentUser(), "url",
-                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "", TimeUtils.dateToString(start_date), city, address,
+                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "",TimeUtils.dateToString(start_date), city, address, street,
                 new OnUpdateMapListener() {
                     @Override
                     public void onSuccess(MapBean mapBean) {

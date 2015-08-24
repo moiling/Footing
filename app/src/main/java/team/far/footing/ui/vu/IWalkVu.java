@@ -30,7 +30,7 @@ public interface IWalkVu {
 
     void stopWalk();
 
-    void pauseWalk();
+    //void pauseWalk();
 
     void showstart();
 
