@@ -3,10 +3,13 @@ package team.far.footing.presenter;
 import android.content.Context;
 import android.content.Intent;
 
+import team.far.footing.model.IMessageModel;
 import team.far.footing.model.IUserModel;
 import team.far.footing.model.callback.OnLoginForQQListener;
 import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OnUpdateUserListener;
+import team.far.footing.model.impl.MessageModel;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.activity.HomeActivity;
 import team.far.footing.ui.activity.RegisterActivty;
@@ -19,10 +22,12 @@ public class LoginPresenter {
     private ILoginVu mILoginVu;
     // 这里应该是model的接口、否则接口白写了(＞﹏＜)
     private IUserModel mUserModel;
+    private IMessageModel mMessageModel;
 
     public LoginPresenter(ILoginVu mILoginVu) {
         this.mILoginVu = mILoginVu;
         mUserModel = UserModel.getInstance();
+        mMessageModel = MessageModel.getInstance();
     }
 
 
@@ -48,6 +53,15 @@ public class LoginPresenter {
             @Override
             public void loginSuccess(Userbean userbean) {
                 mILoginVu.showLoginSuccee(userbean);
+                mMessageModel.sendMssageToUser(userbean, "欢迎注册足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                    }
+                });
             }
 
             @Override

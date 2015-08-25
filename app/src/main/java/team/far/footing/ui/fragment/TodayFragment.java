@@ -127,7 +127,11 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
         }*/
 
         if (TimeUtils.isToday(CurrentUser.getToday_date())) {
-            tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+            if (CurrentUser.getToday_distance() != null) {
+                tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+            } else {
+                tvTodayDistance.setText("0 m");
+            }
         } else {
             tvTodayDistance.setText("0 m");
         }
@@ -179,7 +183,11 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-            holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
+            if (userbeanList.get(position).getNickName() != null) {
+                holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
+            } else {
+                holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + "未取名");
+            }
             holder.ripple.setRippleColor(getResources().getColor(R.color.accent_light_color));
             switch (type) {
                 case 0:

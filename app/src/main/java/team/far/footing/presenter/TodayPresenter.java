@@ -14,6 +14,7 @@ import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.TimeUtils;
 
 /**
  * Created by luoyy on 2015/8/13 0013.
@@ -95,6 +96,17 @@ public class TodayPresenter {
     }
 
     private List<Userbean> getSortListByToday(List<Userbean> list) {
+        for (Userbean userbean : list) {
+            if (TimeUtils.isToday(userbean.getToday_date())) {
+                if (userbean.getToday_distance() != null) {
+                    userbean.setToday_distance(userbean.getToday_distance());
+                } else {
+                    userbean.setToday_distance(0);
+                }
+            } else {
+                userbean.setToday_distance(0);
+            }
+        }
         Userbean temp;
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = 0; j < list.size() - 1 - i; j++) {

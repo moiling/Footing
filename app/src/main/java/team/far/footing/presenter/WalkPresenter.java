@@ -240,6 +240,7 @@ public class WalkPresenter {
                 isFirstIn = false;
                 city = bdLocation.getCity();
                 address = bdLocation.getDistrict();
+                street = bdLocation.getStreet();
                 LogUtils.d("城市：" + city + "，位置：" + address);
                 LogUtils.d(bdLocation.getCity() + "," + bdLocation.getCountry()
                         + "," + bdLocation.getAddrStr() + "," + bdLocation.getFloor()

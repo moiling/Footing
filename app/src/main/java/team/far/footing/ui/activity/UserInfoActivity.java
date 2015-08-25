@@ -32,6 +32,7 @@ import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LevelUtils;
 import team.far.footing.util.ScreenUtils;
+import team.far.footing.util.TimeUtils;
 
 public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolbar.OnMenuItemClickListener, View.OnClickListener, CropHandler {
 
@@ -131,8 +132,16 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
         }
         mUserLv.setText("Lv." + LevelUtils.getLevel(userbean.getLevel()));
         mUserSignature.setText(userbean.getSignature());
+        if (TimeUtils.isToday(userbean.getToday_date())) {
+            if (userbean.getToday_distance() != null) {
+                tvMyTodayDistance.setText(userbean.getToday_distance() + " m");
+            } else {
+                tvMyTodayDistance.setText("0 m");
+            }
+        } else {
+            tvMyTodayDistance.setText("0 m");
+        }
         tvMyAllDistance.setText(userbean.getAll_distance() + "m");
-        tvMyTodayDistance.setText(userbean.getToday_distance() + "m");
         // TODO 经验值
         //tvMyExp.setText(userbean.);
         tvMyEmail.setText(userbean.getEmail());

@@ -224,6 +224,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         //ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
         ScaleXYAnimation.show(ivWalkStart, null);
+        tvWalkDistance.setText("点击下方按钮开始！");
     }
 
 /*    @Override

@@ -1,9 +1,17 @@
 package team.far.footing.presenter;
 
+import android.content.Context;
+import android.content.Intent;
+
+import team.far.footing.model.IMessageModel;
 import team.far.footing.model.IUserModel;
+import team.far.footing.model.callback.OnLoginListener;
 import team.far.footing.model.callback.OnRegsterListener;
 import team.far.footing.model.bean.Userbean;
+import team.far.footing.model.callback.OnUpdateUserListener;
+import team.far.footing.model.impl.MessageModel;
 import team.far.footing.model.impl.UserModel;
+import team.far.footing.ui.activity.HomeActivity;
 import team.far.footing.ui.vu.IRegsterVu;
 
 /**
@@ -12,12 +20,28 @@ import team.far.footing.ui.vu.IRegsterVu;
 public class RegisterPresenter {
 
     private IRegsterVu mIRegsterVu;
+    private IMessageModel mMessageModel;
     // 这里应该是model的接口、否则接口白写了(＞﹏＜)
     private IUserModel mUserModel;
 
     public RegisterPresenter(IRegsterVu mIRegsterVu) {
         this.mIRegsterVu = mIRegsterVu;
         mUserModel = UserModel.getInstance();
+        mMessageModel = MessageModel.getInstance();
+    }
+
+    public void Login() {
+        mUserModel.Login(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), new OnLoginListener() {
+            @Override
+            public void loginSuccess(Userbean userbean) {
+                mIRegsterVu.showLoginSuccee(userbean);
+            }
+
+            @Override
+            public void loginFailed(int i, String reason) {
+                mIRegsterVu.showLoginFail(i, reason);
+            }
+        });
     }
 
     public void Regster() {
@@ -25,8 +49,17 @@ public class RegisterPresenter {
 
         mUserModel.Regster(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), mIRegsterVu.getEmail(), new OnRegsterListener() {
             @Override
-            public void RegsterSuccess(Userbean userbean) {
-                mIRegsterVu.showRegsterSuccee(userbean);
+            public void RegsterSuccess(final Userbean userbean) {
+                mMessageModel.sendMssageToUser(userbean, "欢迎注册足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
+                    @Override
+                    public void onSuccess() {
+                        mIRegsterVu.showRegsterSuccee(userbean);
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                    }
+                });
             }
 
             @Override
@@ -36,6 +69,11 @@ public class RegisterPresenter {
         });
     }
 
+    public void startHomeActivity(Context context) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        context.startActivity(intent);
+    }
     // 解除view的绑定
     public void onRelieveView() {
         mIRegsterVu = null;
