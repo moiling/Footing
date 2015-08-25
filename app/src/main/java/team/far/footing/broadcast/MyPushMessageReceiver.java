@@ -21,6 +21,7 @@ import team.far.footing.model.bean.PushBean;
 import team.far.footing.service.UpdateService;
 import team.far.footing.ui.activity.HomeActivity;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.SPuntils;
 
 /**
  * Created by luoyy on 2015/8/20 0020.
@@ -32,7 +33,7 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
-        if (intent.getAction().equals(PushConstants.ACTION_MESSAGE)) {
+        if (intent.getAction().equals(PushConstants.ACTION_MESSAGE) && SPuntils.gteAllow()) {
             LogUtils.e("客户端收到推送内容：" + intent.getStringExtra("msg"));
             Gson gson = new GsonBuilder().create();
             PushBean pushBean = gson.fromJson(intent.getStringExtra("msg"), PushBean.class);

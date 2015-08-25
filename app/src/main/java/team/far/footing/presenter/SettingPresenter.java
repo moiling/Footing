@@ -15,4 +15,14 @@ public class SettingPresenter {
         this.settingVu = settingVu;
         fileModel = FileModel.getInstance();
     }
+
+    public void cachesize() {
+        String cachesize = fileModel.getCacheFormatSize();
+        settingVu.showCache(cachesize);
+    }
+
+    public void cleancache() {
+        fileModel.clearCache();
+
+    }
 }

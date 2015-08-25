@@ -64,13 +64,13 @@ public class ShareModel implements IShareModel {
         //分享的标题, 最长30个字符。
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "我的足下之行");
         //分享的消息摘要，最长40个字。
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "要分享的摘要");
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "看看我的足迹吧！");
         //这条分享消息被好友点击后的跳转URL。
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, net_url);
         //分享图片的URL或者本地路径
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, pic_url);
         //手Q客户端顶部，替换“返回”按钮文字，如果为空，用返回代替
-        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "测试应用22");
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "足下");
         //分享时自动打开分享到QZone的对话框
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
         mTencent.shareToQQ(activity, params, iUiListener);

@@ -102,7 +102,7 @@ public class MessageModel implements IMessageModel {
         messageBean.save(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
-                AddMessage(userbean, messageBean, onUpdateUserListener);
+                AddMessage(BmobUtils.getCurrentUser(), messageBean, onUpdateUserListener);
             }
 
             @Override
@@ -121,12 +121,12 @@ public class MessageModel implements IMessageModel {
         userbean.update(APP.getContext(), new UpdateListener() {
             @Override
             public void onSuccess() {
-                onUpdateUserListener.onSuccess();
+                if (onUpdateUserListener != null) onUpdateUserListener.onSuccess();
             }
 
             @Override
             public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
+                if (onUpdateUserListener != null) onUpdateUserListener.onFailure(i, s);
             }
         });
     }
