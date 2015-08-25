@@ -239,14 +239,13 @@ public class UserModel implements IUserModel {
         Userbean newUser = new Userbean();
         newUser.setToday_distance(today_distance);
         newUser.setToday_date(date);
-        newUser.setAll_distance(BmobUtils.getCurrentUser().getAll_distance() + today_distance);
         updateUser(newUser, onUpdateUserListener);
     }
 
     @Override
     public void update_all_distance(int all_distance, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
-        newUser.setToday_distance(all_distance);
+        newUser.setAll_distance(all_distance);
         updateUser(newUser, onUpdateUserListener);
     }
 

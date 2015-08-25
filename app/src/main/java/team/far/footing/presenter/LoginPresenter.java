@@ -53,7 +53,7 @@ public class LoginPresenter {
             @Override
             public void loginSuccess(Userbean userbean) {
                 mILoginVu.showLoginSuccee(userbean);
-                mMessageModel.sendMssageToUser(userbean, "欢迎注册足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
+                mMessageModel.sendMssageToUser(userbean, "欢迎登录足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
                     @Override
                     public void onSuccess() {
                     }

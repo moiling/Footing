@@ -21,6 +21,8 @@ import org.hybridsquad.android.library.CropHandler;
 import org.hybridsquad.android.library.CropHelper;
 import org.hybridsquad.android.library.CropParams;
 
+import java.text.DecimalFormat;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
@@ -31,6 +33,7 @@ import team.far.footing.ui.vu.IUserInfoVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LevelUtils;
+import team.far.footing.util.LogUtils;
 import team.far.footing.util.ScreenUtils;
 import team.far.footing.util.TimeUtils;
 
@@ -134,16 +137,24 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoVu, Toolb
         mUserSignature.setText(userbean.getSignature());
         if (TimeUtils.isToday(userbean.getToday_date())) {
             if (userbean.getToday_distance() != null) {
-                tvMyTodayDistance.setText(userbean.getToday_distance() + " m");
+                if (userbean.getToday_distance() > 1000) {
+                    tvMyTodayDistance.setText(new DecimalFormat(".##").format(userbean.getToday_distance() / 1000.0) + " km");
+                } else {
+                    tvMyTodayDistance.setText(userbean.getToday_distance() + " m");
+                }
             } else {
                 tvMyTodayDistance.setText("0 m");
             }
         } else {
             tvMyTodayDistance.setText("0 m");
         }
-        tvMyAllDistance.setText(userbean.getAll_distance() + "m");
-        // TODO 经验值
-        //tvMyExp.setText(userbean.);
+        if (userbean.getAll_distance() > 1000) {
+            tvMyAllDistance.setText(new DecimalFormat(".##").format(userbean.getAll_distance() / 1000.0) + " km");
+        } else {
+            tvMyAllDistance.setText(userbean.getAll_distance() + " m");
+        }
+        LogUtils.d("下一等级：" + (LevelUtils.getLevel(userbean.getLevel()) + 1) + "下一等级经验： " + (LevelUtils.getLevel(userbean.getLevel()) + 1) * (LevelUtils.getLevel(userbean.getLevel()) + 1) * 200 + 40);
+        tvMyExp.setText(userbean.getLevel() + " / " + ((LevelUtils.getLevel(userbean.getLevel()) + 1) * (LevelUtils.getLevel(userbean.getLevel()) + 1) * 200 + 40));
         tvMyEmail.setText(userbean.getEmail());
     }
 
