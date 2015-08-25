@@ -161,7 +161,11 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     @Override
     public void showDistanceTotal(double distance) {
         if (distance != 0) {
-            tvWalkDistance.setText(new DecimalFormat(".##").format(distance) + " m");
+            if (distance > 1000) {
+                tvWalkDistance.setText(new DecimalFormat(".##").format(distance / 1000.0) + " km");
+            } else {
+                tvWalkDistance.setText(new DecimalFormat(".##").format(distance) + " m");
+            }
         } else {
             tvWalkDistance.setText("稍微走动一下哦~");
         }
@@ -224,6 +228,7 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         //ivWalkPause.setVisibility(View.GONE);
         ivWalkStart.setVisibility(View.VISIBLE);
         ScaleXYAnimation.show(ivWalkStart, null);
+        tvWalkDistance.setText("点击下方按钮开始！");
     }
 
 /*    @Override

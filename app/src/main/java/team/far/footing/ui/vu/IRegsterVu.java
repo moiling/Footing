@@ -23,4 +23,8 @@ public interface IRegsterVu {
 
     //注册失败
     void showRegsterFail(int code);
+
+    void showLoginSuccee(Userbean userbean);
+
+    void showLoginFail(int i, String s);
 }

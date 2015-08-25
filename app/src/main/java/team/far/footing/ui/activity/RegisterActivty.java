@@ -22,6 +22,7 @@ import team.far.footing.model.bean.Userbean;
 import team.far.footing.presenter.RegisterPresenter;
 import team.far.footing.ui.vu.IRegsterVu;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LogUtils;
 
 public class RegisterActivty extends BaseActivity implements IRegsterVu {
 
@@ -152,9 +153,10 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu {
     @Override
     public void showRegsterSuccee(Userbean userbean) {
         dismissProgress();
-        new MaterialDialog.Builder(this).title("注册成功").content("现在可以 登录了！").positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+        new MaterialDialog.Builder(this).title("注册成功").content("是否直接登录").positiveText("登录").negativeText("不了").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
             @Override
             public void onPositive(MaterialDialog dialog) {
+                registerPresenter.Login();
                 dialog.dismiss();
             }
         }).show();
@@ -202,5 +204,27 @@ public class RegisterActivty extends BaseActivity implements IRegsterVu {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * @param userbean 当前登录成功的用户
+     */
+    @Override
+    public void showLoginSuccee(Userbean userbean) {
+        dismissProgress();
+        registerPresenter.startHomeActivity(this);
+        // 进入了主页之后不应该能够返回到登陆页面
+        finish();
+    }
+
+    @Override
+    public void showLoginFail(int i, String s) {
+        dismissProgress();
+        new MaterialDialog.Builder(this).title("登录失败").content(BmobUtils.searchCode(i)).positiveText("好的").theme(Theme.LIGHT).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 }

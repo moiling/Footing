@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,18 +117,16 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
 
     @Override
     public void init(Userbean CurrentUser, List<Userbean> userbeanList) {
-        /*if (CurrentUser.getToday_distance() != null) {
-            tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
-        } else {
-            tvTodayDistance.setText("0 m");
-        }
-        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) {
-            tvIsFinishToday.setText("已完成");
-            tvIsFinishToday.setTextColor(getResources().getColor(R.color.accent_color));
-        }*/
-
         if (TimeUtils.isToday(CurrentUser.getToday_date())) {
-            tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+            if (CurrentUser.getToday_distance() != null) {
+                if (CurrentUser.getToday_distance() > 1000) {
+                    tvTodayDistance.setText(new DecimalFormat(".##").format(CurrentUser.getToday_distance() / 1000.0) + " km");
+                } else {
+                    tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+                }
+            } else {
+                tvTodayDistance.setText("0 m");
+            }
         } else {
             tvTodayDistance.setText("0 m");
         }
@@ -179,14 +178,20 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-            holder.tv_name.setText(getActivity().getResources().getStringArray(R.array.sort_string)[position] + "  " + userbeanList.get(position).getNickName());
+            if (userbeanList.get(position).getNickName() != null) {
+                holder.tv_name.setText(userbeanList.get(position).getNickName());
+            } else {
+                holder.tv_name.setText("未取名");
+            }
+            holder.tv_rank.setText((position + 1) + "");
+
             holder.ripple.setRippleColor(getResources().getColor(R.color.accent_light_color));
             switch (type) {
                 case 0:
-                    holder.tv_distance.setText(userbeanList.get(position).getAll_distance() + "  m");
+                    holder.tv_distance.setText(new DecimalFormat("0.##").format(userbeanList.get(position).getAll_distance() / 1000.0) + "  km");
                     break;
                 case 1:
-                    holder.tv_distance.setText(userbeanList.get(position).getToday_distance() + "  m");
+                    holder.tv_distance.setText(new DecimalFormat("0.##").format(userbeanList.get(position).getToday_distance() / 1000.0)  + "  km");
                     break;
                 case 2:
                     holder.tv_distance.setText("Lv." + LevelUtils.getLevel(userbeanList.get(position).getLevel()));
@@ -239,13 +244,14 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
             private TextView tv_name;
             private TextView tv_distance;
             private MaterialRippleLayout ripple;
-
+            private TextView tv_rank;
             public ViewHolder(View itemView) {
                 super(itemView);
                 ripple = (MaterialRippleLayout) itemView.findViewById(R.id.ripple);
                 circleImageView = (CircleImageView) itemView.findViewById(R.id.item_image_friend);
                 tv_name = (TextView) itemView.findViewById(R.id.item_tv_name);
                 tv_distance = (TextView) itemView.findViewById(R.id.item_tv_distance);
+                tv_rank = (TextView) itemView.findViewById(R.id.tv_today_rank);
             }
         }
     }

@@ -104,14 +104,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
         BmobInstallation.getCurrentInstallation(this).save();
         // 启动推送服务
         BmobPush.startWork(this, this.getString(R.string.Bmob_Key));
-
-
         ButterKnife.inject(this);
+        presenter = new HomePresenter(this);
+        messagePresenter = new MessagePresenter(this);
         noUseBarTint();
         initToolbar();
         init();
-        presenter = new HomePresenter(this);
-        messagePresenter = new MessagePresenter(this);
+
     }
 
     @Override
@@ -259,6 +258,11 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
     @Override
     public void showMessage(List<MessageBean> list) {
         if (messageBoxRy != null) messageBoxRy.setAdapter(new MessageBoxAdapter(this, messagePresenter.getAllMessage()));
+        if (messagePresenter.getUnReadMessage().size() > 0) {
+            mToolbar.getMenu().getItem(1).setIcon(getResources().getDrawable(R.mipmap.ic_message_new));
+        } else {
+            mToolbar.getMenu().getItem(1).setIcon(getResources().getDrawable(R.mipmap.ic_message));
+        }
     }
 
     @Override
@@ -354,6 +358,13 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
                         .customView(messageBoxView, false)
                         .backgroundColor(getResources().getColor(R.color.white))
                         .positiveText("看完了")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                messagePresenter.initMessage();
+                            }
+                        })
                         .theme(Theme.LIGHT)
                         .show();
 

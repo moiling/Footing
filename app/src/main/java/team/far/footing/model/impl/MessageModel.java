@@ -92,12 +92,13 @@ public class MessageModel implements IMessageModel {
     }
 
     @Override
-    public void sendMssageToUser(final Userbean userbean, String message, final OnUpdateUserListener onUpdateUserListener) {
+    public void sendMssageToUser(final Userbean userbean, String message, String content, final OnUpdateUserListener onUpdateUserListener) {
         final MessageBean messageBean = new MessageBean();
         messageBean.setGetuser(userbean);
         messageBean.setSenduser(BmobUtils.getCurrentUser());
         messageBean.setIsread(0);
         messageBean.setMessage(message);
+        messageBean.setContent(content);
         messageBean.save(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
