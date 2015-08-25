@@ -1,5 +1,8 @@
 package team.far.footing.presenter;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,16 +47,23 @@ public class MyMapPresenter {
                         }
                     }
                     iMyMapVu.stopLoading();
-                    mapRyViewAdapter = new MapRyViewAdapter(tempList, iMyMapVu.getActivity());
-                    iMyMapVu.showmaplist(mapRyViewAdapter);
+                    if (tempList.size() != 0) {
+                        mapRyViewAdapter = new MapRyViewAdapter(tempList, iMyMapVu.getActivity());
+                        iMyMapVu.showmaplist(mapRyViewAdapter);
+                    } else {
+                        iMyMapVu.stopLoading();
+                        iMyMapVu.showEmpty();
+                    }
                 } else {
+                    iMyMapVu.stopLoading();
                     iMyMapVu.showEmpty();
                 }
             }
 
             @Override
             public void onError(int i, String s) {
-
+                iMyMapVu.stopLoading();
+                Toast.makeText((Activity) iMyMapVu, BmobUtils.searchCode(i), Toast.LENGTH_SHORT).show();
             }
         });
 
