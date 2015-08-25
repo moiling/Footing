@@ -60,7 +60,7 @@ public interface IUserModel {
      * @param today_distance       ----------今日路程
      * @param onUpdateUserListener ---------用户更新的监听器
      */
-    void update_today_distance(int today_distance, OnUpdateUserListener onUpdateUserListener);
+    void update_today_distance(int today_distance,String date, OnUpdateUserListener onUpdateUserListener);
 
     /**
      * @param all_distance         --------总的距离

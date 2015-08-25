@@ -90,6 +90,7 @@ public class UserModel implements IUserModel {
                 regsterBean.setEmail(email);
                 regsterBean.setToday_distance(0);
                 regsterBean.setAll_distance(0);
+                regsterBean.setToday_date("");
                 regsterBean.setIsAuth(0);
                 regsterBean.setPraiseCount(0);
                 regsterBean.setIs_finish_today(0);
@@ -234,9 +235,11 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void update_today_distance(int today_distance, OnUpdateUserListener onUpdateUserListener) {
+    public void update_today_distance(int today_distance, String date, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
         newUser.setToday_distance(today_distance);
+        newUser.setToday_date(date);
+        newUser.setAll_distance(BmobUtils.getCurrentUser().getAll_distance() + today_distance);
         updateUser(newUser, onUpdateUserListener);
     }
 
@@ -316,6 +319,7 @@ public class UserModel implements IUserModel {
                             regsterBean.setToday_distance(0);
                             regsterBean.setAll_distance(0);
                             regsterBean.setIsAuth(1);
+                            regsterBean.setToday_date("");
                             regsterBean.setPraiseCount(0);
                             regsterBean.setIs_finish_today(0);
                             regsterBean.setLevel(1);
@@ -329,7 +333,7 @@ public class UserModel implements IUserModel {
 
                                 @Override
                                 public void onFailure(int i, String s) {
-                                  onLoginForQQListener.loginFailed(s);
+                                    onLoginForQQListener.loginFailed(s);
                                 }
                             });
 

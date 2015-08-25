@@ -40,6 +40,16 @@ public class Userbean extends BmobUser implements Serializable {
     //  0表示不是第三方登陆  1 为第三方登陆
     private Integer isAuth;
 
+    //  表示今日
+    private String today_date;
+
+    public String getToday_date() {
+        return today_date;
+    }
+
+    public void setToday_date(String today_date) {
+        this.today_date = today_date;
+    }
 
     private BmobRelation messages;
 
@@ -50,7 +60,6 @@ public class Userbean extends BmobUser implements Serializable {
     public void setIsAuth(Integer isAuth) {
         this.isAuth = isAuth;
     }
-
 
 
     public BmobRelation getMessages() {

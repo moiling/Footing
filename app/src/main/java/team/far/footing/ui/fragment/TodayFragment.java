@@ -34,6 +34,7 @@ import team.far.footing.ui.vu.IFgTodayVu;
 import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LevelUtils;
+import team.far.footing.util.TimeUtils;
 
 public class TodayFragment extends Fragment implements IFgTodayVu {
 
@@ -51,7 +52,8 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
     TextView tvIsFinishToday;
     @InjectView(R.id.tv_friends)
     TextView tvFriends;
-    @InjectView(R.id.progress_wheel) ProgressWheel progressWheel;
+    @InjectView(R.id.progress_wheel)
+    ProgressWheel progressWheel;
 
     private List<Userbean> userbeanList = new ArrayList<>();
     private TodayPresenter todayPresenter;
@@ -114,7 +116,17 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
 
     @Override
     public void init(Userbean CurrentUser, List<Userbean> userbeanList) {
-        if (CurrentUser.getToday_distance() != null) {
+        /*if (CurrentUser.getToday_distance() != null) {
+            tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
+        } else {
+            tvTodayDistance.setText("0 m");
+        }
+        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) {
+            tvIsFinishToday.setText("已完成");
+            tvIsFinishToday.setTextColor(getResources().getColor(R.color.accent_color));
+        }*/
+
+        if (TimeUtils.isToday(CurrentUser.getToday_date())) {
             tvTodayDistance.setText(CurrentUser.getToday_distance() + " m");
         } else {
             tvTodayDistance.setText("0 m");
@@ -123,6 +135,7 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
             tvIsFinishToday.setText("已完成");
             tvIsFinishToday.setTextColor(getResources().getColor(R.color.accent_color));
         }
+
         this.userbeanList = userbeanList;
         myAdapter.notifyDataSetChanged();
     }

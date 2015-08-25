@@ -205,10 +205,13 @@ public class WalkPresenter {
                     }
                 });
         // 保存用户 等级数据
-
-
-        userModel.updateUser_level(BmobUtils.getCurrentUser().getLevel() + ((int) distanceTotal / 5), null);
-
+        userModel.updateUser_level(BmobUtils.getCurrentUser().getLevel() + (int) distanceTotal, null);
+        //保存用户行走记录
+        if (TimeUtils.isToday(BmobUtils.getCurrentUser().getToday_date())) {
+            userModel.update_today_distance(BmobUtils.getCurrentUser().getToday_distance() + (int) distanceTotal, TimeUtils.getTodayDate(), null);
+        } else {
+            userModel.update_today_distance((int) distanceTotal, TimeUtils.getTodayDate(), null);
+        }
 
     }
 

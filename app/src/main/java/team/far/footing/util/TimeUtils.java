@@ -15,9 +15,25 @@ public class TimeUtils {
 
     public static final String dateToString(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd  HH:mm");
-
         return simpleDateFormat.format(date);
     }
+
+    public static final boolean isToday(String string) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        LogUtils.e(sdf.format(getcurrentTime()));
+        if (sdf.format(getcurrentTime()).equals(string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static final String getTodayDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        LogUtils.e(sdf.format(getcurrentTime()));
+        return sdf.format(getcurrentTime());
+    }
+
 
     public static String formatTime(long ms) {
 
