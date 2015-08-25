@@ -64,7 +64,6 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         parentView = view;
         ButterKnife.inject(this, view);
@@ -130,10 +129,13 @@ public class TodayFragment extends Fragment implements IFgTodayVu {
         } else {
             tvTodayDistance.setText("0 m");
         }
-        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) {
+        // TODO 任务以后再做
+/*        if (CurrentUser.getIs_finish_today() != null && CurrentUser.getIs_finish_today() == 1) {
             tvIsFinishToday.setText("已完成");
             tvIsFinishToday.setTextColor(getResources().getColor(R.color.accent_color));
-        }
+        }*/
+
+        tvIsFinishToday.setText(CurrentUser.getLevel() + " / " + ((LevelUtils.getLevel(CurrentUser.getLevel()) + 1) * (LevelUtils.getLevel(CurrentUser.getLevel()) + 1) * 200 + 40) + " Exp");
 
         this.userbeanList = userbeanList;
         myAdapter.notifyDataSetChanged();

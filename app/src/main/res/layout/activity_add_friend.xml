@@ -11,30 +11,44 @@
 
     <include layout="@layout/layout_toolbar"/>
 
+    <LinearLayout
+        android:id="@+id/ll_add_search_layout"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
     <EditText
         android:id="@+id/edit_addfriend"
-        android:layout_below="@+id/toolbar"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@+id/bt_query"
+        android:layout_marginLeft="24dp"
+        android:textSize="16sp"
+        android:textColorHint="@color/divider_color"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:hint="查询"
-        android:textColor="@color/abc_search_url_text" />
+        android:textColor="@color/secondary_text" />
 
-    <Button
+    <ImageView
         android:id="@+id/bt_query"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@+id/edit_addfriend"
+        android:layout_gravity="center_vertical"
+        android:padding="12dp"
+        android:src="@mipmap/ic_search"
+        android:layout_marginRight="12dp"
+        android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/edit_addfriend"
         android:text="查询" />
 
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/edit_addfriend">
+        android:layout_below="@+id/ll_add_search_layout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/firends_recyclerview"

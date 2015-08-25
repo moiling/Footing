@@ -74,7 +74,7 @@ public class FgFriendPresenter {
 
     }
     public void onRelieveView() {
-        iFgFriendVu = null;
+        if (iFgFriendVu != null) iFgFriendVu = null;
     }
 
 }

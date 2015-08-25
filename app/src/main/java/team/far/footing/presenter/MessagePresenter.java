@@ -52,7 +52,7 @@ public class MessagePresenter {
             @Override
             public void onSuccess(List<MessageBean> list) {
                 messageBeanList = list;
-                v.showMessage(list);
+                if (v != null) v.showMessage(list);
             }
 
             @Override
@@ -67,8 +67,10 @@ public class MessagePresenter {
             @Override
             public void onSuccess(List<MessageBean> list) {
                 messageBeanList = list;
-                v.showMessage(list);
-                v.stopRefresh();
+                if (v != null) {
+                    v.showMessage(list);
+                    v.stopRefresh();
+                }
             }
 
             @Override
@@ -106,12 +108,12 @@ public class MessagePresenter {
         messageModel.deleteMsg(bean, new OnUpdateUserListener() {
             @Override
             public void onSuccess() {
-                v.onMsgSuccess("删除成功");
+                if (v != null) v.onMsgSuccess("删除成功");
             }
 
             @Override
             public void onFailure(int i, String s) {
-                v.onMsgFail("删除失败");
+                if (v != null) v.onMsgFail("删除失败");
             }
         });
     }
@@ -138,7 +140,7 @@ public class MessagePresenter {
 
     // 解除view的绑定
     public void onRelieveView() {
-        v = null;
+        if (v != null) v = null;
     }
 
 }

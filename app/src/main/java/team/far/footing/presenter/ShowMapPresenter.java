@@ -1,26 +1,17 @@
 package team.far.footing.presenter;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.model.LatLng;
-import com.tencent.open.utils.HttpUtils;
-import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-
-import org.apache.http.conn.ConnectTimeoutException;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -64,17 +55,19 @@ public class ShowMapPresenter {
     private void showMap() {
         latLngs = StringUntils.getLaLngs(Arrays.asList(mapBean.getMap_array()));
         LogUtils.d(latLngs.size() + "");
-        iShowMapVu.showWalkInfo(mapBean.getAll_time(), mapBean.getAll_distance(), mapBean.getStart_time(),mapBean.getCity(),mapBean.getAddress());
-        iShowMapVu.showMap(latLngs);
+        if (iShowMapVu != null) {
+            iShowMapVu.showWalkInfo(mapBean.getAll_time(), mapBean.getAll_distance(), mapBean.getStart_time(), mapBean.getCity(), mapBean.getAddress(), mapBean.getStreet());
+            iShowMapVu.showMap(latLngs);
+        }
     }
 
     public void onRelieveView() {
-        iShowMapVu = null;
+        if (iShowMapVu != null)  iShowMapVu = null;
     }
 
 
-    public void printScreen() {
-        iShowMapVu.show_shareProgress(0);
+    public void QQshare() {
+        if (iShowMapVu != null)  iShowMapVu.show_shareProgress(0);
         baiduMap.snapshot(new BaiduMap.SnapshotReadyCallback() {
             @Override
             public void onSnapshotReady(Bitmap bitmap) {
@@ -96,10 +89,10 @@ public class ShowMapPresenter {
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            iShowMapVu.show_shareError();
+            if (iShowMapVu != null) iShowMapVu.show_shareError();
         } catch (IOException e) {
             e.printStackTrace();
-            iShowMapVu.show_shareError();
+            if (iShowMapVu != null) iShowMapVu.show_shareError();
         }
         return f.getPath();
     }
@@ -114,12 +107,12 @@ public class ShowMapPresenter {
 
             @Override
             public void onProgress(int progress) {
-                if (progress != 100) iShowMapVu.show_shareProgress(progress);
+                if (progress != 100 && iShowMapVu != null) iShowMapVu.show_shareProgress(progress);
             }
 
             @Override
             public void onError(int statuscode, String errormsg) {
-                iShowMapVu.show_shareError();
+                if (iShowMapVu != null) iShowMapVu.show_shareError();
             }
         });
     }
@@ -136,31 +129,33 @@ public class ShowMapPresenter {
 
             @Override
             public void onFailure(int i, String s) {
-                iShowMapVu.show_shareError();
+                if (iShowMapVu != null) iShowMapVu.show_shareError();
             }
         });
     }
 
     public void shareMap(String url, String path) {
-        shareModel.ShareToQQWithPT(iShowMapVu.getActivity(), path, url, new IUiListener() {
-            @Override
-            public void onComplete(Object o) {
-                LogUtils.e("完成分享");
-                iShowMapVu.show_shareSuccess();
-            }
+        if (iShowMapVu != null) {
+            shareModel.ShareToQQWithPT(iShowMapVu.getActivity(), path, url, new IUiListener() {
+                @Override
+                public void onComplete(Object o) {
+                    LogUtils.e("完成分享");
+                    if (iShowMapVu != null) iShowMapVu.show_shareSuccess();
+                }
 
-            @Override
-            public void onError(UiError uiError) {
-                LogUtils.e("完成失败");
-                iShowMapVu.show_shareError();
-            }
+                @Override
+                public void onError(UiError uiError) {
+                    LogUtils.e("完成失败");
+                    if (iShowMapVu != null) iShowMapVu.show_shareError();
+                }
 
-            @Override
-            public void onCancel() {
-                LogUtils.e("完成取消");
-                iShowMapVu.show_shareCancel();
-            }
-        });
+                @Override
+                public void onCancel() {
+                    LogUtils.e("完成取消");
+                    if (iShowMapVu != null) iShowMapVu.show_shareCancel();
+                }
+            });
+        }
     }
 
     public Tencent getTencent(){

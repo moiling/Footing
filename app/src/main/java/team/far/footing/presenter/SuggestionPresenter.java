@@ -20,7 +20,7 @@ public class SuggestionPresenter {
     }
 
     public void sendSuggestion(String content) {
-        v.onSendProgress();
+        if (v != null)  v.onSendProgress();
         // 发出请求，显示进度条,回调成功失败
         feedbackModel.sendMsg(content, new SaveListener() {
             @Override
@@ -30,10 +30,13 @@ public class SuggestionPresenter {
 
             @Override
             public void onFailure(int i, String s) {
-                v.onSendFail(i);
+                if (v != null) v.onSendFail(i);
             }
         });
 
     }
-
+    // 解除view的绑定
+    public void onRelieveView() {
+        if (v != null) v = null;
+    }
 }

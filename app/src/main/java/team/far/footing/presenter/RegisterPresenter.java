@@ -31,42 +31,45 @@ public class RegisterPresenter {
     }
 
     public void Login() {
-        mUserModel.Login(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), new OnLoginListener() {
-            @Override
-            public void loginSuccess(Userbean userbean) {
-                mIRegsterVu.showLoginSuccee(userbean);
-            }
+        if (mIRegsterVu != null) {
+            mUserModel.Login(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), new OnLoginListener() {
+                @Override
+                public void loginSuccess(Userbean userbean) {
+                    if (mIRegsterVu != null) mIRegsterVu.showLoginSuccee(userbean);
+                }
 
-            @Override
-            public void loginFailed(int i, String reason) {
-                mIRegsterVu.showLoginFail(i, reason);
-            }
-        });
+                @Override
+                public void loginFailed(int i, String reason) {
+                    if (mIRegsterVu != null) mIRegsterVu.showLoginFail(i, reason);
+                }
+            });
+        }
     }
 
     public void Regster() {
-        mIRegsterVu.showRegsterLoading();
+        if (mIRegsterVu != null) {
+            mIRegsterVu.showRegsterLoading();
+            mUserModel.Regster(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), mIRegsterVu.getEmail(), new OnRegsterListener() {
+                @Override
+                public void RegsterSuccess(final Userbean userbean) {
+                    mMessageModel.sendMssageToUser(userbean, "欢迎注册足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
+                        @Override
+                        public void onSuccess() {
+                            if (mIRegsterVu != null) mIRegsterVu.showRegsterSuccee(userbean);
+                        }
 
-        mUserModel.Regster(mIRegsterVu.getUserName(), mIRegsterVu.getPassword(), mIRegsterVu.getEmail(), new OnRegsterListener() {
-            @Override
-            public void RegsterSuccess(final Userbean userbean) {
-                mMessageModel.sendMssageToUser(userbean, "欢迎注册足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
-                    @Override
-                    public void onSuccess() {
-                        mIRegsterVu.showRegsterSuccee(userbean);
-                    }
+                        @Override
+                        public void onFailure(int i, String s) {
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onFailure(int i, String s) {
-                    }
-                });
-            }
-
-            @Override
-            public void RegsterFail(int i) {
-                mIRegsterVu.showRegsterFail(i);
-            }
-        });
+                @Override
+                public void RegsterFail(int i) {
+                    if (mIRegsterVu != null) mIRegsterVu.showRegsterFail(i);
+                }
+            });
+        }
     }
 
     public void startHomeActivity(Context context) {
@@ -76,6 +79,6 @@ public class RegisterPresenter {
     }
     // 解除view的绑定
     public void onRelieveView() {
-        mIRegsterVu = null;
+        if (mIRegsterVu != null) mIRegsterVu = null;
     }
 }

@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +35,8 @@ import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
 import team.far.footing.ui.vu.IWalkVu;
+import team.far.footing.ui.widget.HorizontalProgressBarWithNumber;
+import team.far.footing.util.GPSUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.animation.ScaleXYAnimation;
 
@@ -51,6 +56,9 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     TextView tvWalkDistance;
     private BaiduMap mBaiduMap;
     private WalkPresenter presenter;
+    private me.drakeet.materialdialog.MaterialDialog materialDialog;
+    private HorizontalProgressBarWithNumber barWithNumber;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,20 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         presenter = new WalkPresenter(this);
         // 开始定位
         presenter.startLocation();
+
+        if (!GPSUtils.isGpsEnable()) {
+            new MaterialDialog.Builder(WalkActivity.this).title("未开启GPS").content("没有找到GPS，足下不能工作了，快去系统设置打开GPS吧！")
+                    .backgroundColor(getResources().getColor(R.color.white))
+                    .positiveText("去开启").negativeText("不了").negativeColor(getResources().getColor(R.color.divider_color)).theme(Theme.LIGHT)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                            startActivityForResult(intent, 35);
+                        }
+                    }).show();
+        }
     }
 
     private void init() {
@@ -131,13 +153,13 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
     }
 
     private void initToolbar() {
-        mToolbar.setTitle(getResources().getString(R.string.walk));
+        mToolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.ic_back));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                back();
             }
         });
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -145,12 +167,20 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             public boolean onMenuItemClick(MenuItem item) {
                 new MaterialDialog.Builder(WalkActivity.this).title("分享").content("是否分享此次步行？")
                         .backgroundColor(getResources().getColor(R.color.white))
-                        .positiveText("分享").negativeText("取消").theme(Theme.LIGHT)
+                        .neutralText("其他分享")
+                        .positiveText("QQ分享").negativeText("取消").theme(Theme.LIGHT)
+                        .neutralColor(getResources().getColor(R.color.divider_color))
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
-                                share();
+                                presenter.QQshare();
                                 dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onNeutral(MaterialDialog dialog) {
+                                share();
+                                super.onNeutral(dialog);
                             }
                         }).show();
                 return false;
@@ -245,6 +275,57 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     }
 
+    private void back() {
+        if (presenter.isWalking()) {
+            new MaterialDialog.Builder(this).theme(Theme.LIGHT).title("结束此次步行么").backgroundColor(getResources().getColor(R.color.white)).content("保留在这个页面退到后台时，足下也会帮你记录足迹哦").positiveText("结束").negativeText("继续步行").callback(new MaterialDialog.ButtonCallback() {
+                @Override
+                public void onPositive(MaterialDialog dialog) {
+                    super.onPositive(dialog);
+                    new MaterialDialog.Builder(WalkActivity.this).title("停止步行").content("是否分享此次步行？")
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .neutralText("其他分享")
+                            .positiveText("QQ分享").negativeText("不用了").theme(Theme.LIGHT)
+                            .neutralColor(getResources().getColor(R.color.divider_color))
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    presenter.QQshare();
+                                    stopWalk();
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onNeutral(MaterialDialog dialog) {
+                                    share();
+                                    // 停止步行
+                                    stopWalk();
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
+                                    stopWalk();
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            }).show();
+                }
+            }).show();
+        } else {
+            finish();
+        }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            back();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     // 分享的相关操作
     private void share() {
         mBaiduMap.snapshotScope(null, new BaiduMap.SnapshotReadyCallback() {
@@ -275,10 +356,17 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
             case R.id.iv_walk_stop:
                 new MaterialDialog.Builder(this).title("停止步行").content("是否分享此次步行？")
                         .backgroundColor(getResources().getColor(R.color.white))
-                        .positiveText("分享").negativeText("不用了").theme(Theme.LIGHT)
+                        .neutralText("其他分享")
+                        .positiveText("QQ分享").negativeText("不用了").theme(Theme.LIGHT)
+                        .neutralColor(getResources().getColor(R.color.divider_color))
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
+                                presenter.QQshare();
+                            }
+
+                            @Override
+                            public void onNeutral(MaterialDialog dialog) {
                                 share();
                                 // 停止步行
                                 stopWalk();
@@ -295,4 +383,67 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         }
     }
 
+
+    @Override
+    public void show_shareProgress(int progress) {
+        if (materialDialog == null) showdialog();
+        barWithNumber.setProgress(progress);
+    }
+
+    @Override
+    public void show_shareSuccess() {
+        dismissProgress();
+        materialDialog = null;
+    }
+
+    @Override
+    public void show_shareError(String s) {
+        textView.setText("分享失败,请稍后重试\n"  + s);
+        barWithNumber.setVisibility(View.GONE);
+        materialDialog = null;
+    }
+
+    @Override
+    public void show_shareCancel() {
+        dismissProgress();
+        materialDialog = null;
+    }
+
+    private void showdialog() {
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_layout, null, false);
+        barWithNumber = (HorizontalProgressBarWithNumber) v.findViewById(R.id.progressBar);
+        textView = (TextView) v.findViewById(R.id.tv_text);
+        materialDialog = new me.drakeet.materialdialog.MaterialDialog(WalkActivity.this).setView(v);
+        materialDialog.show();
+    }
+
+    public void dismissProgress() {
+        materialDialog.dismiss();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 35){
+            if (!GPSUtils.isGpsEnable()) {
+                new MaterialDialog.Builder(WalkActivity.this).title("未开启GPS").content("GPS还是没开启哦")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("继续去开启").negativeText("不了").negativeColor(getResources().getColor(R.color.divider_color)).theme(Theme.LIGHT)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                                startActivityForResult(intent, 0);
+                            }
+                        }).show();
+            }  else {
+                new MaterialDialog.Builder(WalkActivity.this).title("已开启GPS").content("GPS可以正常使用")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("好的").theme(Theme.LIGHT).show();
+            }
+        } else {
+            presenter.getTencent().onActivityResult(requestCode, resultCode, data);
+            dismissProgress();
+        }
+    }
 }

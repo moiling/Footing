@@ -38,6 +38,12 @@ public class SuggestionActivity extends BaseActivity implements ISuggestionVu {
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onRelieveView();
+    }
+
     private void init() {
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override

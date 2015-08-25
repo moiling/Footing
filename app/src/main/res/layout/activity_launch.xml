@@ -3,14 +3,45 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/primary_color"
+                android:background="@color/white"
                 tools:context="team.far.footing.ui.activity.LaunchActivity">
 
-    <TextView
+
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@mipmap/image_launch_pic"
         android:layout_centerInParent="true"
-        android:text="我是LOGO"
-        android:textSize="30sp"/>
+        android:layout_above="@+id/ll_launch_bottom"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_launch_bottom"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="@color/accent_color"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/image_luanch_logo"/>
+
+        <TextView
+            android:id="@+id/tv_launch_title"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:text="足下"
+            android:layout_marginLeft="24dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

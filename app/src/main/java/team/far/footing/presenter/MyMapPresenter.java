@@ -1,5 +1,6 @@
 package team.far.footing.presenter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,16 +29,22 @@ public class MyMapPresenter {
 
 
     private void showmlist() {
-        iMyMapVu.showLoading("玩命的加载...");
+        iMyMapVu.showLoading("玩命加载中...");
 
         mapModel.get_map_byuserbean(BmobUtils.getCurrentUser(), new FindListener<MapBean>() {
             @Override
             public void onSuccess(List<MapBean> list) {
                 // 倒叙
                 Collections.reverse(list);
-                iMyMapVu.stopLoading();
+                List<MapBean> tempList  = new ArrayList<MapBean>();
                 if(list.size() != 0) {
-                    mapRyViewAdapter = new MapRyViewAdapter(list, iMyMapVu.getActivity());
+                    for (MapBean mapBean : list) {
+                        if (Double.parseDouble(mapBean.getAll_distance()) > 0) {
+                            tempList.add(mapBean);
+                        }
+                    }
+                    iMyMapVu.stopLoading();
+                    mapRyViewAdapter = new MapRyViewAdapter(tempList, iMyMapVu.getActivity());
                     iMyMapVu.showmaplist(mapRyViewAdapter);
                 } else {
                     iMyMapVu.showEmpty();
@@ -57,6 +64,6 @@ public class MyMapPresenter {
     }
 
     public void onRelieveView() {
-        iMyMapVu = null;
+        if (iMyMapVu != null) iMyMapVu = null;
     }
 }

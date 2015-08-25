@@ -3,7 +3,6 @@ package team.far.footing.ui.vu;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,5 +32,15 @@ public interface IWalkVu {
     //void pauseWalk();
 
     void showstart();
+
+
+    //分享
+    void show_shareProgress(int progress);
+
+    void show_shareSuccess();
+
+    void show_shareError(String s);
+
+    void show_shareCancel();
 
 }
