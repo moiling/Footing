@@ -105,7 +105,7 @@ public class FileModel implements IFileModel {
     public String getCacheFormatSize() {
         String cacheSize = String.valueOf(BmobPro.getInstance(APP.getContext()).getCacheFileSize());
         String formatSize = BmobPro.getInstance(APP.getContext()).getCacheFormatSize();
-        return cacheSize;
+        return formatSize;
     }
 
     @Override

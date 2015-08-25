@@ -118,15 +118,18 @@ public class MessageModel implements IMessageModel {
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.add(messageBean);
         userbean.setMessages(bmobRelation);
+        LogUtils.e("update===>>>" + userbean.getUsername());
         userbean.update(APP.getContext(), new UpdateListener() {
             @Override
             public void onSuccess() {
-                onUpdateUserListener.onSuccess();
+                LogUtils.e("update===>>>" + "成功");
+                if (onUpdateUserListener != null) onUpdateUserListener.onSuccess();
             }
 
             @Override
             public void onFailure(int i, String s) {
-                onUpdateUserListener.onFailure(i, s);
+                LogUtils.e("update===>>>" + "失败"+s+"      "+i);
+                if (onUpdateUserListener != null) onUpdateUserListener.onFailure(i, s);
             }
         });
     }

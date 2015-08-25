@@ -15,6 +15,7 @@ import team.far.footing.model.callback.OnIsMyFriendListener;
 import team.far.footing.model.callback.OnQueryFriendListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.LogUtils;
 
 /**
  * Created by Luoyy on 2015/8/9 0009.
@@ -36,22 +37,23 @@ public class FriendModel implements IFriendModel {
 
         //把其他人加为好友
         Userbean CurrentUser = BmobUtils.getCurrentUser();
-        Friends friends = new Friends();
+        final Friends friends = new Friends();
         friends.setObjectId(CurrentUser.getFriendId());
         friends.setUserbean(CurrentUser);
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.add(userbean);
         friends.setFriends(bmobRelation);
-        update_friend(friends, onUpdateUserListener);
 
         //其他人把你加为好友
-        Friends friends1 = new Friends();
-        friends1.setObjectId(userbean.getObjectId());
+        final Friends friends1 = new Friends();
+        friends1.setObjectId(userbean.getFriendId());
         friends1.setUserbean(userbean);
         BmobRelation bmobRelation1 = new BmobRelation();
         bmobRelation1.add(CurrentUser);
         friends1.setFriends(bmobRelation1);
-        update_friend(friends1, null);
+
+        MessageModel.getInstance().sendMssageToUser(userbean, "系统消息", BmobUtils.getCurrentUser().getNickName() + " 加你为好友了。", null);
+        update_friend(friends, friends1, onUpdateUserListener);
 
 
     }
@@ -83,35 +85,45 @@ public class FriendModel implements IFriendModel {
     @Override
     public void deleteFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
         Userbean CurrentUser = BmobUtils.getCurrentUser();
+
         Friends friends = new Friends();
-        friends.setObjectId(BmobUtils.getCurrentUser().getFriendId());
+        friends.setObjectId(CurrentUser.getFriendId());
         friends.setUserbean(CurrentUser);
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.remove(userbean);
         friends.setFriends(bmobRelation);
-        update_friend(friends, onUpdateUserListener);
+
+         Friends friends1 = new Friends();
+        friends1.setObjectId(userbean.getFriendId());
+        friends1.setUserbean(userbean);
+        BmobRelation bmobRelation1 = new BmobRelation();
+        bmobRelation1.remove(CurrentUser);
+        friends1.setFriends(bmobRelation1);
+
+
+        update_friend(friends, friends1, onUpdateUserListener);
     }
 
 
     @Override
     public void isMyFriendByNickname(final String nickname, final OnIsMyFriendListener onIsMyFriendListener) {
-      getAllFriends(new OnQueryFriendListener() {
-          @Override
-          public void onSuccess(List<Userbean> object) {
-              for (Userbean userbean : object) {
-                  if (nickname.equals(userbean.getUsername())) {
-                      onIsMyFriendListener.onSuccess(true);
-                      return;
-                  }
-              }
-              onIsMyFriendListener.onSuccess(false);
-          }
+        getAllFriends(new OnQueryFriendListener() {
+            @Override
+            public void onSuccess(List<Userbean> object) {
+                for (Userbean userbean : object) {
+                    if (nickname.equals(userbean.getUsername())) {
+                        onIsMyFriendListener.onSuccess(true);
+                        return;
+                    }
+                }
+                onIsMyFriendListener.onSuccess(false);
+            }
 
-          @Override
-          public void onError(int code, String msg) {
-              onIsMyFriendListener.onError(code, msg);
-          }
-      });
+            @Override
+            public void onError(int code, String msg) {
+                onIsMyFriendListener.onError(code, msg);
+            }
+        });
     }
 
     @Override
@@ -137,13 +149,29 @@ public class FriendModel implements IFriendModel {
     }
 
 
-    private void update_friend(Friends friends, final OnUpdateUserListener onUpdateUserListener) {
+    private void update_friend(Friends friend_1, final Friends friends_2, final OnUpdateUserListener onUpdateUserListener) {
 
-        friends.update(APP.getContext(), new UpdateListener() {
+        friend_1.update(APP.getContext(), new UpdateListener() {
             @Override
             public void onSuccess() {
+
+                if (friends_2 != null) {
+                    friends_2.update(APP.getContext(), new UpdateListener() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+
+                        }
+                    });
+                }
                 if (onUpdateUserListener != null)
                     onUpdateUserListener.onSuccess();
+
+
             }
 
             @Override
