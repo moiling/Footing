@@ -35,12 +35,14 @@ public class UserInfoPresenter {
     }
 
     public void updatePic(Uri uri) {
-        v.showUpdateLoading();
+        if (v != null) v.showUpdateLoading();
         userModel.uploadHeadPortrait(uri.getPath(), new OnUploadListener() {
             @Override
             public void onSuccess(String fileName, String url, BmobFile file) {
-                v.dismissLoading();
-                v.showUpdateSuccess();
+                if (v != null) {
+                    v.dismissLoading();
+                    v.showUpdateSuccess();
+                }
                 fileModel.downloadPic(fileName, new com.bmob.btp.callback.DownloadListener() {
 
                     @Override
@@ -50,7 +52,7 @@ public class UserInfoPresenter {
 
                     @Override
                     public void onSuccess(String s) {
-                        v.showUserPic(BitmapFactory.decodeFile(s));
+                        if (v != null) v.showUserPic(BitmapFactory.decodeFile(s));
                     }
 
                     @Override
@@ -67,8 +69,10 @@ public class UserInfoPresenter {
 
             @Override
             public void onError(int statuscode, String errormsg) {
-                v.dismissLoading();
-                v.showUpdateFailed(statuscode);
+                if (v != null) {
+                    v.dismissLoading();
+                    v.showUpdateFailed(statuscode);
+                }
             }
         });
     }
@@ -80,7 +84,7 @@ public class UserInfoPresenter {
 
     public void showUserInformation() {
         Bitmap bitmap = fileModel.getLocalPic(userbean.getHeadPortraitFileName());
-        v.showUserInformation(userbean, bitmap);
+        if (v != null) v.showUserInformation(userbean, bitmap);
     }
 
     public void startEditUserInfoActivity(Context context) {
@@ -91,7 +95,7 @@ public class UserInfoPresenter {
 
     // 解除view的绑定
     public void onRelieveView() {
-        v = null;
+        if (v != null) v = null;
     }
 
 }

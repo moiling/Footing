@@ -40,7 +40,7 @@ public class TodayPresenter {
     }
 
     public void getUserbeans(final int type) {
-        iFgTodayVu.onProgress();
+        if (iFgTodayVu != null) iFgTodayVu.onProgress();
         friendModel.getAllFriends(new OnQueryFriendListener() {
             @Override
             public void onSuccess(List<Userbean> object) {
@@ -48,15 +48,19 @@ public class TodayPresenter {
                 list = object;
                 //把自己加进去
                 list.add(BmobUtils.getCurrentUser());
-                if (iFgTodayVu != null) iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
-                choose_spinner(type);
-                iFgTodayVu.onProgressEnd();
+                if (iFgTodayVu != null) {
+                    iFgTodayVu.init(BmobUtils.getCurrentUser(), getSortListByAll(list));
+                    choose_spinner(type);
+                    iFgTodayVu.onProgressEnd();
+                }
             }
 
             @Override
             public void onError(int code, String msg) {
-                iFgTodayVu.oninit_error(code, msg);
-                iFgTodayVu.onProgressEnd();
+                if (iFgTodayVu != null) {
+                    iFgTodayVu.oninit_error(code, msg);
+                    iFgTodayVu.onProgressEnd();
+                }
             }
 
 
@@ -68,13 +72,13 @@ public class TodayPresenter {
     public void choose_spinner(int position) {
         switch (position) {
             case 0:
-                iFgTodayVu.choose_alldistance(getSortListByAll(list));
+                if (iFgTodayVu != null) iFgTodayVu.choose_alldistance(getSortListByAll(list));
                 break;
             case 1:
-                iFgTodayVu.choose_distance(getSortListByToday(list));
+                if (iFgTodayVu != null) iFgTodayVu.choose_distance(getSortListByToday(list));
                 break;
             case 2:
-                iFgTodayVu.choose_level(getSortListBylevel(list));
+                if (iFgTodayVu != null) iFgTodayVu.choose_level(getSortListBylevel(list));
                 break;
             case 3:
                 break;
@@ -136,6 +140,6 @@ public class TodayPresenter {
     }
 
     public void onRelieveView() {
-        iFgTodayVu = null;
+        if (iFgTodayVu != null) iFgTodayVu = null;
     }
 }

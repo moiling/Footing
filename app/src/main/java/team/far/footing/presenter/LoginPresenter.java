@@ -32,48 +32,50 @@ public class LoginPresenter {
 
 
     public void Login() {
-        mILoginVu.showLoginLoading();
+        if (mILoginVu != null) {
+            mILoginVu.showLoginLoading();
+            mUserModel.Login(mILoginVu.getUserName(), mILoginVu.getPassword(), new OnLoginListener() {
+                @Override
+                public void loginSuccess(Userbean userbean) {
+                    if (mILoginVu != null) mILoginVu.showLoginSuccee(userbean);
+                }
 
-        mUserModel.Login(mILoginVu.getUserName(), mILoginVu.getPassword(), new OnLoginListener() {
-            @Override
-            public void loginSuccess(Userbean userbean) {
-                mILoginVu.showLoginSuccee(userbean);
-            }
-
-            @Override
-            public void loginFailed(int i, String reason) {
-                mILoginVu.showLoginFail(i, reason);
-            }
-        });
-
+                @Override
+                public void loginFailed(int i, String reason) {
+                    if (mILoginVu != null) mILoginVu.showLoginFail(i, reason);
+                }
+            });
+        }
     }
 
     public void LoginForQQ() {
-        mUserModel.loginForQQ(mILoginVu.getActivity(), new OnLoginForQQListener() {
-            @Override
-            public void loginSuccess(Userbean userbean) {
-                mILoginVu.showLoginSuccee(userbean);
-                mMessageModel.sendMssageToUser(userbean, "欢迎登录足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
-                    @Override
-                    public void onSuccess() {
-                    }
+        if (mILoginVu != null) {
+            mUserModel.loginForQQ(mILoginVu.getActivity(), new OnLoginForQQListener() {
+                @Override
+                public void loginSuccess(Userbean userbean) {
+                    if (mILoginVu != null) mILoginVu.showLoginSuccee(userbean);
+                    mMessageModel.sendMssageToUser(userbean, "欢迎登录足下", "希望你在足下玩得开心！\n有什么问题请一定及时和我们反馈哦！", new OnUpdateUserListener() {
+                        @Override
+                        public void onSuccess() {
+                        }
 
-                    @Override
-                    public void onFailure(int i, String s) {
-                    }
-                });
-            }
+                        @Override
+                        public void onFailure(int i, String s) {
+                        }
+                    });
+                }
 
-            @Override
-            public void loginFailed(String reason) {
-                mILoginVu.showLoginFail(-1, reason);
-            }
+                @Override
+                public void loginFailed(String reason) {
+                    if (mILoginVu != null) mILoginVu.showLoginFail(-1, reason);
+                }
 
-            @Override
-            public void loginCancel() {
-                mILoginVu.showLogincancel();
-            }
-        });
+                @Override
+                public void loginCancel() {
+                    if (mILoginVu != null) mILoginVu.showLogincancel();
+                }
+            });
+        }
     }
 
     public void startHomeActivity(Context context) {
@@ -90,7 +92,7 @@ public class LoginPresenter {
 
     // 解除view的绑定
     public void onRelieveView() {
-        mILoginVu = null;
+        if (mILoginVu != null) mILoginVu = null;
     }
 }
 

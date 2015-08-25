@@ -40,7 +40,7 @@ public class AddFriendPresenter {
                         @Override
                         public void onSuccess(List<Userbean> object) {
                             friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                            iAddFriendVu.showfriends(friendsRyViewAdapter);
+                            if (iAddFriendVu != null) iAddFriendVu.showfriends(friendsRyViewAdapter);
                         }
 
                         @Override
@@ -51,7 +51,7 @@ public class AddFriendPresenter {
 
                 } else {
                     friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                    iAddFriendVu.showfriends(friendsRyViewAdapter);
+                    if (iAddFriendVu != null) iAddFriendVu.showfriends(friendsRyViewAdapter);
                 }
             }
 
@@ -68,7 +68,7 @@ public class AddFriendPresenter {
             @Override
             public void onSuccess(List<Userbean> object) {
                 friendsRyViewAdapter = new FriendsRyViewAdapter(object);
-                iAddFriendVu.showfriends(friendsRyViewAdapter);
+                if (iAddFriendVu != null) iAddFriendVu.showfriends(friendsRyViewAdapter);
             }
 
             @Override
@@ -80,10 +80,10 @@ public class AddFriendPresenter {
     }
 
     public void Refresh() {
-        iAddFriendVu.stopRefresh();
+        if (iAddFriendVu != null) iAddFriendVu.stopRefresh();
     }
 
     public void onRelieveView() {
-        iAddFriendVu = null;
+        if (iAddFriendVu != null) iAddFriendVu = null;
     }
 }

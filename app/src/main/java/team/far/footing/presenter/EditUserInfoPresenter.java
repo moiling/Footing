@@ -33,11 +33,11 @@ public class EditUserInfoPresenter {
     }
 
     public void updateUserInformation() {
-        v.showEditLoading();
+        if (v != null) v.showEditLoading();
         userModel.updataUserInfo(v.getNickName(), v.getSignature(), new OnUpdateUserListener() {
             @Override
             public void onSuccess() {
-                v.showEditSuccee();
+                if (v != null) v.showEditSuccee();
             }
 
             @Override
@@ -48,12 +48,14 @@ public class EditUserInfoPresenter {
     }
 
     public void updatePic(Uri uri) {
-        v.showUpdatePicLoading();
+        if (v != null) v.showUpdatePicLoading();
         userModel.uploadHeadPortrait(uri.getPath(), new OnUploadListener() {
             @Override
             public void onSuccess(String fileName, String url, BmobFile file) {
-                v.dismissPicLoading();
-                v.showUpdatePicSuccess();
+                if (v != null) {
+                    v.dismissPicLoading();
+                    v.showUpdatePicSuccess();
+                }
                 fileModel.downloadPic(fileName, new com.bmob.btp.callback.DownloadListener() {
 
                     @Override
@@ -63,7 +65,7 @@ public class EditUserInfoPresenter {
 
                     @Override
                     public void onSuccess(String s) {
-                        v.showUserPic(BitmapFactory.decodeFile(s));
+                        if (v != null) v.showUserPic(BitmapFactory.decodeFile(s));
                     }
 
                     @Override
@@ -80,8 +82,10 @@ public class EditUserInfoPresenter {
 
             @Override
             public void onError(int statuscode, String errormsg) {
-                v.dismissPicLoading();
-                v.showUpdatePicFailed(statuscode);
+                if (v != null) {
+                    v.dismissPicLoading();
+                    v.showUpdatePicFailed(statuscode);
+                }
             }
         });
     }
@@ -98,6 +102,6 @@ public class EditUserInfoPresenter {
 
     // 解除view的绑定
     public void onRelieveView() {
-        v = null;
+        if (v != null) v = null;
     }
 }

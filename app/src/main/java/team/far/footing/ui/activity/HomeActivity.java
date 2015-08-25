@@ -344,6 +344,14 @@ public class HomeActivity extends BaseActivity implements IHomeVu, IMessageVu, V
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_mission:
+                new MaterialDialog.Builder(this)
+                        .title("任务")
+                        .content("还没有任务呢")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("好吧")
+                        .theme(Theme.LIGHT)
+                        .show();
+
                 break;
             case R.id.action_message:
                 messageBoxAdapter = new MessageBoxAdapter(this, messagePresenter.getAllMessage());

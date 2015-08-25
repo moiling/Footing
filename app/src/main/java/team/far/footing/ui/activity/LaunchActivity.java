@@ -1,16 +1,21 @@
 package team.far.footing.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import team.far.footing.R;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.util.SPUtils;
 
 public class LaunchActivity extends BaseActivity {
 
+    @InjectView(R.id.tv_launch_title) TextView tvLaunchTitle;
     private Boolean isLogin = false;
 
     @Override
@@ -18,10 +23,18 @@ public class LaunchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launch);
-        setBarTintColor(getResources().getColor(R.color.primary_color));
+        ButterKnife.inject(this);
+        noUseBarTint();
+        initFonts();
         // 每次进入显示LOGO的地方先判断是否登陆过
         isLogin = (Boolean) SPUtils.get(this, "isLogin", Boolean.FALSE);
         myIntent();
+    }
+
+    private void initFonts() {
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/square_fonts.TTF");
+        tvLaunchTitle.setTypeface(face);
+        tvLaunchTitle.setTypeface(face);
     }
 
     private void myIntent() {

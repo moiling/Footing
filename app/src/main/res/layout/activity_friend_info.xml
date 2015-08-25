@@ -179,7 +179,7 @@
                 android:layout_below="@+id/tv_friend_all_distance_title"
                 android:background="@color/background_material_light"/>
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/tv_friend_footing_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -200,13 +200,13 @@
                 android:layout_marginRight="24dp"
                 android:textColor="@color/secondary_text"
                 android:textSize="16sp"
-                android:text="查看Ta的足迹"/>
+                android:text="查看Ta的足迹"/>-->
 
             <View
                 android:id="@+id/divider_friend_info_4"
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
-                android:layout_below="@+id/tv_friend_footing_title"
+                android:layout_below="@+id/divider_friend_info_3"
                 android:background="@color/background_material_light"/>
 
             <TextView

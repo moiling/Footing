@@ -99,7 +99,7 @@ public class HomePresenter {
         fileModel.getUserPic(BmobUtils.getCurrentUser(), new OngetUserPicListener() {
             @Override
             public void onSucess(Bitmap bitmap) {
-                v.showUserImg(bitmap);
+                if (v != null) v.showUserImg(bitmap);
             }
 
             @Override
@@ -118,7 +118,7 @@ public class HomePresenter {
 
     // 解除view的绑定
     public void onRelieveView() {
-        v = null;
+        if (v != null) v = null;
     }
 
 }

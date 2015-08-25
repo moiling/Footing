@@ -29,7 +29,7 @@ public class MyMapPresenter {
 
 
     private void showmlist() {
-        iMyMapVu.showLoading("玩命的加载...");
+        iMyMapVu.showLoading("玩命加载中...");
 
         mapModel.get_map_byuserbean(BmobUtils.getCurrentUser(), new FindListener<MapBean>() {
             @Override
@@ -64,6 +64,6 @@ public class MyMapPresenter {
     }
 
     public void onRelieveView() {
-        iMyMapVu = null;
+        if (iMyMapVu != null) iMyMapVu = null;
     }
 }
