@@ -307,7 +307,6 @@ public class UserModel implements IUserModel {
             public void onSuccess(JSONObject userAuth) {
                 // TODO Auto-generated method stub
                 LogUtils.e(" " + (BmobUtils.getCurrentUser().getIsAuth() == null));
-
                 // 判断是否首次登陆 如果是首次登陆  就开始初始化的操作 ==
                 if (BmobUtils.getCurrentUser().getIsAuth() == null) {
                     final Friends friends = new Friends();

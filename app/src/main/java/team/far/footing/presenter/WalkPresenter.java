@@ -177,25 +177,18 @@ public class WalkPresenter {
         end_date = TimeUtils.getcurrentTime();
         // 保存地图数据
         mapModel.save_map_finish(BmobUtils.getCurrentUser(), "url",
-                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "",TimeUtils.dateToString(start_date), city, address, street,
+                "map_file_name", map_list, end_date.getTime() - start_date.getTime() + "", new DecimalFormat(".##").format(distanceTotal) + "", TimeUtils.dateToString(start_date), city, address, street,
                 new OnUpdateMapListener() {
                     @Override
                     public void onSuccess(MapBean mapBean) {
                         LogUtils.d("路线上传成功");
-                        userModel.update_distance((int) (BmobUtils.getCurrentUser().getToday_distance() + distanceTotal),
-                                (int) (BmobUtils.getCurrentUser().getAll_distance() + distanceTotal), new OnUpdateUserListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        LogUtils.d("用户信息上传成功");
-                                        cleanMap();
-                                    }
-
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        LogUtils.e("上传失败");
-                                        cleanMap();
-                                    }
-                                });
+                        //保存用户行走记录
+                        if (TimeUtils.isToday(BmobUtils.getCurrentUser().getToday_date())) {
+                            userModel.update_today_distance(BmobUtils.getCurrentUser().getToday_distance() + (int) distanceTotal, TimeUtils.getTodayDate(), null);
+                        } else {
+                            userModel.update_today_distance((int) distanceTotal, TimeUtils.getTodayDate(), null);
+                        }
+                        cleanMap();
                     }
 
                     @Override
@@ -206,12 +199,7 @@ public class WalkPresenter {
                 });
         // 保存用户 等级数据
         userModel.updateUser_level(BmobUtils.getCurrentUser().getLevel() + (int) distanceTotal, null);
-        //保存用户行走记录
-        if (TimeUtils.isToday(BmobUtils.getCurrentUser().getToday_date())) {
-            userModel.update_today_distance(BmobUtils.getCurrentUser().getToday_distance() + (int) distanceTotal, TimeUtils.getTodayDate(), null);
-        } else {
-            userModel.update_today_distance((int) distanceTotal, TimeUtils.getTodayDate(), null);
-        }
+
 
     }
 
