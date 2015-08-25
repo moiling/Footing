@@ -6,8 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -27,7 +27,7 @@ public class AddFriendActivity extends BaseActivity implements IAddFriendVu, Swi
     @InjectView(R.id.swipe_refresh_widget)
     SwipeRefreshLayout swipeRefreshWidget;
     @InjectView(R.id.bt_query)
-    Button btQuery;
+    ImageView btQuery;
     @InjectView(R.id.toolbar) Toolbar mToolbar;
 
     private AddFriendPresenter addFriendPresenter;
