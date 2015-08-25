@@ -85,13 +85,23 @@ public class FriendModel implements IFriendModel {
     @Override
     public void deleteFriend(Userbean userbean, final OnUpdateUserListener onUpdateUserListener) {
         Userbean CurrentUser = BmobUtils.getCurrentUser();
+
         Friends friends = new Friends();
-        friends.setObjectId(BmobUtils.getCurrentUser().getFriendId());
+        friends.setObjectId(CurrentUser.getFriendId());
         friends.setUserbean(CurrentUser);
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.remove(userbean);
         friends.setFriends(bmobRelation);
-        update_friend(friends, null, onUpdateUserListener);
+
+         Friends friends1 = new Friends();
+        friends1.setObjectId(userbean.getFriendId());
+        friends1.setUserbean(userbean);
+        BmobRelation bmobRelation1 = new BmobRelation();
+        bmobRelation1.remove(CurrentUser);
+        friends1.setFriends(bmobRelation1);
+
+
+        update_friend(friends, friends1, onUpdateUserListener);
     }
 
 

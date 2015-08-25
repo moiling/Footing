@@ -102,7 +102,7 @@ public class MessageModel implements IMessageModel {
         messageBean.save(APP.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
-                AddMessage(BmobUtils.getCurrentUser(), messageBean, onUpdateUserListener);
+                AddMessage(userbean, messageBean, onUpdateUserListener);
             }
 
             @Override
@@ -118,14 +118,17 @@ public class MessageModel implements IMessageModel {
         BmobRelation bmobRelation = new BmobRelation();
         bmobRelation.add(messageBean);
         userbean.setMessages(bmobRelation);
+        LogUtils.e("update===>>>" + userbean.getUsername());
         userbean.update(APP.getContext(), new UpdateListener() {
             @Override
             public void onSuccess() {
+                LogUtils.e("update===>>>" + "成功");
                 if (onUpdateUserListener != null) onUpdateUserListener.onSuccess();
             }
 
             @Override
             public void onFailure(int i, String s) {
+                LogUtils.e("update===>>>" + "失败"+s+"      "+i);
                 if (onUpdateUserListener != null) onUpdateUserListener.onFailure(i, s);
             }
         });
