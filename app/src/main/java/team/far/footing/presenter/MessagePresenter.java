@@ -10,7 +10,6 @@ import team.far.footing.model.callback.OnDateChangeListener;
 import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.impl.MessageModel;
 import team.far.footing.ui.vu.IMessageVu;
-import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
 
 /**
@@ -53,6 +52,7 @@ public class MessagePresenter {
             @Override
             public void onSuccess(List<MessageBean> list) {
                 messageBeanList = list;
+                v.showMessage(list);
             }
 
             @Override
@@ -63,31 +63,7 @@ public class MessagePresenter {
     }
 
     public void refreshMessage() {
-        // TODO 测试刷新用的发消息
-        messageModel.sendMssageToUser(BmobUtils.getCurrentUser(), "测试刷新", new OnUpdateUserListener() {
-            @Override
-            public void onSuccess() {
-                messageModel.getAllMessage(new FindListener<MessageBean>() {
-                    @Override
-                    public void onSuccess(List<MessageBean> list) {
-                        messageBeanList = list;
-                        v.showMessage(list);
-                        v.stopRefresh();
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
-            }
-        });
-/*        messageModel.getAllMessage(new FindListener<MessageBean>() {
+        messageModel.getAllMessage(new FindListener<MessageBean>() {
             @Override
             public void onSuccess(List<MessageBean> list) {
                 messageBeanList = list;
@@ -99,7 +75,7 @@ public class MessagePresenter {
             public void onError(int i, String s) {
 
             }
-        });*/
+        });
     }
 
     private void start_listen_date() {

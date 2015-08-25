@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 
+import java.text.DecimalFormat;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import team.far.footing.R;
@@ -23,6 +25,7 @@ import team.far.footing.ui.widget.CircleImageView;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LevelUtils;
 import team.far.footing.util.ScreenUtils;
+import team.far.footing.util.TimeUtils;
 
 public class FriendInfoActivity extends BaseActivity implements IFriendInfoVu, View.OnClickListener {
 
@@ -208,8 +211,24 @@ public class FriendInfoActivity extends BaseActivity implements IFriendInfoVu, V
         }
         tvFriendInfoUserLv.setText("Lv." + LevelUtils.getLevel(userbean.getLevel()));
         tvFriendInfoFriendSignature.setText(userbean.getSignature());
-        tvFriendAllDistance.setText(userbean.getAll_distance() + "m");
-        tvFriendTodayDistance.setText(userbean.getToday_distance() + "m");
+        if (TimeUtils.isToday(userbean.getToday_date())) {
+            if (userbean.getToday_distance() != null) {
+                if (userbean.getToday_distance() > 1000) {
+                    tvFriendTodayDistance.setText(new DecimalFormat(".##").format(userbean.getToday_distance() / 1000.0) + " km");
+                } else {
+                    tvFriendTodayDistance.setText(userbean.getToday_distance() + " m");
+                }
+            } else {
+                tvFriendTodayDistance.setText("0 m");
+            }
+        } else {
+            tvFriendTodayDistance.setText("0 m");
+        }
+        if (userbean.getAll_distance() > 1000) {
+            tvFriendAllDistance.setText(new DecimalFormat(".##").format(userbean.getAll_distance() / 1000.0) + " km");
+        } else {
+            tvFriendAllDistance.setText(userbean.getAll_distance() + " m");
+        }
         tvFriendEmail.setText(userbean.getEmail());
     }
 

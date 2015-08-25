@@ -31,7 +31,7 @@ public interface IMessageModel {
      * @param userbean
      * @param messager
      */
-    void sendMssageToUser(Userbean userbean, String messager, OnUpdateUserListener onUpdateUserListener);
+    void sendMssageToUser(Userbean userbean, String messager, String Content, OnUpdateUserListener onUpdateUserListener);
 
 
     /**

@@ -47,8 +47,7 @@ public class FriendsFragment extends Fragment implements IFgFriendVu, SwipeRefre
         mRecyclerview.setLayoutManager(new LinearLayoutManager(APP.getContext()));
         mRecyclerview.addItemDecoration(new DividerItemDecoration(APP.getContext(), LinearLayoutManager.VERTICAL));
         swipeRefreshWidget.setOnRefreshListener(this);
-        swipeRefreshWidget.setColorSchemeResources(android.R.color.holo_purple, android.R.color.holo_blue_bright, android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeRefreshWidget.setColorSchemeResources(R.color.accent_color, R.color.primary_color);
     }
 
     @Override

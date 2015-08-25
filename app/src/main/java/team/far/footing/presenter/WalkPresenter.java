@@ -24,7 +24,6 @@ import team.far.footing.model.IMapModel;
 import team.far.footing.model.IUserModel;
 import team.far.footing.model.bean.MapBean;
 import team.far.footing.model.callback.OnUpdateMapListener;
-import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.impl.MapModel;
 import team.far.footing.model.impl.UserModel;
 import team.far.footing.ui.vu.IWalkVu;
@@ -182,20 +181,7 @@ public class WalkPresenter {
                     @Override
                     public void onSuccess(MapBean mapBean) {
                         LogUtils.d("路线上传成功");
-                        userModel.update_distance((int) (BmobUtils.getCurrentUser().getToday_distance() + distanceTotal),
-                                (int) (BmobUtils.getCurrentUser().getAll_distance() + distanceTotal), new OnUpdateUserListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        LogUtils.d("用户信息上传成功");
-                                        cleanMap();
-                                    }
-
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        LogUtils.e("上传失败");
-                                        cleanMap();
-                                    }
-                                });
+                        cleanMap();
                     }
 
                     @Override
@@ -208,11 +194,12 @@ public class WalkPresenter {
         userModel.updateUser_level(BmobUtils.getCurrentUser().getLevel() + (int) distanceTotal, null);
         //保存用户行走记录
         if (TimeUtils.isToday(BmobUtils.getCurrentUser().getToday_date())) {
+            LogUtils.d("今日路程：" + BmobUtils.getCurrentUser().getToday_distance() + (int) distanceTotal);
             userModel.update_today_distance(BmobUtils.getCurrentUser().getToday_distance() + (int) distanceTotal, TimeUtils.getTodayDate(), null);
         } else {
             userModel.update_today_distance((int) distanceTotal, TimeUtils.getTodayDate(), null);
         }
-
+        userModel.update_all_distance(BmobUtils.getCurrentUser().getAll_distance() + (int) distanceTotal, null);
     }
 
     // 解除view的绑定
@@ -240,6 +227,7 @@ public class WalkPresenter {
                 isFirstIn = false;
                 city = bdLocation.getCity();
                 address = bdLocation.getDistrict();
+                street = bdLocation.getStreet();
                 LogUtils.d("城市：" + city + "，位置：" + address);
                 LogUtils.d(bdLocation.getCity() + "," + bdLocation.getCountry()
                         + "," + bdLocation.getAddrStr() + "," + bdLocation.getFloor()

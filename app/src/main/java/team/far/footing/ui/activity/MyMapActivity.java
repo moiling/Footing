@@ -49,6 +49,7 @@ public class MyMapActivity extends BaseActivity implements IMyMapVu, SwipeRefres
     private void init() {
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         swipeRefreshWidget.setOnRefreshListener(this);
+        swipeRefreshWidget.setColorSchemeResources(R.color.accent_color, R.color.primary_color);
     }
 
     private void initToolbar() {
