@@ -122,19 +122,23 @@ public class WalkPresenter {
     public void startLocation() {
         LogUtils.d("开始定位了");
         start_date = TimeUtils.getcurrentTime();
-        v.getBaiduMap().setMyLocationEnabled(true);
-        if (!mLocationClient.isStarted()) {
-            mLocationClient.start();
+        if (v != null) {
+            v.getBaiduMap().setMyLocationEnabled(true);
+            if (!mLocationClient.isStarted()) {
+                mLocationClient.start();
+            }
+            mOrientationListener.start();
         }
-        mOrientationListener.start();
     }
 
     // 停止定位
     public void stopLocation() {
         LogUtils.d("停止定位了");
-        v.getBaiduMap().setMyLocationEnabled(false);
-        mLocationClient.stop();
-        mOrientationListener.stop();
+        if (v != null) {
+            v.getBaiduMap().setMyLocationEnabled(false);
+            mLocationClient.stop();
+            mOrientationListener.stop();
+        }
 
     }
 
@@ -235,71 +239,73 @@ public class WalkPresenter {
     public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            LogUtils.d("现在的状态：" + appStatus);
-            LogUtils.d("LatLng's size: " + latLngs.size());
-            map_list.add(bdLocation.getLongitude() + "=" + bdLocation.getLatitude());
-            MyLocationData data = new MyLocationData.Builder().direction(mCurrentX)
-                    .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
-                    .longitude(bdLocation.getLongitude()).build();
-            MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mMapPointer);
-            v.getBaiduMap().setMyLocationData(data);
-            v.getBaiduMap().setMyLocationConfigeration(config);
-            LogUtils.d(bdLocation.getLatitude() + " , " + bdLocation.getLongitude());
-            LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
-            // 第一次定位把镜头移向用户当前位置
-            if (isFirstIn) {
-                v.moveCamera2Location(latLng);
-                isFirstIn = false;
-                city = bdLocation.getCity();
-                address = bdLocation.getDistrict();
-                street = bdLocation.getStreet();
-                LogUtils.d("城市：" + city + "，位置：" + address);
-                LogUtils.d(bdLocation.getCity() + "," + bdLocation.getCountry()
-                        + "," + bdLocation.getAddrStr() + "," + bdLocation.getFloor()
-                        + "," + bdLocation.getProvince() + "," + bdLocation.getStreet());
-            }
-            // 开始步行才记录（请求失败就不要记录了）
-            if (isWalking && bdLocation.getLatitude() != 4.9E-324) {
-                // 如果不是刚从home回来，就慢慢画
-                if (appStatus != STATUS_HOME_BACK) {
-                    // 先不管怎么样，加入第一个点再说
-                    if (latLngs.isEmpty()) latLngs.add(latLng);
-                    // 先从距离和加速度两方面控制某一点是否添加到数组中
-                    // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
-                    if (latLngs.size() > 0) {
-                        currentDistance = DistanceUtil
-                                .getDistance(latLng, latLngs.get(latLngs.size() - 1));
-                    }
-                    // 距离大于10
-                    if (currentDistance >= 10) {
-                        if (lastDistance == 0) {
-                            latLngs.add(latLng);
-                            v.drawPolyline(latLngs);
-                            lastDistance = currentDistance;
-                        } else {
-                            // 加速度
-                            acceleration = (currentDistance - lastDistance) / (timeSpan * timeSpan);
-                            // 加速度小于10
-                            if (acceleration <= 10) {
+            if (v != null) {
+                LogUtils.d("现在的状态：" + appStatus);
+                LogUtils.d("LatLng's size: " + latLngs.size());
+                map_list.add(bdLocation.getLongitude() + "=" + bdLocation.getLatitude());
+                MyLocationData data = new MyLocationData.Builder().direction(mCurrentX)
+                        .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
+                        .longitude(bdLocation.getLongitude()).build();
+                MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mMapPointer);
+                v.getBaiduMap().setMyLocationData(data);
+                v.getBaiduMap().setMyLocationConfigeration(config);
+                LogUtils.d(bdLocation.getLatitude() + " , " + bdLocation.getLongitude());
+                LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+                // 第一次定位把镜头移向用户当前位置
+                if (isFirstIn) {
+                    v.moveCamera2Location(latLng);
+                    isFirstIn = false;
+                    city = bdLocation.getCity();
+                    address = bdLocation.getDistrict();
+                    street = bdLocation.getStreet();
+                    LogUtils.d("城市：" + city + "，位置：" + address);
+                    LogUtils.d(bdLocation.getCity() + "," + bdLocation.getCountry()
+                            + "," + bdLocation.getAddrStr() + "," + bdLocation.getFloor()
+                            + "," + bdLocation.getProvince() + "," + bdLocation.getStreet());
+                }
+                // 开始步行才记录（请求失败就不要记录了）
+                if (isWalking && bdLocation.getLatitude() != 4.9E-324) {
+                    // 如果不是刚从home回来，就慢慢画
+                    if (appStatus != STATUS_HOME_BACK) {
+                        // 先不管怎么样，加入第一个点再说
+                        if (latLngs.isEmpty()) latLngs.add(latLng);
+                        // 先从距离和加速度两方面控制某一点是否添加到数组中
+                        // 还是有些问题，如果第二点是跳点的话没法判断加速度把它删去，所以要先开启定位再开启绘制工作
+                        if (latLngs.size() > 0) {
+                            currentDistance = DistanceUtil
+                                    .getDistance(latLng, latLngs.get(latLngs.size() - 1));
+                        }
+                        // 距离大于10
+                        if (currentDistance >= 10) {
+                            if (lastDistance == 0) {
                                 latLngs.add(latLng);
-                                // 加入点之后重置间隔时间
-                                timeSpan = 0;
-                                lastDistance = currentDistance;
-                                distanceTotal += currentDistance;
                                 v.drawPolyline(latLngs);
-                                v.showDistanceTotal(distanceTotal);
+                                lastDistance = currentDistance;
+                            } else {
+                                // 加速度
+                                acceleration = (currentDistance - lastDistance) / (timeSpan * timeSpan);
+                                // 加速度小于10
+                                if (acceleration <= 10) {
+                                    latLngs.add(latLng);
+                                    // 加入点之后重置间隔时间
+                                    timeSpan = 0;
+                                    lastDistance = currentDistance;
+                                    distanceTotal += currentDistance;
+                                    v.drawPolyline(latLngs);
+                                    v.showDistanceTotal(distanceTotal);
+                                }
                             }
                         }
+                    } else {
+                        // 刚从home回来，直接画
+                        v.drawAllPolyline(latLngs);
+                        v.showDistanceTotal(distanceTotal);
+                        // 画完了马上换状态
+                        appStatus = STATUS_ACTIVITY_ON;
                     }
-                } else {
-                    // 刚从home回来，直接画
-                    v.drawAllPolyline(latLngs);
-                    v.showDistanceTotal(distanceTotal);
-                    // 画完了马上换状态
-                    appStatus = STATUS_ACTIVITY_ON;
+                    // 间隔时间记录
+                    timeSpan += span;
                 }
-                // 间隔时间记录
-                timeSpan += span;
             }
         }
     }
@@ -309,14 +315,16 @@ public class WalkPresenter {
     // 下面都是分享相关的
 
     public void QQshare() {
-        v.show_shareProgress(0);
-        v.getBaiduMap().snapshot(new BaiduMap.SnapshotReadyCallback() {
-            @Override
-            public void onSnapshotReady(Bitmap bitmap) {
-                String path = saveBitmap(bitmap);
-                uploadBitmap(path);
-            }
-        });
+        if (v != null) {
+            v.show_shareProgress(0);
+            v.getBaiduMap().snapshot(new BaiduMap.SnapshotReadyCallback() {
+                @Override
+                public void onSnapshotReady(Bitmap bitmap) {
+                    String path = saveBitmap(bitmap);
+                    uploadBitmap(path);
+                }
+            });
+        }
     }
 
     public String saveBitmap(Bitmap bitmap) {
@@ -331,10 +339,10 @@ public class WalkPresenter {
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            v.show_shareError(e.toString());
+            if (v != null) v.show_shareError(e.toString());
         } catch (IOException e) {
             e.printStackTrace();
-            v.show_shareError(e.toString());
+            if (v != null) v.show_shareError(e.toString());
         }
         return f.getPath();
     }
@@ -349,12 +357,12 @@ public class WalkPresenter {
 
             @Override
             public void onProgress(int progress) {
-                if (progress != 100) v.show_shareProgress(progress);
+                if (progress != 100 && v != null) v.show_shareProgress(progress);
             }
 
             @Override
             public void onError(int statuscode, String errormsg) {
-                v.show_shareError(errormsg);
+                if (v != null) v.show_shareError(errormsg);
             }
         });
     }
@@ -377,38 +385,40 @@ public class WalkPresenter {
 
                             @Override
                             public void onFailure(int i, String s) {
-                                v.show_shareError(s);
+                                if (v != null) v.show_shareError(s);
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(int i, String s) {
-                        v.show_shareError(s);
+                        if (v != null) v.show_shareError(s);
                     }
                 });
     }
 
     public void shareMap(String url, String path) {
-        shareModel.ShareToQQWithPT((Activity) v, path, url, new IUiListener() {
-            @Override
-            public void onComplete(Object o) {
-                LogUtils.e("完成分享");
-                v.show_shareSuccess();
-            }
+        if (v != null) {
+            shareModel.ShareToQQWithPT((Activity) v, path, url, new IUiListener() {
+                @Override
+                public void onComplete(Object o) {
+                    LogUtils.e("完成分享");
+                    if (v != null) v.show_shareSuccess();
+                }
 
-            @Override
-            public void onError(UiError uiError) {
-                LogUtils.e("完成失败");
-                v.show_shareError(uiError.toString());
-            }
+                @Override
+                public void onError(UiError uiError) {
+                    LogUtils.e("完成失败");
+                    if (v != null) v.show_shareError(uiError.toString());
+                }
 
-            @Override
-            public void onCancel() {
-                LogUtils.e("完成取消");
-                v.show_shareCancel();
-            }
-        });
+                @Override
+                public void onCancel() {
+                    LogUtils.e("完成取消");
+                    if (v != null) v.show_shareCancel();
+                }
+            });
+        }
     }
 
     public Tencent getTencent(){

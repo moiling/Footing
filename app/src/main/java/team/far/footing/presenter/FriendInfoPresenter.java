@@ -41,16 +41,18 @@ public class FriendInfoPresenter {
             public void onSuccess(boolean b) {
                 LogUtils.d("是不是好友？" + b);
                 if (b) {
-                    v.initFriendView();
+                    if (v != null) v.initFriendView();
                 } else {
-                    v.initNotFriendView();
+                    if (v != null) v.initNotFriendView();
                 }
             }
 
             @Override
             public void onError(int code, String msg) {
-                v.initNotFriendView();
-                v.onError("加载出错了！");
+                if (v != null) {
+                    v.initNotFriendView();
+                    v.onError("加载出错了！");
+                }
             }
         });
     }
@@ -60,31 +62,39 @@ public class FriendInfoPresenter {
         friendModel.addFriend(userbean, new OnUpdateUserListener() {
             @Override
             public void onSuccess() {
-                v.dismissProgress();
-                v.onAddSuccess();
+                if (v != null) {
+                    v.dismissProgress();
+                    v.onAddSuccess();
+                }
             }
 
             @Override
             public void onFailure(int i, String s) {
-                v.dismissProgress();
-                v.onAddFail(i);
+                if (v != null) {
+                    v.dismissProgress();
+                    v.onAddFail(i);
+                }
             }
         });
     }
 
     public void deleteFriend() {
-        v.showProgress();
+        if (v != null) v.showProgress();
         friendModel.deleteFriend(userbean, new OnUpdateUserListener() {
             @Override
             public void onSuccess() {
-                v.dismissProgress();
-                v.onDeleteSuccess();
+                if (v != null) {
+                    v.dismissProgress();
+                    v.onDeleteSuccess();
+                }
             }
 
             @Override
             public void onFailure(int i, String s) {
-                v.dismissProgress();
-                v.onDeleteFail(i);
+                if (v != null) {
+                    v.dismissProgress();
+                    v.onDeleteFail(i);
+                }
             }
         });
 
@@ -95,7 +105,7 @@ public class FriendInfoPresenter {
     }
 
     public void onRelieveView() {
-        v = null;
+        if (v != null) v = null;
     }
 
     public void refreshUserInformation() {
@@ -105,7 +115,7 @@ public class FriendInfoPresenter {
 
     public void showUserInformation() {
         Bitmap bitmap = fileModel.getLocalPic(userbean.getHeadPortraitFileName());
-        v.showUserInformation(userbean, bitmap);
+        if (v != null) v.showUserInformation(userbean, bitmap);
     }
 
 

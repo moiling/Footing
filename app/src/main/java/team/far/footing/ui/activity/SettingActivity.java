@@ -2,6 +2,7 @@ package team.far.footing.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import team.far.footing.app.ActivityCollector;
 import team.far.footing.app.BaseActivity;
 import team.far.footing.ui.vu.ISettingVu;
 import team.far.footing.util.BmobUtils;
+import team.far.footing.util.GPSUtils;
 import team.far.footing.util.SPUtils;
 
 public class SettingActivity extends BaseActivity implements ISettingVu {
@@ -54,6 +56,52 @@ public class SettingActivity extends BaseActivity implements ISettingVu {
                 ActivityCollector.finishActivitis();
             }
         });
+        btnSettingGPSCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!GPSUtils.isGpsEnable()) {
+                    new MaterialDialog.Builder(SettingActivity.this).title("未开启GPS").content("GPS没有开启哦")
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveText("去开启").negativeText("不了").negativeColor(getResources().getColor(R.color.divider_color)).theme(Theme.LIGHT)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                    Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                                    startActivityForResult(intent, 0);
+                                }
+                            }).show();
+                } else {
+                    new MaterialDialog.Builder(SettingActivity.this).title("已开启GPS").content("GPS可以正常使用")
+                            .backgroundColor(getResources().getColor(R.color.white))
+                            .positiveText("好的").theme(Theme.LIGHT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 0){
+            if (!GPSUtils.isGpsEnable()) {
+                new MaterialDialog.Builder(SettingActivity.this).title("未开启GPS").content("GPS还是没开启哦")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("继续去开启").negativeText("不了").negativeColor(getResources().getColor(R.color.divider_color)).theme(Theme.LIGHT)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                                startActivityForResult(intent, 0);
+                            }
+                        }).show();
+            }  else {
+                new MaterialDialog.Builder(SettingActivity.this).title("已开启GPS").content("GPS可以正常使用")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("好的").theme(Theme.LIGHT).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initToolbar() {

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import team.far.footing.app.BaseActivity;
 import team.far.footing.presenter.WalkPresenter;
 import team.far.footing.ui.vu.IWalkVu;
 import team.far.footing.ui.widget.HorizontalProgressBarWithNumber;
+import team.far.footing.util.GPSUtils;
 import team.far.footing.util.LogUtils;
 import team.far.footing.util.animation.ScaleXYAnimation;
 
@@ -69,6 +71,20 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
         presenter = new WalkPresenter(this);
         // 开始定位
         presenter.startLocation();
+
+        if (!GPSUtils.isGpsEnable()) {
+            new MaterialDialog.Builder(WalkActivity.this).title("未开启GPS").content("没有找到GPS，足下不能工作了，快去系统设置打开GPS吧！")
+                    .backgroundColor(getResources().getColor(R.color.white))
+                    .positiveText("去开启").negativeText("不了").negativeColor(getResources().getColor(R.color.divider_color)).theme(Theme.LIGHT)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                            startActivityForResult(intent, 35);
+                        }
+                    }).show();
+        }
     }
 
     private void init() {
@@ -407,7 +423,27 @@ public class WalkActivity extends BaseActivity implements IWalkVu, View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        presenter.getTencent().onActivityResult(requestCode, resultCode, data);
-        dismissProgress();
+        if(requestCode == 35){
+            if (!GPSUtils.isGpsEnable()) {
+                new MaterialDialog.Builder(WalkActivity.this).title("未开启GPS").content("GPS还是没开启哦")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("继续去开启").negativeText("不了").negativeColor(getResources().getColor(R.color.divider_color)).theme(Theme.LIGHT)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                                startActivityForResult(intent, 0);
+                            }
+                        }).show();
+            }  else {
+                new MaterialDialog.Builder(WalkActivity.this).title("已开启GPS").content("GPS可以正常使用")
+                        .backgroundColor(getResources().getColor(R.color.white))
+                        .positiveText("好的").theme(Theme.LIGHT).show();
+            }
+        } else {
+            presenter.getTencent().onActivityResult(requestCode, resultCode, data);
+            dismissProgress();
+        }
     }
 }
