@@ -70,7 +70,7 @@
                         android:id="@+id/tv_start_street"
                         android:layout_gravity="center_vertical"
                         tools:text="崇文路"
-                        android:textColor="@color/primary_text"
+                        android:textColor="@color/secondary_text"
                         android:textSize="18sp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="12dp"

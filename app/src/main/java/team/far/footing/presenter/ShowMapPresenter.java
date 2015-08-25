@@ -1,26 +1,17 @@
 package team.far.footing.presenter;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.model.LatLng;
-import com.tencent.open.utils.HttpUtils;
-import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-
-import org.apache.http.conn.ConnectTimeoutException;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -64,7 +55,7 @@ public class ShowMapPresenter {
     private void showMap() {
         latLngs = StringUntils.getLaLngs(Arrays.asList(mapBean.getMap_array()));
         LogUtils.d(latLngs.size() + "");
-        iShowMapVu.showWalkInfo(mapBean.getAll_time(), mapBean.getAll_distance(), mapBean.getStart_time(),mapBean.getCity(),mapBean.getAddress());
+        iShowMapVu.showWalkInfo(mapBean.getAll_time(), mapBean.getAll_distance(), mapBean.getStart_time(),mapBean.getCity(),mapBean.getAddress(), mapBean.getStreet());
         iShowMapVu.showMap(latLngs);
     }
 
@@ -73,7 +64,7 @@ public class ShowMapPresenter {
     }
 
 
-    public void printScreen() {
+    public void QQshare() {
         iShowMapVu.show_shareProgress(0);
         baiduMap.snapshot(new BaiduMap.SnapshotReadyCallback() {
             @Override
