@@ -35,6 +35,7 @@ import team.far.footing.model.callback.OnUpdateUserListener;
 import team.far.footing.model.callback.OnUploadListener;
 import team.far.footing.util.BmobUtils;
 import team.far.footing.util.LogUtils;
+import team.far.footing.util.TimeUtils;
 
 /**
  * Created by moi on 2015/8/7.
@@ -237,7 +238,15 @@ public class UserModel implements IUserModel {
     @Override
     public void update_today_distance(int today_distance, String date, OnUpdateUserListener onUpdateUserListener) {
         Userbean newUser = new Userbean();
-        newUser.setToday_distance(today_distance);
+        if (TimeUtils.isToday(BmobUtils.getCurrentUser().getToday_date())) {
+
+            newUser.setToday_distance(BmobUtils.getCurrentUser().getToday_distance() + today_distance);
+
+        } else {
+            newUser.setToday_distance(today_distance);
+        }
+
+        newUser.setAll_distance(BmobUtils.getCurrentUser().getAll_distance() + today_distance);
         newUser.setToday_date(date);
         updateUser(newUser, onUpdateUserListener);
     }
@@ -306,7 +315,6 @@ public class UserModel implements IUserModel {
             public void onSuccess(JSONObject userAuth) {
                 // TODO Auto-generated method stub
                 LogUtils.e(" " + (BmobUtils.getCurrentUser().getIsAuth() == null));
-
                 // 判断是否首次登陆 如果是首次登陆  就开始初始化的操作 ==
                 if (BmobUtils.getCurrentUser().getIsAuth() == null) {
                     final Friends friends = new Friends();
